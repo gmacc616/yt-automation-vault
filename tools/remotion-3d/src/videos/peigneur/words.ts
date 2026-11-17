@@ -1,0 +1,15 @@
+// word onsets (s) from projects/peigneur-short/voice/words.json (after fix_words.py)
+export const W = {
+  drain: 1.76, bathtub: 2.56, november: 3.37, peigneur: 5.0, ten: 5.84, quiet: 6.78, sitting: 7.9, salt: 9.42,
+  out: 10.42, rig: 11.52, drilling: 11.88, down1: 12.18, down2: 12.88, down3: 13.44, at: 13.96, stuck: 15.54,
+  then1: 16.36, tilt: 17.34, then2: 17.8, sank: 18.1, then3: 18.74, spin: 19.9,
+  whirl: 20.97, swallowed: 21.59, rig3: 22.2, tug: 23.0, barges: 23.96, acres: 24.62, land: 25.72,
+  mine: 26.34, miners: 27.64, water: 28.24, tunnels: 29.3, lucky: 30.21, every: 30.48, elevator: 32.46,
+  unlucky: 33.28, didnt: 34.22,
+  yousee: 35.32, salt2: 36.88, sugar: 38.64, tea: 39.52, tiny: 40.08, melting: 41.32, wider1: 41.7, wider2: 42.3, fell: 43.56,
+  empty: 44.68, canal: 45.88, backwards: 46.86, waterfall: 47.74, tall: 49.56,
+  days: 50.4, barges2: 51.56, popped: 51.86, corks: 52.88,
+  nobody: 53.76, mistake: 54.92, drillers: 55.96, paid: 56.4, million: 57.18, anyway: 57.54,
+  andlake: 59.1, ten2: 60.52, now: 61.8, two00: 62.18, deepest: 63.14, thanks: 64.7, little: 65.28, drill: 65.5,
+  end: 65.96,
+} as const;

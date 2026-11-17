@@ -29,7 +29,7 @@ for (let i = 0; i < files.length; i += 12) {
   const part = files.slice(i, i + 12), args = [];
   for (const f of part) args.push("-i", path.join(out, f));
   const n = part.length;
-  execFileSync("ffmpeg", ["-loglevel", "error", "-y", ...args, "-filter_complex", `${part.map((_, k) => `[${k}]scale=270:-1[s${k}]`).join(";")};${part.map((_, k) => `[s${k}]`).join("")}hstack=${n}`, path.join(out, `sheet_${String(i / 12).padStart(2, "0")}.jpg`)]);
+  execFileSync("ffmpeg", ["-loglevel", "error", "-y", ...args, "-filter_complex", `${part.map((_, k) => `[${k}]scale=270:-1[s${k}]`).join(";")};${n > 1 ? `${part.map((_, k) => `[s${k}]`).join("")}hstack=${n}` : "[s0]null"}`, path.join(out, `sheet_${String(i / 12).padStart(2, "0")}.jpg`)]);
 }
 const rows = files.map((f) => {
   // luma over the whole frame, warmth over the top half (sky + world: golden water is a deliberate dark navy)
