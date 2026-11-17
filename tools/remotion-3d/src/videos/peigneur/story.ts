@@ -252,7 +252,7 @@ const CAMS: Record<number, Key[]> = {
   // the canal ran backwards: the waterfall into the pit
   17: [
     { f: a(17), s: (f) => dolly([CANAL_X0 + 60, 50, 60], [CANAL_X0 - 50, -35, 0], pushK(f, a(17), 0.0025), { fov: 46 }) },
-    { f: at(W.waterfall) - 14, dur: 34, s: (f) => dolly([HOLE[0] + 18, -36, 22], [HOLE[0] + 62, -6, 0], pushK(f, at(W.waterfall) + 20, 0.0025), { fov: 52, roll: 0.04 }) },
+    { f: at(W.waterfall) - 14, cut: true, s: (f) => dolly([HOLE[0] + 18, -36, 22], [HOLE[0] + 62, -6, 0], pushK(f, at(W.waterfall) + 20, 0.0025), { fov: 52, roll: 0.04 }) },
   ],
   // days later, nine barges popped back up
   18: [{ f: a(18), s: (f) => dolly(H(-48, 10, 62), H(4, 0, 4), pushK(f, a(18), 0.003, 0.006, 30), { fov: 46 }) }],

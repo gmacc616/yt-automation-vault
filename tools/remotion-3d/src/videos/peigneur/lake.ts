@@ -320,7 +320,10 @@ export class Mine {
     const steel = lam("rigDark", () => ({ color: "#3a3d47" })), yel = lam("rigYel", () => ({ color: "#f2c443" }));
     const box = (x0: number, y0: number, z0: number, x1: number, y1: number, z1: number, m: THREE.Material, tile = 0) => b.add(boxGeo(V(mx + x0, my + y0, mz + z0), V(mx + x1, my + y1, mz + z1), tile), m);
     box(-120, -0.5, -120, 120, 0, 120, floor);
-    b.add(boxGeo(V(mx - 120, my + C, mz - 120), V(mx + 120, my + C + 2, mz + 120), 20, true), salt); // roof (its underside is what we see)
+    { // roof (its underside is what we see) with an opening over the shaft so the cage rides up through it
+      const [hx, , hz] = Mine.SHAFT, h = 3, R = (x0: number, z0: number, x1: number, z1: number) => b.add(boxGeo(V(mx + x0, my + C, mz + z0), V(mx + x1, my + C + 2, mz + z1), 20, true), salt);
+      R(-120, -120, hx - h, 120); R(hx + h, -120, 120, 120); R(hx - h, -120, hx + h, hz - h); R(hx - h, hz + h, hx + h, 120);
+    }
     // room-and-pillar: 16 m pillars on a 34 m grid (tunnels 18 m wide), a back wall far away
     for (let i = -3; i <= 3; i++) for (let k = -3; k <= 3; k++) {
       const x = i * 34 + 17, z = k * 34 + 17;
@@ -331,7 +334,6 @@ export class Mine {
     // elevator shaft frame (yellow steel) up through the roof
     const [sx, , sz] = Mine.SHAFT;
     for (const ox of [-2.2, 2.2]) for (const oz of [-2.2, 2.2]) box(sx + ox - 0.2, 0, sz + oz - 0.2, sx + ox + 0.2, C + 2, sz + oz + 0.2, yel);
-    box(sx - 2.6, C - 0.6, sz - 2.6, sx + 2.6, C, sz + 2.6, steel);
     b.build(this.group, false);
     // wall lamps: emissive bulbs on the pillars (bloom picks them up)
     const bulb = new THREE.MeshBasicMaterial({ color: new THREE.Color(3.4, 2.9, 2.0), fog: false });

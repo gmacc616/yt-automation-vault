@@ -298,6 +298,7 @@ export class World {
       sp.matrixWorldNeedsUpdate = true;
     } else { sp.matrixAutoUpdate = false; sp.matrix.identity(); sp.matrixWorldNeedsUpdate = true; }
     sp.visible = k < 0.999;
+    if (!sp.visible) sp.matrix.makeTranslation(0, -900, 0); // gone: out of every ray (check.ts casts against hidden meshes too)
     // the waterfall
     this.fall.visible = S.fall > 0.05;
     this.fallMap.offset.y = -t * 1.6;
