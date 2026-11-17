@@ -321,7 +321,7 @@ export class Mine {
     const box = (x0: number, y0: number, z0: number, x1: number, y1: number, z1: number, m: THREE.Material, tile = 0) => b.add(boxGeo(V(mx + x0, my + y0, mz + z0), V(mx + x1, my + y1, mz + z1), tile), m);
     box(-120, -0.5, -120, 120, 0, 120, floor);
     { // roof (its underside is what we see) with an opening over the shaft so the cage rides up through it
-      const [hx, , hz] = Mine.SHAFT, h = 3, R = (x0: number, z0: number, x1: number, z1: number) => b.add(boxGeo(V(mx + x0, my + C, mz + z0), V(mx + x1, my + C + 2, mz + z1), 20, true), salt);
+      const [hx, , hz] = Mine.SHAFT, h = 11, R = (x0: number, z0: number, x1: number, z1: number) => b.add(boxGeo(V(mx + x0, my + C, mz + z0), V(mx + x1, my + C + 2, mz + z1), 20, true), salt);
       R(-120, -120, hx - h, 120); R(hx + h, -120, 120, 120); R(hx - h, -120, hx + h, hz - h); R(hx - h, hz + h, hx + h, 120);
     }
     // room-and-pillar: 16 m pillars on a 34 m grid (tunnels 18 m wide), a back wall far away
