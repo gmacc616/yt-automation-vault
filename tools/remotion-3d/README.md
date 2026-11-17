@@ -27,7 +27,7 @@ Start a new short: `cp -r src/videos/vasa src/videos/<name>`, register it in `sr
    chunk, resumes itself after a container restart (`~/.render-job`). Run it with `setsid nohup ... &`.
 5. `bash scripts/deliver.sh <Comp> <mix.wav> <out.mp4>`: join, re-time to exact 30 fps, assert the frame count, mux, QA.
 
-## Parallel cloud render (coldframe, instead of steps 4-5)
+## Final render = coldframe (the default for every 3D short; steps 4-5 are only the fallback)
 `.github/workflows/coldframe.yml` renders a composition of this folder on up to 20 GitHub machines at once (same
 settings as `render.sh`: 1440x2560, crf 16, swangle, 1 tab per machine) and checks the frame count. It renders what is
 pushed to `main`, so commit and push first (including `public/`, which holds the Kenney models).
