@@ -1,5 +1,7 @@
 # Vault rules for Claude
 
+What this project is for and how it got here: `PROJECT-OVERVIEW.md`.
+
 This folder is an Obsidian vault. Notes are plain Markdown; Obsidian picks up file changes live. Setup details: `Claude/Sessions/2026-11-04 Obsidian REST API setup.md`.
 
 ## The vault is your second brain
