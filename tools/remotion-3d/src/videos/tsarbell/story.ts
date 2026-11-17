@@ -112,9 +112,10 @@ export const sceneAt = (id: number, t: number): Scene => {
       // hot: glows and swells; cold: blue and shrinks; then cold water: outside cold, inside still glowing
       const hot = lin([[W.yousee, 0.15], [W.grows - 0.2, 1.0], [W.shrinks - 0.2, 1.0], [W.shrinks + 0.4, 0.0]], t);
       const pour = t > W.shrank - 0.2;
-      s.glow = pour ? 1.0 : hot; s.innerGlow = pour ? 1.0 : hot;
+      const re = smooth((t - W.shrank + 0.2) / 0.5); // the reheat after the pour fades in, no jump
+      s.glow = pour ? 0 : hot; s.innerGlow = pour ? re : hot;
       s.cold = pour ? smooth((t - W.shrank + 0.2) / 0.6) : lin([[W.shrinks - 0.1, 0], [W.shrinks + 0.4, 1.0]], t) * (t < W.shrank - 0.2 ? 1 : 0);
-      s.bellScale = pour ? 1.0 : 1 + 0.045 * hot - 0.03 * (1 - hot) * (t > W.shrinks ? 1 : 0);
+      s.bellScale = pour ? 0.97 + 0.03 * smooth((t - W.shrank) / 0.8) : 1 + 0.045 * hot - 0.03 * (1 - hot) * (t > W.shrinks ? 1 : 0);
       break;
     }
     case 14: s.place = "kitchen"; break;
@@ -190,7 +191,7 @@ const CAMS: Record<number, Key[]> = {
   ],
   // crane straight up the open corner of the pit: floor -> rim, ten metres
   6: [
-    { f: a(6), s: (f) => ({ pos: [3.7, -8.4, 3.75], look: [0, -6.0, 0], fov: 60 }) },
+    { f: a(6), s: (f) => dolly([3.7, -8.4, 3.75], [0, -6.0, 0], pushK(f, a(6), 0.004), { fov: 60 }) },
     { f: at(W.pit) - 6, dur: Math.max(40, at(W.deep) - at(W.pit) + 10), s: (f) => dolly([3.7, 3.6, 3.75], [0, -9.5, 0], pushK(f, at(W.deep) + 4, 0.002), { fov: 60, roll: 0.02 }) },
   ],
   // May 1737: the crowd on the square, the casting house catching fire behind them
