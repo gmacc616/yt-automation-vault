@@ -1,0 +1,525 @@
+{
+ "slug": "kelly-clarkson-molly",
+ "title": [
+  "KELLY CLARKSON vs. A ",
+  "$15M BIRD"
+ ],
+ "tempo": 1.0,
+ "music": "Sneaky Snitch.mp3",
+ "music_db": -24,
+ "sources": {
+  "S1A": {
+   "file": "S1_cctvA.mp4",
+   "clean": [
+    240,
+    0,
+    1440,
+    940
+   ],
+   "credit": "PABLO TORRE FINDS OUT"
+  },
+  "S2": {
+   "file": "S2.mp4",
+   "clean": [
+    0,
+    44,
+    1280,
+    556
+   ],
+   "credit": "GOOD MORNING AMERICA (ABC)"
+  },
+  "S3": {
+   "file": "S3.mp4",
+   "clean": [
+    0,
+    0,
+    1280,
+    610
+   ],
+   "credit": "GOOD MORNING AMERICA (ABC)"
+  },
+  "S4": {
+   "file": "S4.mp4",
+   "clean": [
+    0,
+    0,
+    1920,
+    915
+   ],
+   "credit": "TODAY (NBC)"
+  },
+  "S5": {
+   "file": "S5.mp4",
+   "clean": [
+    0,
+    0,
+    1920,
+    915
+   ],
+   "credit": "TODAY (NBC)"
+  },
+  "S6": {
+   "file": "S6.mp4",
+   "clean": [
+    0,
+    0,
+    1280,
+    690
+   ],
+   "credit": "EXTRA"
+  },
+  "S8": {
+   "file": "S8.mp4",
+   "clean": [
+    0,
+    0,
+    1920,
+    740
+   ],
+   "credit": "NEWS 12"
+  }
+ },
+ "items": [
+  {
+   "id": "s01",
+   "text": "Kelly Clarkson spent less than five minutes in this Brooklyn magic shop.|Now the shop says its staff are getting threats, and a wooden bird has a fifteen-million-dollar price tag.",
+   "shots": [
+    [
+     "S2",
+     3.0,
+     7.5,
+     0.45,
+     "punch"
+    ],
+    [
+     "S2",
+     15.0,
+     19.0,
+     0.5,
+     "push"
+    ],
+    [
+     "S5",
+     12.0,
+     16.0,
+     0.78,
+     "push"
+    ],
+    [
+     "S4",
+     51.5,
+     57.5,
+     0.5,
+     "push"
+    ]
+   ]
+  },
+  {
+   "id": "s02",
+   "text": "She asked about Molly, the shop's handmade mechanical bird.|Kelly says the employee looked her up and down, quoted fifteen thousand dollars, and offered to find her something comparable.|So she posted about it, comparing herself to Julia Roberts in Pretty Woman.|Over thirty-two million views.",
+   "label": "KELLY'S SIDE",
+   "shots": [
+    [
+     "S4",
+     85.0,
+     89.5,
+     0.5,
+     "push"
+    ],
+    [
+     "S2",
+     22.5,
+     27.4,
+     0.5,
+     "punch"
+    ],
+    [
+     "S3",
+     6.0,
+     10.5,
+     0.5,
+     "flat"
+    ],
+    [
+     "S6",
+     39.0,
+     44.0,
+     0.5,
+     "push"
+    ],
+    [
+     "S3",
+     12.5,
+     17.0,
+     0.5,
+     "push"
+    ]
+   ]
+  },
+  {
+   "id": "s03",
+   "text": "The shop says Molly was never for sale.|The fifteen thousand was for Molly's twin, owned by the artist, and the comparable option was a two-thousand-dollar bird.|Kelly's reply? You're not only rude, you're also a liar.",
+   "label": "THE SHOP'S SIDE",
+   "shots": [
+    [
+     "S8",
+     28.0,
+     31.5,
+     0.5,
+     "push"
+    ],
+    [
+     "S5",
+     63.0,
+     67.0,
+     0.5,
+     "flat"
+    ],
+    [
+     "S4",
+     52.0,
+     57.5,
+     0.5,
+     "punch"
+    ],
+    [
+     "S5",
+     69.0,
+     75.0,
+     0.62,
+     "push"
+    ],
+    [
+     "S6",
+     45.0,
+     47.5,
+     0.5,
+     "push"
+    ]
+   ]
+  },
+  {
+   "id": "s04",
+   "text": "Then the security footage drops, and everyone yells: receipts.|She browses, points at the bird, talks to an employee, and leaves.|But there's one problem.|There's no audio.|The whole fight is about a tone and one sentence, and the tape has neither.",
+   "label": "THE TAPE",
+   "shots": [
+    [
+     "S1A",
+     4.0,
+     6.9,
+     0.5,
+     "push"
+    ],
+    [
+     "S2",
+     15.0,
+     18.1,
+     0.5,
+     "punch"
+    ],
+    [
+     "S2",
+     22.5,
+     25.3,
+     0.5,
+     "push"
+    ],
+    [
+     "S1A",
+     40.0,
+     41.0,
+     0.5,
+     "freeze"
+    ],
+    [
+     "S1A",
+     42.0,
+     54.0,
+     0.5,
+     "push"
+    ]
+   ]
+  },
+  {
+   "id": "s05",
+   "text": "Here's my take. Both stories can be true.|Something comparable can sound helpful to one person, and insulting to another.|The real issue is scale.|When you or I vent about a store, nothing happens.|When Kelly does it, one tiny shop gets the whole internet. Even the owner gets it:",
+   "label": "MY TAKE",
+   "shots": [
+    [
+     "S8",
+     21.0,
+     24.0,
+     0.5,
+     "push"
+    ],
+    [
+     "S8",
+     36.0,
+     40.0,
+     0.5,
+     "punch"
+    ],
+    [
+     "S8",
+     48.0,
+     50.5,
+     0.5,
+     "flat"
+    ],
+    [
+     "S6",
+     3.0,
+     9.0,
+     0.5,
+     "push"
+    ],
+    [
+     "S8",
+     57.0,
+     60.0,
+     0.5,
+     "push"
+    ],
+    [
+     "S2",
+     57.0,
+     63.0,
+     0.5,
+     "push"
+    ]
+   ]
+  },
+  {
+   "id": "SB",
+   "soundbite": [
+    "S5",
+    102.4,
+    110.75
+   ],
+   "shots": [
+    [
+     "S5",
+     102.4,
+     110.75,
+     0.5,
+     "flat"
+    ]
+   ]
+  },
+  {
+   "id": "s06",
+   "text": "So, was she right to call them out? Tell me below.|And Molly? Stay on that wall.",
+   "shots": [
+    [
+     "S4",
+     85.0,
+     90.0,
+     0.5,
+     "push"
+    ],
+    [
+     "S4",
+     52.0,
+     58.0,
+     0.5,
+     "push"
+    ]
+   ]
+  }
+ ],
+ "sfx": [
+  {
+   "at": 0,
+   "file": "generated/boom_impact.wav",
+   "gain": -6
+  },
+  {
+   "at": 0.02,
+   "file": "generated/whoosh_short.wav",
+   "gain": -10
+  },
+  {
+   "at": "sections",
+   "file": "generated/whoosh_short.wav",
+   "gain": -12
+  },
+  {
+   "item": "s01",
+   "word": "$15",
+   "file": "generated/ding.wav",
+   "gain": -14
+  },
+  {
+   "item": "s02",
+   "word": "32",
+   "file": "generated/ding.wav",
+   "gain": -12
+  },
+  {
+   "item": "s03",
+   "word": "liar",
+   "file": "generated/glitch_burst.wav",
+   "gain": -16
+  },
+  {
+   "item": "s04",
+   "word": "footage",
+   "file": "generated/camera_shutter.wav",
+   "gain": -10
+  },
+  {
+   "item": "s04",
+   "word": "audio",
+   "file": "generated/boom_deep_sub.wav",
+   "gain": -4
+  },
+  {
+   "item": "s05",
+   "word": "scale",
+   "file": "generated/punch_hit.wav",
+   "gain": -10
+  },
+  {
+   "item": "s06",
+   "word": "wall",
+   "file": "generated/pop.wav",
+   "gain": -10
+  }
+ ],
+ "music_dropouts": [
+  {
+   "item": "s04",
+   "word": "audio",
+   "dur": 1.6
+  }
+ ],
+ "pops": [
+  {
+   "item": "s01",
+   "word": "$15",
+   "text": "$15,000,000",
+   "dur": 2.0,
+   "y": 400
+  },
+  {
+   "item": "s02",
+   "word": "32",
+   "text": "32M+ VIEWS",
+   "dur": 2.2,
+   "y": 380
+  },
+  {
+   "item": "s03",
+   "word": "twin",
+   "text": "$15K = MOLLY'S TWIN",
+   "dur": 2.6,
+   "y": 640
+  },
+  {
+   "item": "s03",
+   "word": "$2",
+   "text": "\"COMPARABLE\" = $2K BIRD",
+   "dur": 2.6,
+   "y": 640
+  }
+ ],
+ "stamps": [
+  {
+   "item": "s04",
+   "word": "audio",
+   "text": "NO AUDIO",
+   "dur": 2.0
+  }
+ ],
+ "emphasis": [
+  "molly",
+  "$15",
+  "15",
+  "fifteen",
+  "million",
+  "thousand",
+  "$2",
+  "liar",
+  "audio",
+  "rude",
+  "receipts",
+  "scale",
+  "32",
+  "thirty",
+  "twin",
+  "comparable",
+  "wall",
+  "threats"
+ ],
+ "caption_fixes": {
+  "s02": [
+   [
+    "and",
+    "and"
+   ],
+   [
+    "and",
+    "and"
+   ],
+   [
+    "and",
+    "in"
+   ],
+   [
+    "News.",
+    ""
+   ]
+  ],
+  "s03": [
+   [
+    "15,000",
+    "$15,000"
+   ],
+   [
+    "fire.",
+    ""
+   ]
+  ],
+  "s04": [
+   [
+    "recites,",
+    "receipts."
+   ],
+   [
+    "in",
+    "and"
+   ],
+   [
+    "either.",
+    ""
+   ]
+  ],
+  "s06": [
+   [
+    "wish",
+    "was"
+   ],
+   [
+    "you",
+    "she"
+   ],
+   [
+    "out.",
+    "out?"
+   ]
+  ],
+  "SB": [
+   [
+    "Clarkson,",
+    "Clarkson,"
+   ]
+  ]
+ },
+ "cover": {
+  "at": 51.8,
+  "lines": [
+   "THE TAPE HAS",
+   "NO AUDIO"
+  ]
+ }
+}

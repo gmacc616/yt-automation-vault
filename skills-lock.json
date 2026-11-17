@@ -1,0 +1,187 @@
+{
+  "version": 2,
+  "skills": {
+    "YouTube Automation": {
+      "source": "claude-office-skills/skills",
+      "sourceType": "github",
+      "skillPath": "youtube-automation/SKILL.md",
+      "computedHash": "",
+      "installMode": "copy"
+    },
+    "analyze-video-editing": {
+      "source": "gitethanwoo/video-editing",
+      "sourceType": "github",
+      "skillPath": "skills/analyze-video-editing/SKILL.md",
+      "computedHash": "028ecc3d4547410a95ae43a2f0318874e2b00d3a7b0707a3591b9178d7299bf5",
+      "installMode": "copy"
+    },
+    "b-roll-shot-list": {
+      "source": "Ootto-AI/claude-content-skills",
+      "sourceType": "github",
+      "skillPath": "skills/b-roll-shot-list/SKILL.md",
+      "computedHash": "3b60e0574b802dd5bbe835547b587918850266818eb3edc492c2d47fc94a8297",
+      "installMode": "copy"
+    },
+    "baoyu-youtube-transcript": {
+      "source": "jimliu/baoyu-skills",
+      "sourceType": "github",
+      "skillPath": "skills/baoyu-youtube-transcript/SKILL.md",
+      "computedHash": "",
+      "installMode": "copy"
+    },
+    "broll": {
+      "source": "appariciojunior/video-editor-skills",
+      "sourceType": "github",
+      "skillPath": "skills/broll/SKILL.md",
+      "computedHash": "c240ec4b555b5ba5a4029dfd6d256c57a963fb6fa96902c49b3e748da7c45d8e",
+      "installMode": "copy"
+    },
+    "broll-finder": {
+      "source": "reelary/skills",
+      "sourceType": "github",
+      "skillPath": "skills/broll-finder/SKILL.md",
+      "computedHash": "bdeee954cda24d9f011e6cc1327cd9c8f262edf62aaa4be6ce2cd23c4145f615",
+      "installMode": "copy"
+    },
+    "cartoon-3d-short": {
+      "source": "mromidev/claude-animated-shorts",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "",
+      "installMode": "copy"
+    },
+    "clone-website": {
+      "source": "julianromli/ai-skills",
+      "sourceType": "github",
+      "skillPath": "skills/clone-website/SKILL.md",
+      "computedHash": "b20e41e49434511414579b7bbb9f6e2cb29ab99f97382c2f749d5f81eeab7510",
+      "installMode": "copy"
+    },
+    "collage-broll-explainers": {
+      "source": "MegaTroll222/VOX-COLLAGE-BROLL",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "e596e762a66311cbd802c9c63f99375efa6091d78a227ffcb40dec213cf60f46",
+      "installMode": "copy"
+    },
+    "erduo-broll-loop-engineering": {
+      "source": "erduo1998-cell/erduo-broll-loop-engineering",
+      "sourceType": "github",
+      "skillPath": "erduo-broll-loop-engineering/SKILL.md",
+      "computedHash": "4c462348e529fa59249c1fe22543602b36784d67e01712eab5d09f3f45c65275",
+      "installMode": "copy"
+    },
+    "find-broll": {
+      "source": "louisedesadeleer/b-roll-finder",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "686d364733177913fdec777cbb214b496132c9dffb92e1c2058f503cd4831f32",
+      "installMode": "copy"
+    },
+    "gbro-collage-broll": {
+      "source": "akillness/jeo-skills",
+      "sourceType": "github",
+      "skillPath": ".agent-skills/gbro-collage-broll/SKILL.md",
+      "computedHash": "080cc46a90c45f2cf8f3f297d6c8632d6be4d1a36f17a1cfeaf149eb8ec57452",
+      "installMode": "copy"
+    },
+    "higgsfield-faceless-video": {
+      "source": "higgsfield-ai/skills",
+      "sourceType": "github",
+      "skillPath": "higgsfield-faceless-video/SKILL.md",
+      "computedHash": "",
+      "installMode": "copy"
+    },
+    "higgsfield-youtube-thumbnail": {
+      "source": "higgsfield-ai/skills",
+      "sourceType": "github",
+      "skillPath": "higgsfield-youtube-thumbnail/SKILL.md",
+      "computedHash": "",
+      "installMode": "copy"
+    },
+    "motion-broll": {
+      "source": "Barty-Bart/motion-graphics",
+      "sourceType": "github",
+      "skillPath": "skills/motion-broll/SKILL.md",
+      "computedHash": "ddb1adb127644a843943cd9e0af0f9bbe808653024d98a717a43103f74c28788",
+      "installMode": "copy"
+    },
+    "muapi-youtube-shorts": {
+      "source": "samuraigpt/generative-media-skills",
+      "sourceType": "github",
+      "skillPath": ".opencode/skills/muapi-youtube-shorts/SKILL.md",
+      "computedHash": "",
+      "installMode": "copy"
+    },
+    "pm-competitor-deconstructor": {
+      "source": "SpaceZephyr/pm-skills",
+      "sourceType": "github",
+      "skillPath": "pm-competitor-deconstructor/SKILL.md",
+      "computedHash": "9a6211b0cb8f5386262464deb091e5cafb19bfbf1827f075331e938dd71fc1f6",
+      "installMode": "copy"
+    },
+    "rea-video-reverse-engineer": {
+      "source": "ThaddeusHackz/THE-AI-VIDEO-EDITOR",
+      "sourceType": "github",
+      "skillPath": "skills/rea-video-reverse-engineer/SKILL.md",
+      "computedHash": "55fd171fb94ef4f705df9954f5c16107bcddf018a0d19d32d881f054d3a69d03",
+      "installMode": "copy"
+    },
+    "reference-media-analysis": {
+      "source": "calesthio/generative-media-skills",
+      "sourceType": "github",
+      "skillPath": "skills/production/governance-delivery/reference-media-analysis/SKILL.md",
+      "computedHash": "8cb7f25bdf2d38c4358a17d7a54362ca66f8bef8947275feedf8169c9d0c79ed",
+      "installMode": "copy"
+    },
+    "reverse-engineer-any-video": {
+      "source": "lisn0/reverse-engineer-any-video",
+      "sourceType": "github",
+      "skillPath": "plugins/reverse-engineer-any-video/skills/reverse-engineer-any-video/SKILL.md",
+      "computedHash": "ef1c4311403c513ea4f5fd94c06dc63520e54e6ed95d7673dce0bda3e22bbf44",
+      "installMode": "copy"
+    },
+    "reverse-engineer-marketing": {
+      "source": "coreyhaines31/marketingskills",
+      "sourceType": "github",
+      "skillPath": "skills/reverse-engineer-marketing/SKILL.md",
+      "computedHash": "8aa7c101abf2aabe3bdd9f6bd262511c78533fe786f9319f725e4d943281f60d",
+      "installMode": "copy"
+    },
+    "talking-head-b-roll": {
+      "source": "iart-ai/b-roll-skills",
+      "sourceType": "github",
+      "skillPath": "skills/talking-head-b-roll/SKILL.md",
+      "computedHash": "6eba23c4ccaca57f373d97cbbfcfbef9ec12f5fb2c1e4511b7144855ea64f45e",
+      "installMode": "copy"
+    },
+    "video-ad-reverse-engineer": {
+      "source": "creatify-ai/video-ad-reverse-engineer",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "53bdafa9ab006ea32fbadd68577d2087b1c658990731de54eb61723428a768ec",
+      "installMode": "copy"
+    },
+    "viral-reverse-engineering": {
+      "source": "social-media-skills/skills",
+      "sourceType": "github",
+      "skillPath": "skills/viral-reverse-engineering/SKILL.md",
+      "computedHash": "0c6138313d789ad1b6bc525ba79040bff6e06f758a100ceb68192f387998dde5",
+      "installMode": "copy"
+    },
+    "youtube-api": {
+      "source": "fetcher-sh/fetcher-skills",
+      "sourceType": "github",
+      "skillPath": "skills/youtube-api/SKILL.md",
+      "computedHash": "",
+      "installMode": "copy"
+    },
+    "youtube-seo": {
+      "source": "kostja94/marketing-skills",
+      "sourceType": "github",
+      "skillPath": "skills/platforms/youtube/SKILL.md",
+      "computedHash": "",
+      "installMode": "copy"
+    }
+  }
+}

@@ -1,0 +1,125 @@
+name: Render video
+# Renders a COMMITTED, already-built project to MP4 and uploads it as an artifact. Pick the engine by skill:
+#   hyperframes    viral-shorts, youtube-style-clip, gab, puregrit, other HyperFrames skills (folder of clipNN/index.html)
+#   cartoon-audio  cartoon-audio-short (project made by kit/tools/setup.sh: web/, render.mjs, mix_raw.wav, finish.sh)
+#   remotion       3d-short, cartoon-3d-short (Remotion project with package.json; needs the mixed audio file)
+# Story, script, voice and look checks stay interactive in a Claude session; this only does the final render.
+# Inputs reach the shell only through env vars, never by ${{ }} text substitution into scripts.
+on:
+  workflow_dispatch:
+    inputs:
+      engine:
+        description: Which skill family to render
+        type: choice
+        required: true
+        options: [hyperframes, cartoon-audio, remotion]
+        default: hyperframes
+      project_dir:
+        description: Repo folder of the built project
+        required: true
+        default: tests/render-smoke
+      clips:
+        description: hyperframes only - space-separated clip folders (default all)
+        required: false
+      frames:
+        description: cartoon-audio only - frame range such as 0-2009 (default 0-59)
+        required: false
+        default: 0-59
+      title:
+        description: cartoon-audio only - output name for finish.sh
+        required: false
+        default: short
+      comp:
+        description: remotion only - composition id, for example BridgeShort
+        required: false
+      audio:
+        description: remotion only - mixed audio file inside project_dir, muxed onto the video
+        required: false
+      drive_link:
+        description: Optional Google Drive link shared as Anyone with the link, downloaded into downloads/ first
+        required: false
+permissions:
+  contents: read
+env:
+  ENGINE: ${{ inputs.engine }}
+  PROJECT_DIR: ${{ inputs.project_dir }}
+  CLIPS: ${{ inputs.clips }}
+  FRAMES: ${{ inputs.frames }}
+  TITLE: ${{ inputs.title }}
+  COMP: ${{ inputs.comp }}
+  AUDIO: ${{ inputs.audio }}
+  DRIVE_LINK: ${{ inputs.drive_link }}
+concurrency:
+  group: render
+  cancel-in-progress: false
+jobs:
+  render:
+    runs-on: ubuntu-latest   # standard Linux runner: 1x minutes, free quota applies
+    timeout-minutes: 345     # cartoon-audio is software WebGL (~2.5 s/frame on 4 cores: a 67 s short is ~85+ min); other engines finish far sooner
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate inputs
+        run: |
+          ok(){ [[ "$1" =~ $2 && "$1" != *..* ]]; }
+          ok "$PROJECT_DIR" '^[A-Za-z0-9._/-]+$' && [ -d "$PROJECT_DIR" ] || { echo "bad project_dir: $PROJECT_DIR"; exit 1; }
+          [ -z "$CLIPS" ] || ok "$CLIPS" '^[A-Za-z0-9._ -]+$' || { echo "bad clips"; exit 1; }
+          [ -z "$FRAMES" ] || ok "$FRAMES" '^[0-9]+-[0-9]+$' || { echo "bad frames (use a-b)"; exit 1; }
+          [ -z "$TITLE" ] || ok "$TITLE" '^[A-Za-z0-9._ -]+$' || { echo "bad title"; exit 1; }
+          [ -z "$COMP" ] || ok "$COMP" '^[A-Za-z0-9_-]+$' || { echo "bad comp"; exit 1; }
+          [ -z "$AUDIO" ] || ok "$AUDIO" '^[A-Za-z0-9._/-]+$' || { echo "bad audio"; exit 1; }
+          [ -z "$DRIVE_LINK" ] || [[ "$DRIVE_LINK" =~ ^https://[A-Za-z0-9./?=_\&%-]+$ ]] || { echo "bad drive_link"; exit 1; }
+          [ "$ENGINE" != remotion ] || [ -n "$COMP" ] || { echo "remotion needs comp"; exit 1; }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ~/.cache/hyperframes
+            ~/.cache/ms-playwright
+          key: render-${{ runner.os }}-${{ inputs.engine }}-${{ hashFiles('cloud/setup-render.sh') }}
+      - run: bash cloud/setup-render.sh "$ENGINE"
+      - name: Fetch source
+        if: ${{ inputs.drive_link != '' }}
+        run: bash cloud/fetch-drive.sh "$DRIVE_LINK"
+
+      - name: Render (hyperframes)
+        if: ${{ inputs.engine == 'hyperframes' }}
+        run: |
+          read -ra CLIP_LIST <<< "$CLIPS"
+          bash tools/pipeline/render-shorts.sh "$PROJECT_DIR" output/ci "${CLIP_LIST[@]}"
+          ls output/ci/*.mp4 && ! grep -l "RENDER FAILED" "$PROJECT_DIR/render.log"
+
+      - name: Render (cartoon-audio)
+        if: ${{ inputs.engine == 'cartoon-audio' }}
+        working-directory: ${{ inputs.project_dir }}
+        run: |
+          [ -d node_modules/playwright ] || npm i --no-save --no-audit --no-fund playwright@1.63.0
+          node render.mjs frames "$FRAMES"
+          bash finish.sh "$TITLE"
+          mkdir -p "$GITHUB_WORKSPACE/output/ci" && cp out/*.mp4 "$GITHUB_WORKSPACE/output/ci/"
+
+      - name: Render (remotion)
+        if: ${{ inputs.engine == 'remotion' }}
+        working-directory: ${{ inputs.project_dir }}
+        run: |
+          npm ci --no-audit --no-fund
+          mkdir -p out/render "$GITHUB_WORKSPACE/output/ci"
+          # --gl=swangle: software WebGL on a runner with no GPU
+          npx remotion render src/index.ts "$COMP" out/render/video.mp4 --codec h264 --crf 16 --scale 1.3333 --gl=swangle
+          if [ -n "$AUDIO" ]; then
+            ffmpeg -v error -y -i out/render/video.mp4 -i "$AUDIO" -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 192k -shortest -movflags +faststart "$GITHUB_WORKSPACE/output/ci/$COMP.mp4"
+          else
+            cp out/render/video.mp4 "$GITHUB_WORKSPACE/output/ci/$COMP.mp4"
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: video
+          retention-days: 3
+          path: |
+            output/ci/*.mp4
+            ${{ inputs.project_dir }}/render.log
+            ${{ inputs.project_dir }}/clip*/render_out.txt
+            ${{ inputs.project_dir }}/out/qa_sheet.jpg

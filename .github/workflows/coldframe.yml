@@ -1,0 +1,44 @@
+# Parallel cloud render of the 3D shorts (3d-short, cartoon-3d-short) with coldframe (github.com/Razee4315/coldframe, MIT).
+# Splits a Remotion composition of tools/remotion-3d across up to 20 GitHub machines, joins the chunks without
+# re-encoding and checks the frame count. The silent MP4 is attached to the run; mux the mixed audio afterwards.
+# Start: Actions tab > coldframe > Run workflow, or (renders what is pushed to main, not local edits):
+#   npx github:Razee4315/coldframe#da55531509d27399c70846df3e4e5793f922abf3 render VasaShort --repo gmacc616/yt-automation-vault --chunks 20
+# Pinned to coldframe v1 by commit SHA so upstream changes cannot alter what runs here. Uses no secrets.
+# Settings match tools/remotion-3d/scripts/render.sh (scale 1.3333 = 1440x2560, crf 16, software WebGL, 1 tab per machine).
+
+name: coldframe
+
+on:
+  workflow_dispatch:
+    inputs:
+      composition:
+        description: Composition id (e.g. VasaShort)
+        required: true
+      chunks:
+        description: Parallel machines (1-20)
+        default: "20"
+      props:
+        description: Input props (JSON)
+        default: "{}"
+      output-name:
+        description: Output file name (optional)
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    uses: Razee4315/coldframe/.github/workflows/render.yml@da55531509d27399c70846df3e4e5793f922abf3
+    with:
+      composition: ${{ inputs.composition }}
+      chunks: ${{ fromJSON(inputs.chunks) }}
+      props: ${{ inputs.props }}
+      output-name: ${{ inputs.output-name }}
+      project-dir: tools/remotion-3d
+      entry-point: src/index.ts
+      gl: swangle
+      concurrency: "1"
+      frame-timeout: 300000
+      extra-args: --scale=1.3333 --crf=16
+      chunk-timeout: 150

@@ -1,0 +1,561 @@
+{
+ "base": {
+  "title": "mgl base",
+  "style": "ysc",
+  "headline": "MGL *BASE*",
+  "hookEnd": 0.9,
+  "drift": false,
+  "fixes": {},
+  "emphasis": [],
+  "punch": [],
+  "sfx": [],
+  "callouts": []
+ },
+ "transitions": {
+  "title": "mgl transitions",
+  "style": "ysc",
+  "headline": "MGL *TRANSITIONS*",
+  "hookEnd": 0.9,
+  "drift": false,
+  "fixes": {},
+  "emphasis": [],
+  "punch": [],
+  "sfx": [],
+  "callouts": [],
+  "transitions": [
+   {
+    "type": "zoom-in",
+    "t": 1.6
+   },
+   {
+    "type": "zoom-out",
+    "t": 3.2
+   },
+   {
+    "type": "punch-zoom",
+    "t": 4.8
+   },
+   {
+    "type": "snap-zoom",
+    "t": 6.4
+   },
+   {
+    "type": "zoom-blur",
+    "t": 8
+   },
+   {
+    "type": "push-in",
+    "t": 9.6
+   },
+   {
+    "type": "pull-out",
+    "t": 11.2
+   },
+   {
+    "type": "spin",
+    "t": 12.8
+   },
+   {
+    "type": "whip",
+    "t": 14.4
+   },
+   {
+    "type": "slide",
+    "t": 16
+   },
+   {
+    "type": "push",
+    "t": 17.6
+   },
+   {
+    "type": "cross-shake",
+    "t": 19.2
+   },
+   {
+    "type": "shake-cut",
+    "t": 20.8
+   },
+   {
+    "type": "white-flash",
+    "t": 22.4
+   },
+   {
+    "type": "black-flash",
+    "t": 24
+   },
+   {
+    "type": "flash-zoom",
+    "t": 25.6
+   },
+   {
+    "type": "light-leak",
+    "t": 27.2
+   },
+   {
+    "type": "exposure",
+    "t": 28.8
+   },
+   {
+    "type": "strobe",
+    "t": 30.4
+   },
+   {
+    "type": "flash-impact",
+    "t": 32
+   },
+   {
+    "type": "rgb-split",
+    "t": 33.6
+   },
+   {
+    "type": "glitch",
+    "t": 35.2
+   },
+   {
+    "type": "vhs",
+    "t": 36.8
+   },
+   {
+    "type": "static",
+    "t": 38.4
+   },
+   {
+    "type": "breakup",
+    "t": 40
+   },
+   {
+    "type": "blur-to-clear",
+    "t": 41.6
+   },
+   {
+    "type": "focus-pull",
+    "t": 43.2
+   },
+   {
+    "type": "radial-blur",
+    "t": 44.8
+   },
+   {
+    "type": "wave-distort",
+    "t": 46.4
+   },
+   {
+    "type": "circle-reveal",
+    "t": 48
+   },
+   {
+    "type": "wipe",
+    "t": 49.6
+   },
+   {
+    "type": "diagonal-wipe",
+    "t": 51.2
+   },
+   {
+    "type": "split-reveal",
+    "t": 52.8
+   },
+   {
+    "type": "pip-in",
+    "t": 54.4
+   },
+   {
+    "type": "pull-in",
+    "t": 56
+   },
+   {
+    "type": "pull-back",
+    "t": 57.6
+   },
+   {
+    "type": "whirl",
+    "t": 59.2
+   },
+   {
+    "type": "rotate",
+    "t": 60.8
+   },
+   {
+    "type": "cube",
+    "t": 62.4
+   },
+   {
+    "type": "swipe",
+    "t": 64
+   }
+  ],
+  "capAnims": [
+   {
+    "t": 0,
+    "anim": "pop"
+   },
+   {
+    "t": 3.2,
+    "anim": "bounce"
+   },
+   {
+    "t": 6.4,
+    "anim": "spring"
+   },
+   {
+    "t": 9.600000000000001,
+    "anim": "slide-up"
+   },
+   {
+    "t": 12.8,
+    "anim": "slide-in"
+   },
+   {
+    "t": 16,
+    "anim": "fade-rise"
+   },
+   {
+    "t": 19.200000000000003,
+    "anim": "fade-scale"
+   },
+   {
+    "t": 22.400000000000002,
+    "anim": "scale-up"
+   },
+   {
+    "t": 25.6,
+    "anim": "rotate-in"
+   },
+   {
+    "t": 28.8,
+    "anim": "flip"
+   },
+   {
+    "t": 32,
+    "anim": "blur-in"
+   },
+   {
+    "t": 35.2,
+    "anim": "typewriter"
+   },
+   {
+    "t": 38.400000000000006,
+    "anim": "stretch-in"
+   },
+   {
+    "t": 41.6,
+    "anim": "shake"
+   },
+   {
+    "t": 44.800000000000004,
+    "anim": "punch-in"
+   }
+  ]
+ },
+ "overlays": {
+  "title": "mgl overlays",
+  "style": "ysc",
+  "headline": "MGL *OVERLAYS*",
+  "hookEnd": 0.9,
+  "drift": false,
+  "fixes": {},
+  "emphasis": [],
+  "punch": [],
+  "sfx": [],
+  "callouts": [],
+  "overlays": [
+   {
+    "type": "underline",
+    "t": 1,
+    "d": 1.2
+   },
+   {
+    "type": "box",
+    "t": 2.6,
+    "d": 1.2
+   },
+   {
+    "type": "label",
+    "t": 4.2,
+    "d": 1.2
+   },
+   {
+    "type": "counter",
+    "t": 5.8,
+    "d": 1.2
+   },
+   {
+    "type": "progress-bar",
+    "t": 7.4,
+    "d": 1.2
+   },
+   {
+    "type": "lower-third",
+    "t": 9,
+    "d": 1.2
+   },
+   {
+    "type": "notification",
+    "t": 10.6,
+    "d": 1.2
+   },
+   {
+    "type": "speech-bubble",
+    "t": 12.2,
+    "d": 1.2
+   },
+   {
+    "type": "spotlight",
+    "t": 13.8,
+    "d": 1.2
+   },
+   {
+    "type": "vignette-pulse",
+    "t": 15.4,
+    "d": 1.2
+   },
+   {
+    "type": "freeze-frame",
+    "t": 17,
+    "d": 1.2
+   },
+   {
+    "type": "scale-pulse",
+    "t": 18.6,
+    "d": 1.2
+   },
+   {
+    "type": "glow-pulse",
+    "t": 20.2,
+    "d": 1.2
+   },
+   {
+    "type": "handheld",
+    "t": 21.8,
+    "d": 1.2
+   },
+   {
+    "type": "emoji",
+    "t": 23.4,
+    "d": 1.2
+   },
+   {
+    "type": "warm-glow",
+    "t": 25,
+    "d": 1.2
+   },
+   {
+    "type": "speed-lines",
+    "t": 26.6,
+    "d": 1.2
+   },
+   {
+    "type": "tint",
+    "t": 28.2,
+    "d": 1.2
+   },
+   {
+    "type": "gradient-bg",
+    "t": 29.8,
+    "d": 1.2
+   },
+   {
+    "type": "particles",
+    "t": 31.4,
+    "d": 1.2
+   }
+  ]
+ },
+ "combo": {
+  "title": "mgl combo",
+  "style": "ysc",
+  "headline": "MGL *COMBO*",
+  "hookEnd": 2.1,
+  "drift": true,
+  "fixes": {},
+  "emphasis": [],
+  "punch": [],
+  "sfx": [],
+  "callouts": [],
+  "transitions": [
+   {
+    "t": 3.2,
+    "type": "whip",
+    "dir": "left"
+   },
+   {
+    "t": 4.8,
+    "type": "light-leak"
+   },
+   {
+    "t": 8,
+    "type": "glitch"
+   },
+   {
+    "t": 9.6,
+    "type": "circle-reveal"
+   },
+   {
+    "t": 12.8,
+    "type": "punch-zoom"
+   }
+  ],
+  "capAnims": [
+   {
+    "t": 0,
+    "anim": "punch-in"
+   },
+   {
+    "t": 3.2,
+    "anim": "slide-up"
+   },
+   {
+    "t": 8,
+    "anim": "typewriter"
+   },
+   {
+    "t": 12.8,
+    "anim": "bounce"
+   }
+  ],
+  "overlays": [
+   {
+    "t": 5.4,
+    "d": 1.6,
+    "type": "counter",
+    "from": 0,
+    "to": 60000,
+    "prefix": "$"
+   },
+   {
+    "t": 10.2,
+    "d": 1.4,
+    "type": "box",
+    "x": 240,
+    "y": 700,
+    "w": 600,
+    "h": 420
+   },
+   {
+    "t": 13.2,
+    "d": 1.2,
+    "type": "speech-bubble",
+    "text": "NO WAY!"
+   },
+   {
+    "t": 11,
+    "d": 1.4,
+    "type": "label",
+    "x": 300,
+    "y": 1100,
+    "text": "HERE"
+   }
+  ],
+  "arrows": [
+   {
+    "t": 6.6,
+    "d": 1.2,
+    "x": 700,
+    "y": 1000,
+    "rot": -20
+   },
+   {
+    "t": 7.2,
+    "d": 0.6,
+    "kind": "circle",
+    "x": 540,
+    "y": 900,
+    "r": 140
+   }
+  ]
+ },
+ "capcut20": {
+  "title": "mgl capcut20",
+  "style": "ysc",
+  "headline": "MGL *CAPCUT20*",
+  "hookEnd": 0.9,
+  "drift": false,
+  "fixes": {},
+  "emphasis": [],
+  "punch": [],
+  "sfx": [],
+  "callouts": [],
+  "transitions": [
+   {
+    "type": "pull-in",
+    "t": 1.6
+   },
+   {
+    "type": "pull-back",
+    "t": 3.2
+   },
+   {
+    "type": "cross-shake",
+    "t": 4.8
+   },
+   {
+    "type": "whirl",
+    "t": 6.4
+   },
+   {
+    "type": "zoom-in",
+    "t": 8
+   },
+   {
+    "type": "zoom-out",
+    "t": 9.6
+   },
+   {
+    "type": "focus-pull",
+    "t": 11.2
+   },
+   {
+    "type": "glitch",
+    "t": 12.8
+   },
+   {
+    "type": "white-flash",
+    "t": 14.4
+   },
+   {
+    "type": "spin",
+    "t": 16
+   },
+   {
+    "type": "slide",
+    "t": 17.6
+   },
+   {
+    "type": "rotate",
+    "t": 19.2
+   },
+   {
+    "type": "shake-cut",
+    "t": 20.8
+   },
+   {
+    "type": "zoom-blur",
+    "t": 22.4
+   },
+   {
+    "type": "wave-distort",
+    "t": 24
+   },
+   {
+    "type": "cube",
+    "t": 25.6
+   },
+   {
+    "type": "swipe",
+    "t": 27.2
+   },
+   {
+    "type": "wipe",
+    "t": 28.8
+   },
+   {
+    "type": "split-reveal",
+    "t": 30.4
+   },
+   {
+    "type": "light-leak",
+    "t": 32
+   }
+  ]
+ }
+}

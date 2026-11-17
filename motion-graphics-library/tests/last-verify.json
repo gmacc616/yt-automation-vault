@@ -1,0 +1,365 @@
+{
+ "date": "2026-11-06T17:36:23.683Z",
+ "rows": [
+  {
+   "name": "transition:zoom-in",
+   "t": 1.6,
+   "score": 60.28,
+   "ok": true
+  },
+  {
+   "name": "transition:zoom-out",
+   "t": 3.2,
+   "score": 47.95,
+   "ok": true
+  },
+  {
+   "name": "transition:punch-zoom",
+   "t": 4.8,
+   "score": 36.49,
+   "ok": true
+  },
+  {
+   "name": "transition:snap-zoom",
+   "t": 6.4,
+   "score": 48,
+   "ok": true
+  },
+  {
+   "name": "transition:zoom-blur",
+   "t": 8,
+   "score": 67.59,
+   "ok": true
+  },
+  {
+   "name": "transition:push-in",
+   "t": 9.6,
+   "score": 14.86,
+   "ok": true
+  },
+  {
+   "name": "transition:pull-out",
+   "t": 11.2,
+   "score": 24.32,
+   "ok": true
+  },
+  {
+   "name": "transition:spin",
+   "t": 12.8,
+   "score": 72.78,
+   "ok": true
+  },
+  {
+   "name": "transition:whip",
+   "t": 14.4,
+   "score": 98.83,
+   "ok": true
+  },
+  {
+   "name": "transition:slide",
+   "t": 16,
+   "score": 98.75,
+   "ok": true
+  },
+  {
+   "name": "transition:push",
+   "t": 17.6,
+   "score": 94.1,
+   "ok": true
+  },
+  {
+   "name": "transition:cross-shake",
+   "t": 19.2,
+   "score": 93.68,
+   "ok": true
+  },
+  {
+   "name": "transition:shake-cut",
+   "t": 20.8,
+   "score": 20.29,
+   "ok": true
+  },
+  {
+   "name": "transition:white-flash",
+   "t": 22.4,
+   "score": 98.17,
+   "ok": true
+  },
+  {
+   "name": "transition:black-flash",
+   "t": 24,
+   "score": 98.68,
+   "ok": true
+  },
+  {
+   "name": "transition:flash-zoom",
+   "t": 25.6,
+   "score": 99.04,
+   "ok": true
+  },
+  {
+   "name": "transition:light-leak",
+   "t": 27.2,
+   "score": 65.42,
+   "ok": true
+  },
+  {
+   "name": "transition:exposure",
+   "t": 28.8,
+   "score": 82.54,
+   "ok": true
+  },
+  {
+   "name": "transition:strobe",
+   "t": 30.4,
+   "score": 98.07,
+   "ok": true
+  },
+  {
+   "name": "transition:flash-impact",
+   "t": 32,
+   "score": 98.09,
+   "ok": true
+  },
+  {
+   "name": "transition:rgb-split",
+   "t": 33.6,
+   "score": 97.86,
+   "ok": true
+  },
+  {
+   "name": "transition:glitch",
+   "t": 35.2,
+   "score": 66.71,
+   "ok": true
+  },
+  {
+   "name": "transition:vhs",
+   "t": 36.8,
+   "score": 99.62,
+   "ok": true
+  },
+  {
+   "name": "transition:static",
+   "t": 38.4,
+   "score": 55.87,
+   "ok": true
+  },
+  {
+   "name": "transition:breakup",
+   "t": 40,
+   "score": 96.17,
+   "ok": true
+  },
+  {
+   "name": "transition:blur-to-clear",
+   "t": 41.6,
+   "score": 33.18,
+   "ok": true
+  },
+  {
+   "name": "transition:focus-pull",
+   "t": 43.2,
+   "score": 23.44,
+   "ok": true
+  },
+  {
+   "name": "transition:radial-blur",
+   "t": 44.8,
+   "score": 20.01,
+   "ok": true
+  },
+  {
+   "name": "transition:wave-distort",
+   "t": 46.4,
+   "score": 13.25,
+   "ok": true
+  },
+  {
+   "name": "transition:circle-reveal",
+   "t": 48,
+   "score": 96.12,
+   "ok": true
+  },
+  {
+   "name": "transition:wipe",
+   "t": 49.6,
+   "score": 70.36,
+   "ok": true
+  },
+  {
+   "name": "transition:diagonal-wipe",
+   "t": 51.2,
+   "score": 93.98,
+   "ok": true
+  },
+  {
+   "name": "transition:split-reveal",
+   "t": 52.8,
+   "score": 93.33,
+   "ok": true
+  },
+  {
+   "name": "transition:pip-in",
+   "t": 54.4,
+   "score": 75.37,
+   "ok": true
+  },
+  {
+   "name": "transition:pull-in",
+   "t": 56,
+   "score": 81.06,
+   "ok": true
+  },
+  {
+   "name": "transition:pull-back",
+   "t": 57.6,
+   "score": 64.68,
+   "ok": true
+  },
+  {
+   "name": "transition:whirl",
+   "t": 59.2,
+   "score": 90.96,
+   "ok": true
+  },
+  {
+   "name": "transition:rotate",
+   "t": 60.8,
+   "score": 88.35,
+   "ok": true
+  },
+  {
+   "name": "transition:cube",
+   "t": 62.4,
+   "score": 96.37,
+   "ok": true
+  },
+  {
+   "name": "transition:swipe",
+   "t": 64,
+   "score": 99.03,
+   "ok": true
+  },
+  {
+   "name": "overlay:underline",
+   "t": 1.4,
+   "score": 0.53,
+   "ok": true
+  },
+  {
+   "name": "overlay:box",
+   "t": 3,
+   "score": 1.16,
+   "ok": true
+  },
+  {
+   "name": "overlay:label",
+   "t": 4.600000000000001,
+   "score": 1.1,
+   "ok": true
+  },
+  {
+   "name": "overlay:counter",
+   "t": 6.200000000000001,
+   "score": 1.61,
+   "ok": true
+  },
+  {
+   "name": "overlay:progress-bar",
+   "t": 7.800000000000001,
+   "score": 2.09,
+   "ok": true
+  },
+  {
+   "name": "overlay:lower-third",
+   "t": 9.400000000000002,
+   "score": 1.41,
+   "ok": true
+  },
+  {
+   "name": "overlay:notification",
+   "t": 11.000000000000002,
+   "score": 6.47,
+   "ok": true
+  },
+  {
+   "name": "overlay:speech-bubble",
+   "t": 12.600000000000001,
+   "score": 2.08,
+   "ok": true
+  },
+  {
+   "name": "overlay:spotlight",
+   "t": 14.200000000000001,
+   "score": 85.18,
+   "ok": true
+  },
+  {
+   "name": "overlay:vignette-pulse",
+   "t": 15.8,
+   "score": 42.56,
+   "ok": true
+  },
+  {
+   "name": "overlay:freeze-frame",
+   "t": 17.4,
+   "score": 62.09,
+   "ok": true
+  },
+  {
+   "name": "overlay:scale-pulse",
+   "t": 19,
+   "score": 19,
+   "ok": true
+  },
+  {
+   "name": "overlay:glow-pulse",
+   "t": 20.599999999999998,
+   "score": 78.91,
+   "ok": true
+  },
+  {
+   "name": "overlay:handheld",
+   "t": 22.2,
+   "score": 10.94,
+   "ok": true
+  },
+  {
+   "name": "overlay:emoji",
+   "t": 23.799999999999997,
+   "score": 2.25,
+   "ok": true
+  },
+  {
+   "name": "overlay:warm-glow",
+   "t": 25.4,
+   "score": 27.95,
+   "ok": true
+  },
+  {
+   "name": "overlay:speed-lines",
+   "t": 27,
+   "score": 22.84,
+   "ok": true
+  },
+  {
+   "name": "overlay:tint",
+   "t": 28.599999999999998,
+   "score": 86.39,
+   "ok": true
+  },
+  {
+   "name": "overlay:gradient-bg",
+   "t": 30.2,
+   "score": 100,
+   "ok": true
+  },
+  {
+   "name": "overlay:particles",
+   "t": 31.799999999999997,
+   "score": 0.72,
+   "ok": true
+  }
+ ]
+}

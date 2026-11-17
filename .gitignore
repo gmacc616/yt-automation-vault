@@ -1,0 +1,33 @@
+# Secrets: plugin settings hold the Local REST API key and its certificate private key
+.obsidian/plugins/*/data.json
+# Per-machine Obsidian state
+.obsidian/workspace*.json
+.obsidian/cache
+# Machine-specific graphify paths and scratch files
+graphify-out/.graphify_python
+graphify-out/.graphify_root
+graphify-out/.graphify_*.json
+graphify-out/.graphify_*.txt
+# Env files and OS junk
+.env
+.env.*
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Render runs
+/output/
+/downloads/
+.render.lock
+.hyperframes/
+render.log
+
+# Private files: kept in gmacc616/yt-automation-vault-private and linked in by cloud/session-start.sh (never commit them here)
+/sfxv2
+/Claude/Sessions
+/Claude/Prompts
+/Claude/graphify-out
+/Graphs
+/graphify-out
+/.claude/skills/gab
+/.claude/skills/default-voice/voice
