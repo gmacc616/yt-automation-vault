@@ -192,7 +192,8 @@ keeps its own look, camera grammar, characters, audio levels (-14 LUFS) and gate
   then `python3 $SK/inkbeat-shorts/scripts/vo_to_timings.py vo/<name>` → `timings.json` for `plan/plan_src.py` (prints the first 10
   words for a check). In the cloud use the venv with `qwen-tts`; it takes ~10-20 min on CPU, so run it while you build
   the set. A recorded VO instead: any word-level aligner, same `words.json` + `chunks.json`, then the same steps.
-- **Cloud (no GPU):** `--gl=angle` needs a GPU; in the cloud use `--gl=swangle`, stills at `--scale=0.4`,
+- **Cloud (no GPU):** tested 2026-11-18: `npm ci` (264 packages, ~6 s) and the `Demo` still at `--scale=0.4
+  --gl=swangle` render correctly (ink, toon shading, captions). `--gl=angle` needs a GPU; in the cloud use `--gl=swangle`, stills at `--scale=0.4`,
   concurrency 1 (~6-12 s/frame) and skip `gpu_lock.py`. Set `TEMP`/`TMP` to a roomy folder: every bundle copies
   `public/` and is never deleted. Ask before deleting bundle folders you did not create.
 - **Final render = coldframe** (20 GitHub machines, like the 3D skills). Commit and push `tools/inkbeat` (the
