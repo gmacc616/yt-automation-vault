@@ -1,5 +1,5 @@
 # Final mix of "The Bridge That Fell for a Song": the voice (gain only) + original march score (ducked under speech,
-# per-section level automation relative to the voice) + synthesized SFX stem. Master gain to -15 LUFS integrated,
+# per-section level automation relative to the voice) + synthesized SFX stem. Master gain to -14 LUFS integrated,
 # own 4x-oversampled look-ahead limiter for <= -1 dBTP, exactly 67.500 s / 48 kHz / stereo / 24-bit.
 # Writes mix.wav + stem_voice/music/sfx.wav (at mix gain, pre-limiter), cues.md (every SFX event, music map,
 # loudness report). Rendered stems are cached in _cache/ so a crash never costs a full re-render.
@@ -17,13 +17,17 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 CACHE = os.path.join(HERE, "_cache")
 N = ns(T.DUR)                    # 3,240,000 samples = 67.500 s
-TARGET_LUFS = -15.0
-CEIL_DBTP = -1.2                 # limiter ceiling (spec: true peak <= -1 dBTP)
+TARGET_LUFS = -14.0             # reference channel: -14.1 LUFS median over its 30 latest Shorts (2026-11-18)
+CEIL_DBTP = -1.5                 # limiter ceiling (reference sample peaks -2.1 dBFS median)
 DUCK_DB = -3.0                   # music dip while the voice speaks (key = words.json, not the audio)
 # Default since 2026-11-16: the reference channel's bed. Put mystery_bed.py's output here as music_bed.wav and
 # mix.py uses it instead of music.py: one constant level BED_LU under the voice (integrated), never ducked, no rides.
-# Measured on its 8 latest Shorts: the music+SFX bed sits 14-20 LU under the voice (median ~16).
-BED_LU = -16.0
+# Re-measured 2026-11-18 on its 30 latest Shorts (demucs voice/bed split): music+SFX together sit 16.6 LU under
+# the voice (p10-p90 14-20); the MUSIC alone (bed floor while the voice talks) sits ~21 dB under the voice
+# (p10-p90 17-23); SFX hits peak (400 ms) at a median 12 dB under the voice, the loud 10 % ~6 dB under.
+BED_LU = -21.0
+SFX_EVENT_MED_LU = -12.0         # median SFX hit (max momentary of each hit) vs the voice's integrated loudness
+SFX_EVENT_MAX_LU = -5.0          # no single hit louder than this vs the voice (reference p90 -5.7)
 
 # music level per section, LU relative to the voice in that section (after ducking); "+3 dB music" standard
 # (user standard: bed -10 instead of the old -13; sway/swing deliberately softer and warmer, rule/tourists leave room
@@ -206,6 +210,26 @@ def ffmpeg_ebur(path):
         return f"ffmpeg check failed: {e}"
 
 
+def sfx_level_lock(s_st, v_ref):
+    """One gain on the whole SFX stem so its hits sit where the reference channel's do: median hit SFX_EVENT_MED_LU
+    under the voice, loudest hit no louder than SFX_EVENT_MAX_LU (hit = local max of 400 ms momentary loudness,
+    >= 6 LU over the stem's own 40th percentile, >= 0.5 s apart)."""
+    M = np.maximum(momentary(s_st, hop=0.1), -90)
+    if M.max() <= -90:
+        return s_st
+    fl = max(np.percentile(M, 40), M.max() - 30)
+    pk, last = [], -99
+    for i in range(2, len(M) - 2):
+        if M[i] == M[i - 2:i + 3].max() and M[i] > fl + 6 and i - last >= 5:
+            pk.append(M[i]); last = i
+    if not pk:
+        return s_st
+    g = (v_ref + SFX_EVENT_MED_LU) - float(np.median(pk))
+    g = min(g, (v_ref + SFX_EVENT_MAX_LU) - max(pk))
+    log(f"sfx level lock: {len(pk)} hits, median {np.median(pk) - v_ref:+.1f} -> {np.median(pk) + g - v_ref:+.1f} LU vs voice, gain {g:+.2f} dB")
+    return s_st * dbg(g)
+
+
 # ================================================================ main
 def main():
     t_start = time.time()
@@ -258,6 +282,7 @@ def main():
             c.measured = None
     C = C_holder["C"]
     log("sfx rendered", f"{lufs(s_st):.2f} LUFS")
+    s_st = sfx_level_lock(s_st, v_ref)
 
     # ---------------- master
     mix0 = v + m + s_st

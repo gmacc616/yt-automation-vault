@@ -1,6 +1,6 @@
 ---
 name: 3d-short
-description: Same pipeline as cartoon-3d-short (55-70 s vertical story short, 2D bean-head cards in a colourful 3D world, three.js inside Remotion, default clone_3_voicebox-qwen3 voice), but it STARTS by researching 10 fact-checked story ideas (facts, verdict, sources; no hooks or scripts) to pick from by number, then runs straight through to the video. Use when the user types /3d-short or asks for "3d short" ideas or video.
+description: Same pipeline as cartoon-3d-short (45-65 s vertical story short, 2D bean-head cards in a colourful 3D world, three.js inside Remotion, default clone_3_voicebox-qwen3 voice), but it STARTS by researching 10 fact-checked story ideas (facts, verdict, sources; no hooks or scripts) to pick from by number, then runs straight through to the video. Use when the user types /3d-short or asks for "3d short" ideas or video.
 ---
 
 # 3D short: 10 researched stories → script → voice → three.js + Remotion video
@@ -31,7 +31,7 @@ Proven example: **The Bridge That Fell for a Song**. It is an original 67 s shor
 - Script, voice and sound: `~/bridge-short/`.
 - Style research: `references/`.
 
-The style reference is a channel studied privately (`references/`: STYLE_BIBLE.md, reports/*.md, frames/).
+The style reference is a channel studied privately (`references/`: **STUDY_2026-11-18.md** (30 latest Shorts, every frame: camera, cuts, characters, light, script, narration, audio levels; it wins wherever older notes disagree), STYLE_BIBLE.md, reports/*.md, frames/).
 - Those videos are private study material. Never upload, publish or send them.
 - Never copy their scripts, characters or shots. Story, characters and voice are always OUR OWN.
 - Never say the channel's name in a voice-over or description.
@@ -41,7 +41,7 @@ User rules that apply:
 - English only.
 - Voice: one steady tone. Default voice: clone_3_voicebox-qwen3 (step 3).
 - Jokes are researched real facts.
-- Standard mix (since 2026-11-16, copied from the reference channel): music bed 16 LU under the voice, never ducked; SFX -6 dB as before; voice unchanged. (Replaces the old "music +3 dB" part of the rule.)
+- Standard mix (since 2026-11-18, measured on the reference channel's 30 latest Shorts): the narrator is clearly on top. Music bed **21 dB under the voice**, never ducked; SFX hits a median **12 dB under the voice**, loudest ~5 dB under (`mix.py` `BED_LU`, `sfx_level_lock`); master -14 LUFS. Voice unchanged. (Replaces the 2026-11-16 "bed 16 LU, SFX -6 dB" rule: SFX were nearly as loud as the voice.)
 - Final export 2K vertical: 1440x2560, `--scale 1.3333`.
 - Opus max verifies every check.
 - Save after every step.
@@ -52,22 +52,24 @@ User rules that apply:
    - Write the facts with their source at the top of `SCRIPT.md`.
    - Fact-check every detail before writing a word: date, counts, sizes, depths. The checked numbers often become the best joke (the bridge's river was only 2 ft deep → "Luckily... / Unluckily...").
    - Make sure the reference channel hasn't already told this story (search its titles/transcripts). If it has, drop it and pick another (the first bridge-short topic was dropped this way).
-2. **Script** (55-70 s ≈ 175-225 words at the default voice's ~3.2 words/s). Beat formula from the bridge short:
-   - **Hook:** the absurd fact in one line ("Seventy-four soldiers knocked down an iron bridge just by walking across it.").
-   - **Setting:** year, place, pride.
-   - **Action:** escalation over three or four beats, each a little bigger.
-   - **Snap:** the moment it breaks.
-   - **Deadpan double line:** "Luckily ... / Unluckily ...".
-   - **Pivot "You see,"** (14 of the 20 reference shorts flip into the explanation with these exact two words), then the **explanation:** one physics idea through an everyday analogy (the kid on a swing).
-   - **Consequence:** the rule it created.
-   - **Callback twist:** the ending.
-   - Never describe on screen what the viewer already sees.
-   - Delivery is relentless: ~3.7-4 words/s with basically zero dead air. Sentence 1 is a paradox stated as fact; no intro, no setup. The video ends on the twist's last word.
+2. **Script** (50-65 s ≈ 185-235 words at the reference pace of ~3.7 words/s; ~15 sentences, median 13 words). Structure measured on the reference's 30 latest transcripts (`references/STUDY_2026-11-18.md` §3):
+   - **Hook = the result first, as an insane-sounding act, past tense, ~14 words:** "[Someone] did [baffling thing], but [twist clause]." Alternatives: "If you [normal act], [absurd result].", "[X] is illegal/impossible, yet …", "Imagine you're …". Never a date, setup or question first.
+   - **"You see," + context** in sentence 2 (the stakes, place, who doubts it), then **switch to present tense** for the story.
+   - **Chain every sentence as a consequence or reversal:** start them with "So" (the reference's #1 opener), "But", "Then,", "Eventually,", "Soon,", "The next morning,". Escalate with ladders of odd, specific numbers or times ("In May… By July… On the hottest day…").
+   - **Doubters:** 1-3 short quoted lines from a boss / crowd / buddy, no "he said": the funniest lines, proven wrong by the end.
+   - **1-2 exaggeration jokes** (claim → absurd comparison) and dry narrator asides ("Big mistake." / "So he does what any sane person would do.").
+   - **Mystery beat** right before the reveal: one short question ("So how does this keep happening?") answered "Well, it's called [name]."
+   - **Withheld climax (strongest pattern):** build to the brink → "You see," + the explanation through one everyday analogy (2-4 sentences, never a lecture) → resolve the climax in the LAST sentence.
+   - **Ending:** an ironic image or a callback to an early detail on the last word. No moral, no CTA, no coda.
+   - "Luckily … / Unluckily …" stays available as a deadpan double line (bridge short), not a required beat.
+   - Never describe on screen what the viewer already sees. Two modes: third-person story (~70 %) or "Imagine you're…" second-person explainer (~30 %, can run 35-45 s).
+   - Delivery is relentless: ~3.7 words/s, first word at frame 0, sentence gaps ~0.22 s, no pause over ~0.5 s. The video ends ~0.3 s after the last word.
    - Show the script in a copyable block with its word count and estimated length, plus a one-paragraph shot plan, then go straight on to step 3 (no approval stop; the user can still interrupt with edits).
 3. **Voice.** Default narrator: **clone_3_voicebox-qwen3** (Qwen3-TTS voice clone, free, local; settings in `../default-voice/SKILL.md`). Never ask the user for a voiceover. Save the script as plain text, then run
    `py templates/scripts/fenrir_voice.py SCRIPT.txt ~/<name>-short/voice/` → `voice.wav` + `words.json` ([{w, s, e}], word times from faster-whisper).
-   - Defaults = the clone_3 sample: tempo 1.0 (natural casual delivery, ~3.2 words/s), 0.4 s between script lines; one paragraph per line in SCRIPT.txt (each line is voiced in one go). For the tighter reference pace use `--tempo 1.1 --gap 0.2`. The printed words/s undercounts numbers (Whisper writes "74", not "seventy-four").
-   - Write it the way you'd tell a friend: contractions, "You see,", `...` before a reveal, `!` on the punch word, numbers as words.
+   - Defaults (since 2026-11-18) = the reference pace: `--tempo 1.12 --gap 0.22` (the wrapper adds them unless you pass your own; `--tempo 1.0 --gap 0.4` = the old relaxed read). One paragraph per line in SCRIPT.txt (each line is voiced in one go); a new line = a ~0.22 s breath, so break lines before "So / But / Then / Well / Eventually", never mid-phrase. The printed words/s undercounts numbers (Whisper writes "74", not "seventy-four").
+   - Storytelling (measured on the reference narrator, STUDY §2): casual and animated (17-semitone range), statements end level (never trailing off), rhetorical questions end LOW and quick, dialogue lines read in the narrator's own voice with attitude (sarcasm, panic, deadpan), reveal sentences a touch slower, lists and dialogue faster.
+   - Write it the way you'd tell a friend: contractions, "You see,", `...` only before the 1-2 biggest reveals, `!` on the punch word, numbers as words.
    - Only use another voice if the user asks (a recorded `voice.wav` + any speech-to-text with word times; Kokoro is no longer the default).
    - Put them in the project folder, e.g. `~/bridge-short/voice/`.
    - Then `python3 templates/scripts/fix_words.py ~/<name>-short/voice/` (fixes Whisper's smeared times at every chunk start, early or late; keeps `words.raw.json`) and `python3 templates/scripts/voice_check.py SCRIPT.txt ~/<name>-short/voice/` (transcript vs script word accuracy, pitch range per line: flat < 2 semitones is flagged). Both must pass before the picture is timed. Everything is timed to words.json. In the cloud, generate the voice while you build the world (it runs ~10-20 min on CPU).
@@ -99,7 +101,7 @@ User rules that apply:
      It composes an original playful-mystery cue in the reference channel's style: minor key, 100-118 bpm (default 112, D minor),
      staccato pizzicato walking bass, plucked/mallet melody up high, soft off-beat chord stabs, light kick; dark (almost nothing
      above 4 kHz), continuous, with a hit on frame 0, a lift after the twist and a hit on the last word. Change `--key`/`--bpm`/`--seed`
-     per story so videos don't share one tune. When `audio/music_bed.wav` exists, `mix.py` uses it at BED_LU (-16) with no ducking
+     per story so videos don't share one tune. When `audio/music_bed.wav` exists, `mix.py` uses it at BED_LU (-21) with no ducking
      and skips `music.py`. `music.py` (the bridge march) stays as the example of a story-locked score, only when the user asks for one.
    - Output: mix.wav (48 kHz, exact length), stems and cues.md.
    - Lock the picture's time constants before the sound is made. Any later timing change means re-running the sound.
@@ -136,33 +138,37 @@ lighting 5-6, ink 6, textures 5-6, characters 7, depth 6-7, composition 6-7 (fro
 - **Characters** (`toon.ts`/`cast.ts`/`cardshade.ts`): bean heads h/w .94, plum ink #241726, eyes .26 W apart, no blush,
   14 expressions; adults 3.5 head-heights; walk bob 5 %, lean 1-7°, planted 0.8 m stride; blinks 0.5-2.3 s; tight
   contact shadow ~.5 under the feet + sun-direction tail by day; golden rim inner only (never an offset outer copy).
-- **Light arc** (story beats): warm and bright (day) while setting up, golden for decline/drama, and **night-blue from the "You see," line** for the explanation. The template only has `day` and `golden`; add a `night` preset to `LIGHTS`/`LOOK` when needed: blue ambient, warm windows/lamps as the key, violet fog #877aea, purple (never brown) shadows, faces still bright (V ~.97). Numbers: `references/reports/lighting.md` (night rows) and `grade.md`.
-- **Camera** (`story.ts`): 0-1 hard cuts per short (big jumps travel there with the camera or use a 6-8 f crossfade; see Look targets), smootherstep glides 18-40 f, every hold creeps (no static hold ≥4 f),
-  flip kicks decaying over 7 f on impacts, 4-4.6° rolls, foreground props (`FOREGROUND`) in ~1/3 of shots.
+- **Light arc** (story beats; STUDY §7): day while setting up (median luma ~.50, not brighter), a saturated royal-blue **night / storm / crisis stretch mid-story** (luma .22-.30, 9 of 10 references have one; the "You see," explanation can live there), and a return to **sunrise/golden for the payoff** (half the references end golden). Light changes inside a shot on the story word (night → warm in ~0.8 s on "sunrise"; a 1.5 s sunset→night→day time-lapse for "a week later"). Characters take the colour of the nearest practical lamp; whole-head tints for emotion (red anger, blue cold, green disgust). The template only has `day` and `golden`; add a `night` preset to `LIGHTS`/`LOOK` when needed: blue ambient, warm windows/lamps as the key, violet fog #877aea, purple (never brown) shadows, faces still bright (V ~.97). Numbers: `references/reports/lighting.md` (night rows) and `grade.md`.
+- **Camera** (`story.ts`, updated 2026-11-18, see Look targets): a new framing every 1.5-2.5 s; creep → punch → creep (a fast 8-12 f reframe/punch every ~2.2 s); ~9 `XFADE` dissolves of 6-12 f per short (also inside one place, at sentence changes); 0-3 hard cuts; motivated transitions (follow an object, push through a hole, crane up and descend, foreground wipe, match-dissolve on a held object);
+  flip kicks decaying over 7 f on impacts, 10-15° dutch rolls on drama/falls, foreground props (`FOREGROUND`) in ~1/3 of shots, 6-10 prop-insert ECUs per short.
 
 ## Look targets (measured from the reference; see references/reports/)
 - **Ink:**
   - World lines: about 3 px at 1080 wide, near-black #0b0a0c, nearly constant with distance. Silhouettes, depth jumps and normal creases only. No line on wall/floor joins or the horizon. Character cards are never outlined by the world ink.
   - Character ink: dark plum #201628-#2f1d28, thicker on the bottom/shadow side.
 - **Colour:**
-  - Day median luma ~.57. Non-ink p5 ~.23 (no crushed blacks). Lit chroma C* p90 ~55. Day sky top ~#5e93d9, horizon 1.28x brighter.
+  - Day median luma ~.50 (reference .45 overall incl. its night stretches; the old .57 was too bright). Non-ink p5 ~.23 (no crushed blacks). Lit chroma C* p90 ~55. Day sky top ~#5e93d9, horizon 1.28x brighter.
   - Golden: peach horizon #ffd08a, violet-blue shadows (never brown), backlit sun.
 - **Depth:**
   - DOF on about 1/3 of screen time (CU, MS, inserts), cInf 10-16 px at 1080, focus on the eyes. Establishing and wide shots stay sharp.
   - Fog = horizon colour, 25→420 m day, 20→360 m golden.
   - Bloom only on HDR emissives: threshold 1.0.
 - **Camera:**
-  - Hard cuts almost never: 12 of the 20 references have one hard cut or none. Aim for 0-1 per short. The camera physically travels into the next moment instead (follow an object, push or fly through into the next place, pull back from a close-up into the wide); a 6-8 f crossfade where it really changes place.
-  - Moves are smootherstep glides of 18-40 f (reference ≈ 23 f, slow in and slow out; ours first snapped in 3 f), peak ≤ 25 px/f at 720p.
-  - The camera moves in ~65 % of frames, mostly slow push-ins. (The first measuring tool said "still 80 % of the time"; it was wrong because it couldn't see moves that slow.)
-  - Every hold pushes in 0.15-0.35 %/f, with 0.6 %/f on punch words.
-  - Rolls of 4-5°.
+  - (Re-measured 2026-11-18 on 30 Shorts, every frame; replaces the 20-Short numbers.) The camera moves in ~94 % of frames; still in only ~6 % of half-second windows.
+  - Push-ins 57 % of the time at a median 0.5 %/f (p75 1.3, p90 3.0 = punches); pull-outs 28 % (median 0.64 %/f); pans median 5.7 px/f at 720p.
+  - Rhythm creep → punch → creep: a fast reframe / punch-in / whip of 8-12 f every ~2.2 s, peak ~50 px/f at 720p and 3-5 %/f zoom (push-throughs up to 12-18 %/f). The old "peak ≤ 25 px/f" cap is lifted. Explainers punch far more often than slow narratives.
+  - A new framing every 1.5-2.5 s; per sentence rotate wide → medium two-shot → close-up on the punch word → prop insert ECU (6-10 per short). Low, chest-to-floor cameras, wide lenses, top-down inserts and aerials.
+  - Joints: ~9 dissolves of 6-12 f per short (4-19 in the reference), used inside one location too whenever no motivated move exists; 0-3 hard cuts (bursts around explosions/glitches); motivated transitions: follow an object, push through a hole (pupil, spyglass, door, window, furnace, held photo, optional 1-f white flash), crane up to aerial/map and descend, a foreground object wiping the lens, match-dissolve on a held object, pull out of a screen.
+  - Dutch rolls of 10-15° on drama and falls (up to ~25° held).
+  - The ending holds the ironic last image ~1-1.5 s with a slow push.
   - No hand-held float. Impact shakes flip sign every frame and decay over 7 f.
 - **Characters:**
-  - About 3.5 head-heights tall, legs 1.4 HH.
+  - 3-3.5 head-heights tall, no neck, capsule torso ~1.2 HH about as wide as the head, legs ~1.5 HH (re-measured 2026-11-18).
   - Stick limbs about 0.055 of head width, ink-dot hands.
-  - Bean head (h/w ~0.93, narrower chin, pointier crown).
-  - No blush or eye highlights. Faces at brightness ~.93.
+  - Near-round head (h/w ~0.95-1.0; the old 0.93 bean was too narrow). In close-ups the head fills 70-100 % of the frame width.
+  - Outline 6-14 px at 1080 (2-4x the world ink), thicker on the shadow side.
+  - Faces act: expression swaps every 0.3-1 s on beat words, heavy brows, O-O shock / >< pain eyes, teeth, sweat drops, tears, anger ticks; blush allowed. No eye highlights. Faces at brightness ~.93.
+  - 1-2 characters in ~80 % of shots; crowds of 20-40 copies for scale/payoff beats.
   - Walk bob 3-7 %, lean 1-7°, planted feet.
   - Blinks every 0.5-2.3 s, lasting 4 f.
 

@@ -1,18 +1,18 @@
 ---
 name: cartoon-audio-short
-description: Make a vertical animated cartoon short. Offers 10 ideas, writes the script, voices it automatically with the default narrator, a local Qwen3-TTS voice clone (or uses an uploaded voiceover), then builds a finished MP4 with a quiet playful-mystery music bed (16 dB under the voice) and SFX at half the voice level. Use for any cartoon short or animated story video request.
+description: Make a vertical animated cartoon short. Offers 10 ideas, writes the script, voices it automatically with the default narrator, a local Qwen3-TTS voice clone (or uses an uploaded voiceover), then builds a finished MP4 with the narrator clearly on top: a quiet playful-mystery music bed (21 dB under the voice) and SFX hits ~12 dB under it. Use for any cartoon short or animated story video request.
 ---
 
 # Cartoon short: idea → script → voiceover → finished MP4
 
-The look: flat 2D bean-head cartoon characters (canvas-drawn "cards" with plum outlines) in a colourful 3D world with black ink outlines, painted textures, depth-of-field and gliding cameras. The output is 1080x1920, 30 fps, exactly as long as the voiceover. The voice is generated with the default narrator (clone_3_voicebox-qwen3) by default (no recording needed); an uploaded voiceover is used instead only when the user provides one. Either way the voice is unchanged. The music bed and SFX are synthesized. The bed sits **16 dB under the voice** (the reference channel's level); SFX sit at **50 % of the voice level**. Proven on "The Soldier Who Never Left" (19.7 s, 8 shots).
+The look: flat 2D bean-head cartoon characters (canvas-drawn "cards" with plum outlines) in a colourful 3D world with black ink outlines, painted textures, depth-of-field and gliding cameras. The output is 1080x1920, 30 fps, exactly as long as the voiceover. The voice is generated with the default narrator (clone_3_voicebox-qwen3) by default (no recording needed); an uploaded voiceover is used instead only when the user provides one. Either way the voice is unchanged. The music bed and SFX are synthesized. The bed sits **21 dB under the voice**; SFX hits sit a median **12 dB under the voice** (the reference channel's levels, re-measured on its 30 latest Shorts on 2026-11-18). The full study (camera, cuts, characters, light, script, narration, audio) is `references/STUDY_2026-11-18.md`; it wins wherever older notes disagree. Proven on "The Soldier Who Never Left" (19.7 s, 8 shots).
 
 ## Rules
 - Stories, characters and shots are always original. Never recreate another creator's video shot for shot. Offer an original take on the same idea instead.
 - No real, named living people as characters, and no brand mascots or logos.
 - No captions unless the user asks. Diegetic text (a carved message, a sign) is fine, and it must read correctly (not mirrored).
 - Never edit or re-time the voice. The picture is timed to it, and every visual reaction lands 0-3 frames before its word.
-- **Audio levels:** the music bed sits 16 dB under the voice (gated RMS; measured on the reference channel's 8 latest Shorts on 2026-11-16, where the bed is 14-20 LU under the voice and never ducked). SFX sit at 50 % or slightly less, with peaks capped so no hit pokes out over the narration. Always mix with `mix.py`, never by hand. Use no ducking or compression that would change this ratio; only one linear gain plus a peak limiter goes on the whole mix.
+- **Audio levels:** the narrator is clearly louder than everything else. Music bed 21 dB under the voice (gated RMS), never ducked; SFX hits (400 ms peak) a median 12 dB under the voice, the loudest no closer than 5 dB (measured on the reference channel's 30 latest Shorts on 2026-11-18 with a demucs voice/bed split: music ~21 dB under, hits median -12 / loud 10 % -6, music+SFX 16.6 LU under, mix -14 LUFS). Replaces the 2026-11-16 "bed -16 dB, SFX 50 %" rule, which made SFX nearly as loud as the voice. Always mix with `mix.py`, never by hand. Use no ducking or compression that would change this ratio; only one linear gain plus a peak limiter goes on the whole mix.
 - Keep the user informed with a task list. Send a stills contact sheet before the long render.
 
 ## Stage 1: Intake (always first)
@@ -25,7 +25,7 @@ Use the target length the user stated; otherwise use the default 20-30 s without
 ## Stage 2: 10 video ideas
 Give exactly 10 ideas in one reply, numbered, and ask the user to reply with a number (or "more"). Each idea gets:
 - **Title** (5-8 words, curiosity-driven, e.g. "The Soldier Who Never Left").
-- **Hook line**: the first spoken sentence, a paradox stated as fact ("A man sold the Eiffel Tower. Twice.").
+- **Hook line**: the first spoken sentence: the result first, as an insane-sounding act in the past tense ("A man sold the Eiffel Tower. Twice."), or "If you [normal act], [absurd result]."
 - **The twist** in one line (the ironic payoff that ends the video).
 - **Why it animates well**: the 2-3 big visual moments (a collapse, a reveal, a chase).
 - **True or legend**: say plainly whether it is documented history, a disputed account or folklore.
@@ -40,13 +40,13 @@ What makes an idea "perfect" for this format:
 - No real living people as the butt of a joke, nothing graphic and nothing political.
 
 ## Stage 3: Script (after they pick)
-Write the narration only (no stage directions in the spoken text), with basically zero dead air (the 20 reference shorts run 3.7-4 words/s). Size it for the default voice at ~3.2 words/s: 20 s ≈ 65 words, 30 s ≈ 95, 60 s ≈ 190 (with `--tempo 1.1`: 70 / 105 / 210). Formula:
-1. **Hook** (sentence 1, no setup): the absurd fact.
-2. **Setting** in 1-2 lines: when, where, who, a concrete detail.
-3. **Escalation**, 2-4 beats, each bigger. Others doubt or mock. Use one exaggeration joke.
-4. **Mystery beat, then the pivot "You see,"** (14 of the 20 reference shorts flip into the explanation with exactly these two words; "But when..." only if it reads better). It introduces the real mechanism, often with an everyday analogy.
-5. **Twist / payoff**: short, ironic, and the last words of the video.
-Use plain spoken English, contractions, sentences around 8-15 words, and numbers written as words. Never describe what the viewer already sees.
+Write the narration only (no stage directions in the spoken text), with basically zero dead air. Size it at the reference pace of ~3.7 words/s (the voice defaults now hit it): 20 s ≈ 72 words, 30 s ≈ 110, 45 s ≈ 165, 60 s ≈ 220. Formula (measured on the reference's 30 latest transcripts, `references/STUDY_2026-11-18.md` §3):
+1. **Hook** (sentence 1, ~14 words, no setup): the result first, as an insane-sounding act in the past tense, often with a twist clause ("…but made sure it wouldn't go off"-type). Or "If you…", "[X] is illegal, yet…", "Imagine you're…".
+2. **"You see," + context** in sentence 2: stakes, place, who doubts it. Then **switch to present tense**.
+3. **Escalation** where every sentence is a consequence or a reversal, opened with "So", "But", "Then,", "Eventually,", "The next morning,". Ladders of odd, specific numbers or times. 1-3 short quoted mocker lines (no "he said"), one exaggeration joke, a dry aside ("Big mistake.").
+4. **Mystery beat** (one short question, "So how does this keep happening?") → "Well, it's called [name]." / "You see," → the mechanism through one everyday analogy in 2-4 sentences. Best pattern: build to the brink, explain, THEN resolve the climax.
+5. **Twist / payoff**: an ironic image or a callback to an early detail, on the last words. No moral, no CTA.
+Use plain spoken English, contractions, ~13-word sentences (a few long run-on ones are fine), and numbers written as words. Never describe what the viewer already sees.
 
 Then reply with:
 - The script in a copyable block, with the word count and estimated length.
@@ -56,10 +56,10 @@ Keep the final script text. It drives the voice and the timing in Stage 4.
 
 ### Voiceover (automatic, right after the script is approved)
 Default narrator for every skill: **clone_3_voicebox-qwen3** (Qwen3-TTS 1.7B Base cloning our reference voice; free, local; full settings in `../default-voice/SKILL.md`). Don't ask about the voice; generate it and continue. Save the final script as `script.txt` in the project (one paragraph per line: each line is voiced in one go, which keeps the casual flow), then run it alone (the voice model next to Whisper or x264 runs out of memory on small machines):
-`py <skill>/scripts/kokoro_voice.py script.txt work [--tempo 1.0] [--gap 0.4]` (`python3` instead of `py` on Linux/cloud; the file name is historical, it runs the default voice)
+`py <skill>/scripts/kokoro_voice.py script.txt work [--tempo 1.12] [--gap 0.22]` (`python3` instead of `py` on Linux/cloud; the file name is historical, it runs the default voice)
 - It writes `work/voice.wav` (use it wherever Stage 4 says `voice.mp3`) and `work/sentences.json` (= `chunks.json`): start and end in seconds of each script line. Every line boundary is a pause.
-- Settings = the clone_3 sample: tempo 1.0 (natural, ~3.2 words/s), 0.4 s between lines. For the tighter reference delivery use `--tempo 1.1 --gap 0.2` (pitch-safe speed-up). Send the user the WAV for reference, then go straight on with Stage 4 without waiting. If they later ask for another voice, rerun it, then redo 4.1 timing and 4.7 sound (the picture timing follows the voice).
-- Write it casual: contractions, "You see," asides, `...` before a reveal, `!` on the punch word, numbers as words (Stage 3). Unusual names may need a phonetic respelling, in `script.txt` only.
+- Defaults (since 2026-11-18) = the reference narrator's pace: `--tempo 1.12 --gap 0.22` (~3.7 words/s, ~0.22 s breaths, no pause over ~0.5 s); the wrapper adds them unless you pass your own (`--tempo 1.0 --gap 0.4` = the old relaxed read). A new script line = a breath: break lines before "So / But / Then / Well / Eventually", never mid-phrase. Send the user the WAV for reference, then go straight on with Stage 4 without waiting. If they later ask for another voice, rerun it, then redo 4.1 timing and 4.7 sound (the picture timing follows the voice).
+- Write it casual and animated like the reference narrator: statements end level (never trailing off), rhetorical questions short and dropping, dialogue lines in the narrator's own voice with attitude (sarcasm, panic, deadpan), `...` only before the 1-2 biggest reveals, `!` on the punch word, numbers as words (Stage 3). Unusual names may need a phonetic respelling, in `script.txt` only.
 - Needs Python 3.10-3.13 with `qwen-tts`, `torch`, `soundfile`, `numpy` (see `../default-voice/SKILL.md` for setup). First run downloads the model (~4.5 GB) without asking. CPU speed: about 1-1.5 min per 10 s of voice.
 - In 4.1, check `phrases.json` against `sentences.json`: every line boundary must fall in a pause. If they disagree, trust `sentences.json`.
 
@@ -85,10 +85,10 @@ Run `python3 timing.py voice.mp3 script.txt --out work` (`work/voice.wav` from t
 ### 4.2 Shot plan (`work/PLAN.md` before code)
 Make one row per shot: frames, words, setting, light, camera move, characters/poses/expressions, effects and SFX cue.
 - Frame 0 is already the hook image.
-- Usually one shot per phrase. Merge tiny phrases into the next shot.
+- A new framing every 1.5-2.5 s (1-2 per sentence). Merge tiny phrases into the next shot.
 - Illustrate every sentence literally. Props carry the jokes.
-- Vary shot sizes: hook MCU → wide reveal → two-shot → insert close-up on the key object → reaction close-up → environment move for the payoff.
-- Use light for beats: warm and bright day while setting up, golden for decline or drama, night-blue starting on the "You see," line for the explanation (blue ambient, warm windows/lamps, violet fog, purple never brown shadows, faces still bright). A time jump gets a 6-frame white flash.
+- Vary shot sizes: hook MCU → wide reveal → two-shot → insert close-up on the key object → reaction close-up → environment move for the payoff. Prop-insert ECUs (the sentence's noun filling the frame) about every 6-10 s. Low, chest-to-floor cameras, top-down inserts, aerials.
+- Use light for beats: day while setting up (not too bright, median luma ~.50), a saturated royal-blue night / storm / crisis stretch mid-story (the explanation can live there: blue ambient, warm windows/lamps, violet fog, purple never brown shadows, faces still bright), and sunrise/golden for the payoff. Change light inside a shot on the story word (night → warm in ~0.8 s on "sunrise"). Characters take the nearest lamp's colour; whole-head tints for emotion (red anger, blue cold). A time jump gets a 6-frame white flash or a 1.5 s sunset→night→day time-lapse.
 - The twist line gets a sting (music stops, low hit, push-in with roll). The last shot's physical payoff lands on the final word.
 
 ### 4.3 World (`web/main.js`)
@@ -110,10 +110,10 @@ Keep the engine sections: toon materials, ink contract, `add`/`tbox`, sky, light
 - A detached part (e.g. a lifted helmet) is its own card, aligned with `headCenter(seed)`: y = DECK + (partY − hc) × 0.00225.
 
 ### 4.5 Motion: smooth and alive (`web/motion.js`)
-- **Cameras**: `camFromKeys(keys, f, {kicks})`. Use smootherstep glides (18-45 f), `easeOut` for reveals and whips, and `path` via-points (Catmull-Rom) for curved moves. Every hold creeps and nothing is static for 4+ frames. Use 3-5° rolls on drama and 7-frame flip-shakes on impacts.
-- **Continuity**: prefer continuous moves (pull back from a close-up into the wide, rack focus, crane through the deck, push into an object, follow an object into the next moment). Aim for 0-1 hard cuts per short (12 of the 20 reference shorts have one or none); cut only on place or time jumps, with a flash, or a 6-8 f crossfade.
-- **Glides** average ~23 f, slow in and slow out, never a 3-frame snap. The reference camera moves in ~65 % of frames, mostly slow push-ins.
-- **Characters never freeze**: apply `idle(f, seed)` to every card, `blinkAt` blinks, and head bobs on stressed words.
+- **Cameras** (re-measured 2026-11-18 on 30 reference Shorts, every frame): `camFromKeys(keys, f, {kicks})`. The camera moves in ~94 % of frames. Rhythm = creep → punch → creep: holds push in ~0.5 %/f (smootherstep glides 18-45 f), and a fast 8-12 f reframe / punch-in / whip (`easeOut`, peak ~50 px/f at 720p, 3-5 %/f zoom) lands every ~2.2 s on a key word. `path` via-points (Catmull-Rom) for curved moves. Nothing static for 4+ frames. 10-15° dutch rolls on drama and falls, 7-frame flip-shakes on impacts.
+- **Joints**: ~1 dissolve of 6-12 f every ~6 s, also inside one place at a sentence change, wherever no motivated move exists. 0-3 hard cuts. Motivated transitions: follow an object into the next moment, push through a hole (pupil, spyglass, door, window), crane up to an aerial and descend into the next place, a foreground object wiping the lens, match-dissolve on a held object, pull back from a close-up into the wide.
+- **Ending**: hold the ironic last image ~1-1.5 s with a slow push.
+- **Characters never freeze**: apply `idle(f, seed)` to every card, `blinkAt` blinks, and head bobs on stressed words. Faces act: swap expressions every 0.3-1 s on beat words (brows, O-O shock, >< pain, teeth, sweat drops, anger ticks). Heads near-round, characters 3-3.5 heads tall, outline thicker than the world ink.
 - **Actions**: anticipation → `back` overshoot → `spring` settle. A stamp is a 2-frame dip + dust puff + kick. Laughs are an alternating tilt + bob.
 - **Secondary motion**: banner cloth waves, leaves/dust/drips/Zzz effect cards, flowing water. Something always moves.
 - **Walks**: `walk()` gives distance + step phase. Feet planted, bob 3-7 %.
@@ -132,7 +132,7 @@ Send the sheet to the user with a one-line shot summary, then start the full ren
 Rewrite the cue table for the story; the synths stay. `audio.py` writes only stems (`music.wav`, `sfx.wav`).
 - Music: make the bed with `python3 mystery_bed.py --dur <voice length> --twist <twist line s> --out music.wav` (it replaces the music part of `audio.py`; keep `audio.py` for the SFX stem). It composes an original playful-mystery cue in the reference channel's style: minor key, 100-118 bpm (default 112, D minor), staccato pizzicato walking bass, plucked/mallet melody up high, soft off-beat chord stabs, light kick, dark and continuous, with a hit on frame 0, a lift after the twist and a hit on the last word. Change `--key`/`--bpm`/`--seed` per story so videos don't share one tune.
 - SFX on events (in frames/30): whooshes on big moves, thunk on stamps, rumble+crash on collapses, scrape on metal, ting on reveals, sting on the twist, creaks, snap, splash, snore, leaves, water ambience.
-- Mix with `python3 mix.py voice.mp3 music.wav sfx.wav`. It sets music to the voice's gated RMS −16 dB and SFX to 50 % (−6 dB) with peaks capped at 0.7× the voice peak. It prints the measured levels: confirm music shows −16.0 dB vs voice and SFX is at or below −6 dB.
+- Mix with `python3 mix.py voice.mp3 music.wav sfx.wav`. It sets music to the voice's gated RMS −21 dB and one SFX gain so the median hit sits −12 dB under the voice (loudest ≥ 5 dB under). It prints the measured levels: confirm music shows −21.0 dB vs voice and the SFX median hit −12.0. Aim for ~11 SFX hits a minute (reference 2.5-21).
 - Lock picture timing before making sound. Any timing change means re-running audio.py and mix.py.
 
 ### 4.8 Render + finish
@@ -153,5 +153,5 @@ Rewrite the cue table for the story; the synths stay. `audio.py` writes only ste
 - `main.js`: renderer, toon materials, world, cards (1200x2000 CanvasTexture planes, origin at soles), passes colour (RT samples 4) → normal/depth → ink+grade (saturation, gain/lift, vignette, flash) → DOF to screen. It exposes `window.renderFrame(f)` and `window.ready`.
 - `story.js` exports SHOTS, `shotAt`, `camAt`, `dofAt`, LIGHTS/`lightFor`, `worldAt`, `actorsAt(f, T)`, `fxAt(f, T)`. All are pure functions of the frame.
 - `render.mjs`: Playwright → `renderFrame(f)` → `toDataURL('image/jpeg', .95)` → `frames/f0000.jpg`.
-- `mystery_bed.py`: original music bed in the reference style. `mix.py`: gated-RMS level lock (music −16 dB, SFX at 50 % of the voice). `finish.sh`: linear loudness gain, limiter, encode, QA.
+- `mystery_bed.py`: original music bed in the reference style. `mix.py`: level lock (music −21 dB gated RMS, SFX median hit −12 dB, loudest ≥ 5 dB under the voice). `finish.sh`: linear loudness gain, limiter, encode, QA.
 - Characters: the Pen API from mromidev/claude-animated-shorts `templates/bridge/toon.ts`, extended in the same module scope by the cast file.

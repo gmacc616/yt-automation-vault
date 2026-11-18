@@ -33,4 +33,10 @@ for c in C:
     words = len(norm(c["text"])); rate = words / max(0.1, c["end"] - c["start"])
     tag = "  <- FLAT" if rng < 2 else ""; flat += rng < 2
     print(f"  {c['start']:6.2f}s  pitch range {rng:4.1f} st  {rate:3.1f} w/s  {c['text'][:50]}{tag}")
-print("VOICE OK" if acc > 0.95 and not flat else f"VOICE CHECK: accuracy {acc * 100:.0f}%, {flat} flat lines")
+# pace vs the reference channel (30 Shorts, 2026-11-18): 3.5-3.9 words/s, sentence gaps ~0.22 s, nothing over ~0.5 s
+gaps = [W[i + 1]["s"] - W[i]["e"] for i in range(len(W) - 1)]
+wps = len(ref) / max(0.1, len(a) / sr)
+long_gaps = [(round(W[i]["e"], 2), round(g, 2)) for i, g in enumerate(gaps) if g > 0.55]
+print(f"PACE {wps:.2f} words/s (target 3.5-3.9), first word at {W[0]['s']:.2f}s, {len(long_gaps)} gaps > 0.55 s {long_gaps[:6]}")
+pace_ok = 3.4 <= wps <= 4.0 and len(long_gaps) <= 1
+print("VOICE OK" if acc > 0.95 and not flat and pace_ok else f"VOICE CHECK: accuracy {acc * 100:.0f}%, {flat} flat lines, pace {'ok' if pace_ok else 'OFF: adjust --tempo/--gap'}")

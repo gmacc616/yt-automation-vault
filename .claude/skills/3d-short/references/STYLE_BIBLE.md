@@ -1,4 +1,5 @@
 # the reference channel style bible (study of latest 20 shorts, 2026-10-30)
+> **2026-11-18:** superseded wherever it disagrees by `STUDY_2026-11-18.md` (30 latest Shorts, every frame). Camera, cuts, character proportions, light levels, script structure and audio levels all changed there.
 Private study only. Videos: vids/ (720p, original EN audio), transcripts: tx/, per-video measurements: measure/summary.json,
 30 fps contact sheets: measure/<video>_sheets/ (each sheet = 2 s, 60 frames).
 

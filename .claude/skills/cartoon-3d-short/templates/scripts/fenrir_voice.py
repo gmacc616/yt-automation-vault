@@ -1,7 +1,7 @@
 """Default narrator (clone_3_voicebox-qwen3, see default-voice/SKILL.md) -> voice.wav + words.json for the cartoon 3D short.
 File name kept from the Kokoro am_fenrir days so old notes and commands still work; Kokoro is no longer used.
 
-Usage: py fenrir_voice.py SCRIPT.txt out_dir [--tempo 1.0] [--gap 0.4] [--whisper small.en]
+Usage: py fenrir_voice.py SCRIPT.txt out_dir [--tempo 1.12] [--gap 0.22]  (defaults = reference pace; pass --tempo 1.0 --gap 0.4 for the old relaxed read) [--whisper small.en]
 Writes out_dir/voice.wav (24 kHz mono), out_dir/chunks.json and out_dir/words.json ([{w, s, e}] in seconds, the format
 timeline.py/mix.py read). Word times come from faster-whisper run on the generated voice; hand-fix them as the skill says.
 Runs default-voice/qwen_voice.py (found via DEFAULT_VOICE_DIR, the skills folder above this file, or ~/.claude/skills).
@@ -19,6 +19,15 @@ def engine():
             return c / "qwen_voice.py"
     sys.exit("default-voice skill not found: set DEFAULT_VOICE_DIR to the folder holding qwen_voice.py")
 
+# Reference-channel pace (30 latest Shorts, 2026-11-18): 3.7 words/s, ~0.22 s between sentences, no pause over 0.5 s.
+DEFAULTS = {"--tempo": "1.12", "--gap": "0.22"}
+def with_defaults(args):
+    args = list(args)
+    for k, v in DEFAULTS.items():
+        if not any(a == k or a.startswith(k + "=") for a in args):
+            args += [k, v]
+    return args
+
 if len(sys.argv) < 3:
     sys.exit(__doc__)
-subprocess.run([sys.executable, str(engine()), "script", sys.argv[1], "-o", sys.argv[2], "--words", *sys.argv[3:]], check=True)
+subprocess.run([sys.executable, str(engine()), "script", sys.argv[1], "-o", sys.argv[2], "--words", *with_defaults(sys.argv[3:])], check=True)

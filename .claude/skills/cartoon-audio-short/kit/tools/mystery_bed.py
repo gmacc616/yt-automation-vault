@@ -7,7 +7,7 @@ The style was measured from the reference channel's 8 latest Shorts (2026-11-16,
 - staccato pizzicato walking bass (C2-C3, a new note every half beat), plucked/mallet melody high up (C5-C7),
   soft off-beat chord stabs in the middle, a light low kick: dark and bass-heavy, almost nothing above 4 kHz
 - flat level with small lifts: a hit on frame 0, a lift after the twist, and a final hit on the last word
-Set the level with the skill's mix script (the bed sits ~15-16 dB under the voice).
+Set the level with the skill's mix script (the bed sits ~21 dB under the voice, measured 2026-11-18).
 
 Usage: python3 mystery_bed.py --dur 63.2 [--out music.wav] [--bpm 112] [--key D] [--twist 41.5] [--seed 3]
 """

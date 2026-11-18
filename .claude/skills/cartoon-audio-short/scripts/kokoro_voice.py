@@ -1,7 +1,7 @@
 """Voiceover for a cartoon short with the default narrator (clone_3_voicebox-qwen3, see default-voice/SKILL.md).
 File name kept from the Kokoro days so old notes and commands still work; Kokoro is no longer used.
 
-Usage: py kokoro_voice.py script.txt out_dir [--tempo 1.0] [--gap 0.4]
+Usage: py kokoro_voice.py script.txt out_dir [--tempo 1.12] [--gap 0.22]  (defaults = reference pace; pass --tempo 1.0 --gap 0.4 for the old relaxed read)
 Writes out_dir/voice.wav (24 kHz mono), out_dir/chunks.json and out_dir/sentences.json (same content:
 [{text, start, end}] per chunk = per script paragraph; every chunk boundary is a pause).
 Runs default-voice/qwen_voice.py (found next to this skill, or via DEFAULT_VOICE_DIR). Run it alone: the voice model
@@ -20,8 +20,17 @@ def engine():
             return c / "qwen_voice.py"
     sys.exit("default-voice skill not found: set DEFAULT_VOICE_DIR to the folder holding qwen_voice.py")
 
+# Reference-channel pace (30 latest Shorts, 2026-11-18): 3.7 words/s, ~0.22 s between sentences, no pause over 0.5 s.
+DEFAULTS = {"--tempo": "1.12", "--gap": "0.22"}
+def with_defaults(args):
+    args = list(args)
+    for k, v in DEFAULTS.items():
+        if not any(a == k or a.startswith(k + "=") for a in args):
+            args += [k, v]
+    return args
+
 if len(sys.argv) < 3:
     sys.exit(__doc__)
 script, out_dir, rest = sys.argv[1], sys.argv[2], sys.argv[3:]
-subprocess.run([sys.executable, str(engine()), "script", script, "-o", out_dir, *rest], check=True)
+subprocess.run([sys.executable, str(engine()), "script", script, "-o", out_dir, *with_defaults(rest)], check=True)
 shutil.copyfile(Path(out_dir) / "chunks.json", Path(out_dir) / "sentences.json")
