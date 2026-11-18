@@ -6,11 +6,13 @@ import { PeigneurShort, PEIGNEUR_FRAMES } from "./videos/peigneur/Bridge";
 import { HannibalShort, HANNIBAL_FRAMES } from "./videos/hannibal/Bridge";
 import { YakhchalShort, YAKH_FRAMES } from "./videos/yakhchal/Bridge";
 import { AutunShort, AUTUN_FRAMES } from "./videos/autun/Bridge";
+import { Autun2Short, AUTUN2_FRAMES } from "./videos/autun2/Bridge";
 // one <Composition> per short; copy src/videos/vasa (or the skill's templates/bridge) to src/videos/<name> and register it here
 export const RemotionRoot: React.FC = () => (
   <>
     <Composition id="TsarBellShort" component={TsarBellShort} durationInFrames={TSAR_FRAMES} fps={30} width={1080} height={1920} />
     <Composition id="VasaShort" component={VasaShort} durationInFrames={VASA_FRAMES} fps={30} width={1080} height={1920} />
+    <Composition id="Autun2Short" component={Autun2Short} durationInFrames={AUTUN2_FRAMES} fps={30} width={1080} height={1920} />
     <Composition id="AutunShort" component={AutunShort} durationInFrames={AUTUN_FRAMES} fps={30} width={1080} height={1920} />
     <Composition id="YakhchalShort" component={YakhchalShort} durationInFrames={YAKH_FRAMES} fps={30} width={1080} height={1920} />
     <Composition id="HannibalShort" component={HannibalShort} durationInFrames={HANNIBAL_FRAMES} fps={30} width={1080} height={1920} />
