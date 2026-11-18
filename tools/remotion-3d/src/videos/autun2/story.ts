@@ -73,7 +73,10 @@ export const sceneAt = (id: number, t: number): Scene => {
 // ---------------- camera ----------------
 export type Cam = { pos: V3; look: V3; fov: number; roll: number };
 type Shot = Partial<Cam> & { pos: V3; look: V3 };
-type Key = { f: number; dur?: number; cut?: boolean; over?: number; s: (f: number) => Shot };
+type Key = { f: number; dur?: number; cut?: boolean; over?: number; reveal?: boolean; s: (f: number) => Shot };
+/** the reference's opening pull-out: short ease-in, long ease-out (velocity ~ t(1-t)^1.5), no overshoot */
+export const easeReveal = (t: number) => { const u = clamp01(t); return 1 - Math.pow(1 - u, 2.5) * (1 + 2.5 * u); };
+const easeSine = (t: number) => 0.5 - 0.5 * Math.cos(Math.PI * clamp01(t));
 const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
 const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
 const len = (a: V3) => Math.hypot(a[0], a[1], a[2]);
@@ -97,7 +100,8 @@ const run = (keys: Key[], f: number) => {
   for (let i = 1; i < keys.length; i++) {
     const k = keys[i];
     if (f < k.f) break;
-    cur = k.cut ? full(k.s(f)) : mix(cur, full(k.s(f)), ease((f - k.f) / (k.dur ?? 14), k.over ?? 0));
+    const u = (f - k.f) / (k.dur ?? 14);
+    cur = k.cut ? full(k.s(f)) : mix(cur, full(k.s(f)), k.reveal ? easeReveal(u) : k.over ? ease(u, k.over) : easeSine(u));
   }
   return cur;
 };
@@ -125,9 +129,9 @@ const a = (id: number) => SHOTS[id - 1].a;
 const at = (s: number) => fr(s);
 /** key helpers: a move (14 f ease, overshoot on every third), a hard cut-in, a dead-still hold */
 let nth = 0;
-const MV = (t: number, sh: () => Shot, creep = 0.0015, arc = 3, dur = 14): Key => { const over = nth++ % 3 === 0 ? 0.8 : 0; const f0 = at(t) - 3; return { f: f0, dur, over, s: (f) => hold(sh(), f, f0 + dur, creep, arc) }; };
+const MV = (t: number, sh: () => Shot, creep = 0.0015, arc = 3, dur = 22): Key => { const over = nth++ % 6 === 0 ? 0.4 : 0; const f0 = at(t) - 3; return { f: f0, dur, over, s: (f) => hold(sh(), f, f0 + dur, creep, arc) }; };
 const CUT = (t: number, sh: () => Shot, creep = -0.0012, arc = -3): Key => { const f0 = at(t) - 1; return { f: f0, cut: true, s: (f) => hold(sh(), f, f0, creep, arc) }; };
-const STILL = (t: number, sh: () => Shot, dur = 10): Key => ({ f: at(t) - 3, dur, s: () => still(sh()) });
+const STILL = (t: number, sh: () => Shot, dur = 10): Key => ({ f: at(t) - 3, dur, s: (f) => hold(still(sh()), f, at(t) + dur, 0.001, 0.5) });
 
 const [CX, CY, CZ] = COURT, [FX, , FZ] = FIELD, [KX, , KZ] = CHURCH, [LX, , LZ] = LANE, [PX, PY, PZ] = PARTY;
 const LAWYER: V3 = [CX + 1.9, CY, CZ - 3.2], JUDGE: V3 = [CX, CY + 0.8, CZ - 9.6], DOCK: V3 = [CX + 4.5, CY, CZ - 4.1];
@@ -136,14 +140,17 @@ const mid = (p: V3, q: V3, k = 0.42): V3 => [p[0] + (q[0] - p[0]) * k, Math.min(
 const CAMS: Record<number, Key[]> = {
   // hook: lawyer and his clients in the dock, full body two-shot; cut-in to the rats on "never"
   1: [
-    { f: 0, s: (f) => hold(frame(mid(LAWYER, DOCK), 0.34, 8, { fov: 50, camY: 1.2, lookY: 0.9 }), f, 0, 0.0018, 3) },
-    MV(W.clients, () => frame(mid(LAWYER, DOCK), 0.44, 2, { fov: 50, camY: 1.15, lookY: 0.95 }), 0.0012, -2),
+    // the reference opening: on the hero first (chest-height lens looking slightly up), then one long pull-out that
+    // reveals the place on its noun ("court"), settling in ~32 f; the hero stays in frame on a third
+    { f: 0, s: (f) => hold(frame(LAWYER, 0.45, 20, { fov: 35, camY: 1.0, lookY: 1.55 }), f, 0, 0.001, 1.5) },
+    { f: at(W.court1) - 2, dur: 32, reveal: true, s: (f) => hold({ pos: [CX + 0.6, CY + 3.0, CZ + 8.6], look: [CX + 2.6, CY + 1.0, CZ - 4.2], fov: 35 }, f, at(W.court1) + 30, 0.001, 1) },
     CUT(W.never, () => ({ pos: add(DOCK, [0.4, 0.55, 2.4]), look: add(DOCK, [0, 0.35, 0]), fov: 46, roll: 0.06 }), 0.002, 4),
   ],
   // France 1510: the barley field and the windmill, a farmer in the foreground
   2: [
-    { f: a(2), s: (f) => hold({ pos: [FX + 3.2, 1.05, FZ + 10.5], look: [FX - 1.5, 1.4, FZ + 2], fov: 50 }, f, a(2), 0.0015, 4) },
-    MV(W.autun, () => ({ pos: [FX + 1.6, 0.9, FZ + 8.2], look: [FX - 0.8, 1.05, FZ + 4.4], fov: 48 }), 0.0015, -3, 14),
+    // on the farmer first, then the big crane-out over the barley on "Autun" (town hazy on the horizon)
+    { f: a(2), s: (f) => hold(frame([FX - 1.2, 0, FZ + 4.6], 0.45, 200, { fov: 35, camY: 1.0, lookY: 1.5 }), f, a(2), 0.001, 1.5) },
+    { f: at(W.autun) - 2, dur: 34, reveal: true, s: (f) => hold({ pos: [FX - 4, 7, FZ - 12], look: [FX - 1, 1.0, FZ + 6], fov: 35 }, f, at(W.autun) + 32, 0.001, 1) },
   ],
   // the rats in the eaten patch, the farmers behind them
   3: [
@@ -238,7 +245,7 @@ export const camAt = (id: number, f: number): Cam => {
 
 // ---------------- lens: blur the far background on full-body shots, wides sharp ----------------
 export type Dof = { f: number; dur?: number; cInf: number; focus?: (f: number) => V3 };
-export const DOF: Dof[] = [{ f: 0, cInf: 9 }, { f: a(2), cInf: 3 }, { f: a(3), cInf: 8 }, { f: a(4), cInf: 2 }, { f: at(W.judge), cInf: 8 }, { f: a(5), cInf: 9 }, { f: a(6), cInf: 9 },
+export const DOF: Dof[] = [{ f: 0, cInf: 9 }, { f: at(W.court1), dur: 30, cInf: 1 }, { f: at(W.never), cInf: 9 }, { f: a(2), cInf: 9 }, { f: at(W.autun), dur: 32, cInf: 0 }, { f: a(3), cInf: 8 }, { f: a(4), cInf: 2 }, { f: at(W.judge), cInf: 8 }, { f: a(5), cInf: 9 }, { f: a(6), cInf: 9 },
   { f: a(7), cInf: 7 }, { f: a(8), cInf: 9 }, { f: a(9), cInf: 3 }, { f: at(W.every), cInf: 8 }, { f: a(10), cInf: 9 }, { f: a(11), cInf: 4 }, { f: at(W.cats), cInf: 9 },
   { f: a(12), cInf: 9 }, { f: a(13), cInf: 7 }, { f: a(14), cInf: 5 }, { f: at(W.lock), cInf: 9 }, { f: a(15), cInf: 8 }, { f: a(16), cInf: 6 }];
 export const dofAt = (f: number) => {
