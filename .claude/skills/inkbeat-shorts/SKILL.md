@@ -202,7 +202,10 @@ keeps its own look, camera grammar, characters, audio levels (-14 LUFS) and gate
   and `gh run download <run-id> --repo gmacc616/yt-automation-vault -D out/cloud` (1440x2560, crf 16, swangle).
   Motion blur: render the 4× sub-frame composition there and `tmix` it locally (render-and-qa.md); it is 4× the
   machine time, so say so before starting. Fallback only when coldframe fails (tell the user first): a local chunked
-  `remotion render`. Mux with `-map 0:v:0 -map 1:a:0` (Remotion writes a silent audio track).
+  `remotion render`. Any final at 1440x2560 needs the exact scale `--scale=1.3333333333333333`: this Remotion
+  (4.0.540) rejects a non-integer size (`--scale=1.3333` gives 2559.94 px and fails at stitching). Start coldframe
+  through the REST API (`gh workflow run` needs GraphQL, blocked in cloud sessions):
+  `gh api -X POST repos/gmacc616/yt-automation-vault/actions/workflows/coldframe.yml/dispatches -f ref=main -f 'inputs[composition]=<Comp>' -f 'inputs[chunks]=20' -f 'inputs[project-dir]=tools/inkbeat'`. Mux with `-map 0:v:0 -map 1:a:0` (Remotion writes a silent audio track).
 - **Extra QA:** besides `flicker.py` and `analyze_pacing.py`, run
   `python3 $SK/cartoon-3d-short/templates/scripts/short_qa.py final.mp4 out/<name>/qa` (black, white, frozen and pop
   frames, loudness, sheets).
