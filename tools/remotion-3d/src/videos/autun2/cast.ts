@@ -8,7 +8,7 @@ import {
   Pen, bodyFront, bodySide, townsfolk, craftsman, fxBurst, fxShadow, fxContact, INK,
   Outfit, Expr, FrontOpts, SideOpts, Prop,
 } from "./toon";
-import { FPS, SHOTS, V3, smooth, clamp01, W, L as LEADT, Scene, lin, SPOT } from "./story";
+import { FPS, SHOTS, V3, smooth, clamp01, W, L as LEADT, Scene, lin, SPOT, camAt } from "./story";
 import { COURT, PARTY, LANE, CHURCH, FIELD } from "./medieval";
 import { RMS } from "./rms";
 import { NOINK } from "./ink";
@@ -477,6 +477,22 @@ const passers = (cam: CamInfo, t: number, out: Stage, x0: number, z0: number, di
   }
   void y;
 };
+// ---------------- foreground occluders (reference: a dark, defocused near layer in ~1/3 of the shots) ----------------
+export const fgPost = (p: Pen) => { p.poly([[100, 0], [156, 0], [160, 512], [96, 512]], "#3a2a24", 0); p.poly([[70, 150], [186, 150], [176, 250], [80, 250]], "#2a1e1a", 0); p.ell(128, 200, 30, 34, "#ffcf7a", 0); };
+const fgClump = (p: Pen) => { for (let i = 0; i < 26; i++) { const x = 20 + (i * 37) % 220, h2 = 260 + (i * 53) % 220; p.line([[x, 512], [x + ((i % 5) - 2) * 14, 512 - h2]], i % 2 ? "#b8902e" : "#9a7424", 12, false); p.ell(x + ((i % 5) - 2) * 14, 512 - h2, 9, 26, "#d0a83a", 0); } };
+const fgBarrel = (p: Pen) => { p.poly([[40, 512], [30, 300], [60, 120], [196, 120], [226, 300], [216, 512]], "#4a3222", 0); for (const y of [180, 330, 460]) p.poly([[30, y], [226, y], [226, y + 22], [30, y + 22]], "#2a2228", 0); };
+const fgWall = (p: Pen) => { p.poly([[0, 0], [256, 0], [256, 512], [0, 512]], "#3a3448", 0); for (let y = 0; y < 512; y += 64) p.stroke([[0, y], [256, y]], 6, "#2a2638"); };
+/** a near occluder fixed in the world: placed from the shot's opening camera, `ahead` m in front and `side` m to the side */
+const FG: Record<number, [(p: Pen) => void, string, number, number, number, number, number]> = {
+  2: [fgClump, "fgClump", 1.5, -0.55, -0.2, 0.9, 1.6], 11: [fgWall, "fgWall", 1.6, -0.7, 0.9, 0.6, 2.6],
+  14: [fgBarrel, "fgBarrel", 1.6, 0.55, 0.0, 0.7, 1.2], 4: [fgBarrel, "fgBarrel", 1.6, -0.6, -0.2, 0.7, 1.2],
+};
+const foreground = (id: number, out: Stage) => {
+  const e = FG[id]; if (!e) return;
+  const c = camAt(id, SHOTS[id - 1].a), f = [c.look[0] - c.pos[0], 0, c.look[2] - c.pos[2]], fl = Math.hypot(f[0], f[2]) || 1, fx = f[0] / fl, fz = f[2] / fl;
+  const [draw, key, ahead, side, y, w, h] = e;
+  out.fx.push({ key, cw: 256, ch: 512, draw, x: c.pos[0] + fx * ahead - fz * side, y: c.pos[1] - 1.0 + y + h / 2 - 0.3, z: c.pos[2] + fz * ahead + fx * side, w, h });
+};
 /** everything with a face and the effects in shot `id` at time t */
 export const stage = (id: number, t: number, S: Scene, cam: CamInfo): Stage => {
   const out: Stage = { places: [], fx: [] };
@@ -484,6 +500,7 @@ export const stage = (id: number, t: number, S: Scene, cam: CamInfo): Stage => {
   LNAME = s.light; NOW = t;
   findSun(cam, SUN);
   const c = s.crowd;
+  foreground(id, out);
   if (c === "hook") hook(t, cam, out);
   if (c === "field") field(t, cam, out, false);
   if (c === "eaten") field(t, cam, out, true);

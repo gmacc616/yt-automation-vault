@@ -71,6 +71,7 @@ export class World {
   private stars: THREE.Points;
   private lamps = [0, 1, 2, 3].map(() => new THREE.PointLight("#ffb060", 0, 16, 1.5));
   private rain: THREE.LineSegments; private rainMat: THREE.LineBasicMaterial;
+  private moon = new THREE.Sprite(new THREE.SpriteMaterial({ map: (() => { const c = document.createElement("canvas"); c.width = c.height = 128; const g = c.getContext("2d")!; const gr = g.createRadialGradient(64, 64, 20, 64, 64, 64); gr.addColorStop(0, "rgba(255,250,230,1)"); gr.addColorStop(0.42, "rgba(255,245,220,1)"); gr.addColorStop(0.5, "rgba(200,210,255,0.35)"); gr.addColorStop(1, "rgba(120,140,255,0)"); g.fillStyle = gr; g.fillRect(0, 0, 128, 128); return new THREE.CanvasTexture(c); })(), color: new THREE.Color(1.8, 1.8, 1.9), fog: false, depthWrite: false }));
 
   constructor(kit: Kit) {
     const R = this.root;
@@ -111,6 +112,7 @@ export class World {
     setSight(sightLines());
     this.town = new Town(kit); this.field = new Field(kit);
     R.add(this.town.group, this.field.group, this.court.group, this.party.group, ...this.lamps);
+    this.moon.layers.set(NOINK); this.moon.renderOrder = -0.6; this.moon.frustumCulled = false; R.add(this.moon);
     // rain: short falling streaks in a box around the lens (pure function of t)
     const rp = new Float32Array(1800 * 6);
     this.rainMat = new THREE.LineBasicMaterial({ color: new THREE.Color(0.75, 0.8, 0.95), transparent: true, opacity: 0.55, fog: false, depthWrite: false });
@@ -170,7 +172,7 @@ export class World {
     const e = K.sky.e.map((deg) => THREE.MathUtils.degToRad(deg));
     su.e.value.set(e[1], e[2], e[3], e[4]);
     this.sky.position.copy(cam.position);
-    untone(L.fog, this.fog.color); this.fog.near = S.place === "field" ? 60 : L.fogNear; this.fog.far = S.place === "field" ? 520 : L.fogFar;
+    untone(L.fog, this.fog.color); this.fog.near = s.light === "night" ? 14 : s.light === "golden" ? 50 : 30; this.fog.far = s.light === "night" ? 170 : s.light === "golden" ? 420 : 320;
     scene.fog = this.fog; scene.background = null;
     const showSun = s.light === "golden" && (S.place === "town" || S.place === "field");
     this.sunDisc.visible = showSun;
@@ -191,6 +193,8 @@ export class World {
     this.stars.position.copy(cam.position);
     this.town.setWeather(S.wet, night, S.rain); WATER.t.value = t;
     if (S.place === "field") this.field.sway(t);
+    if (S.place === "court") { this.court.dust.position.set(0.15 * Math.sin(t * 0.3), -0.05 * t % 1, 0.1 * Math.cos(t * 0.27)); }
+    this.moon.visible = outside && night && S.rain < 0.01; if (this.moon.visible) { this.moon.position.copy(cam.position).add(this.v.set(-0.35, 0.5, -0.8).normalize().multiplyScalar(800)); this.moon.scale.setScalar(75); }
     // practical lights: the four lamp posts nearest the lens (night), candles in the court
     const lampPts = S.place === "court" ? [[COURT[0] - 2.8, COURT[1] + 2.4, COURT[2] - 8.8], [COURT[0] + 2.8, COURT[1] + 2.4, COURT[2] - 8.8], [COURT[0] - 9.4, COURT[1] + 3.2, COURT[2]], [COURT[0] + 9.4, COURT[1] + 3.2, COURT[2]]]
       : [...LAMPS, ...Array.from({ length: 5 }, (_, i) => [LANE[0] - 6 + i * 11, 0, LANE[2] + (i % 2 ? 4 : -4)])].map((p) => [p[0] + 0.5, 2.8, p[2]])

@@ -142,6 +142,7 @@ export class Town {
   ground: THREE.Mesh;
   puddles: THREE.Object3D[] = [];
   lampMats: THREE.MeshBasicMaterial; windowMat: THREE.MeshBasicMaterial;
+  winLit = new THREE.MeshBasicMaterial({ color: new THREE.Color(1.0, 0.85, 0.6) });
   constructor(kit: Kit) {
     const b = new Batch();
     const g = new THREE.PlaneGeometry(260, 260, 1, 1).rotateX(-Math.PI / 2); const uv = g.attributes.uv as THREE.BufferAttribute;
@@ -186,6 +187,28 @@ export class Town {
     for (let i = 0; i < 5; i++) lampPost(b, LANE[0] - 6 + i * 11, LANE[2] + (i % 2 ? 4 : -4));
     // trees and hedges outside the square (green accents)
     for (const [x, z] of [[-22, 0], [22, 10], [-24, 30], [24, -14], [0, 40], [-18, -30], [20, -30]]) prop(b, kit, "tree_oak", x, 0, z, 8, x);
+    // midground + far backdrop (reference: 4-5 depth layers): rows of simple houses with gable roofs and chimneys out to
+    // 150 m, church towers, then wooded hills; the fog (= horizon colour) fades them like the reference's haze
+    const ringWall = ["#e2c49a", "#d8a95f", "#c47a5c", "#ecdab2", "#cc9a6c", "#ddbd78"], ringRoof = ["#b8644f", "#8f97a8", "#c9775a", "#8e7aa0"];
+    for (let i = 0; i < 230; i++) {
+      const a2 = hash(i, 11) * Math.PI * 2, r2 = 34 + hash(i, 12) ** 0.7 * 120, x = r2 * Math.cos(a2), z = r2 * Math.sin(a2);
+      if (Math.abs(x) < 26 && z > -26 && z < 40) continue; // the square itself
+      if (Math.abs(z - LANE[2]) < 14 && x > LANE[0] - 16 && x < LANE[0] + 54) continue; // the lane
+      const w = 6 + hash(i, 13) * 4, d = 6 + hash(i, 14) * 3, h = 6 + hash(i, 15) * 5, yaw = Math.round(hash(i, 16) * 4) * Math.PI / 2 + (hash(i, 17) - 0.5) * 0.3;
+      const m = at(x, 0, z, yaw);
+      b.add(new THREE.BoxGeometry(w, h, d).translate(0, h / 2, 0), C(ringWall[i % 6]), m);
+      b.add(new THREE.CylinderGeometry(0.001, Math.hypot(w, d) * 0.5, d * 0.45, 4, 1).rotateY(Math.PI / 4).scale(w / Math.hypot(w, d) * 1.42, 1, d / Math.hypot(w, d) * 1.42).translate(0, h + d * 0.22, 0), C(ringRoof[i % 4]), m);
+      if (i % 3 === 0) b.add(new THREE.BoxGeometry(0.7, 2.2, 0.7).translate(w * 0.25, h + 1.4, 0), C("#9a5a42"), m);
+      for (let k = 0; k < 3; k++) for (const sy of [0.35, 0.68]) b.add(new THREE.PlaneGeometry(0.8, 1.1).translate(-w / 2 + (k + 0.5) * (w / 3), h * sy, d / 2 + 0.02), (i + k) % 4 === 0 ? this.winLit : C("#3a3448"), m);
+    }
+    for (const [x, z, h] of [[-70, -120, 30], [95, -60, 26], [-110, 60, 24]]) { b.add(new THREE.BoxGeometry(6, h, 6).translate(x, h / 2, z), STONE()); b.add(new THREE.ConeGeometry(4.6, 12, 4).rotateY(Math.PI / 4).translate(x, h + 6, z), lam("spire", () => ({ map: roofHD("#5a6476", true) }))); }
+    for (let i = 0; i < 40; i++) { const a2 = (i / 40) * Math.PI * 2, r2 = 330 + 60 * hash(i, 21), h = 30 + 50 * hash(i, 22); b.add(new THREE.SphereGeometry(70 + 40 * hash(i, 23), 10, 6, 0, Math.PI * 2, 0, Math.PI / 2).scale(1, h / 90, 1).translate(r2 * Math.cos(a2), -4, r2 * Math.sin(a2)), C(i % 2 ? "#5d8a4a" : "#6f9a52")); }
+    for (let i = 0; i < 90; i++) { const a2 = hash(i, 31) * Math.PI * 2, r2 = 170 + hash(i, 32) * 120; prop(b, kit, i % 3 ? "tree_oak" : "tree_default", r2 * Math.cos(a2), 0, r2 * Math.sin(a2), 9 + hash(i, 33) * 6, a2); }
+    // clusters of props at the wall bases (no bare wall: reference)
+    for (let i = 0; i < 16; i++) {
+      const sx = i % 2 ? 1 : -1, z = -12 + i * 2.6, x = sx * 9.2;
+      if (i % 4 === 0) barrel(b, x, 0, z, 0.9); else if (i % 4 === 1) { crate(b, x, 0, z, 0.6, i); sack(b, x - sx * 0.1, 0, z + 0.6, 0.8); } else if (i % 4 === 2) pot(b, x, 0, z, 0.6, "#b5653f", ["#e2453c", "#f2c443", "#b57ad0"][i % 3]); else { crate(b, x, 0, z, 0.7, i); crate(b, x, 0.7, z, 0.5, i + 1); }
+    }
     // weeds in the cobble gaps along the walls and around props (green accents, reference ground cover)
     const wm = new THREE.MeshLambertMaterial({ map: grassCardTex(), alphaTest: 0.5, side: THREE.DoubleSide });
     const wg = new THREE.PlaneGeometry(0.5, 0.45).translate(0, 0.22, 0), wg2 = wg.clone().rotateY(Math.PI / 2);
@@ -219,6 +242,7 @@ export class Town {
     for (const p of this.puddles) p.visible = wet;
     this.lampMats.color.setRGB(night ? 3.4 : 1.1, night ? 2.4 : 0.95, night ? 1.2 : 0.8);
     this.windowMat.color.setScalar(night ? 1.6 : 0.9);
+    this.winLit.color.setRGB(night ? 2.6 : 0.35, night ? 1.8 : 0.33, night ? 0.9 : 0.4);
   }
 }
 
@@ -242,6 +266,8 @@ export class Field {
     for (const zz of [fz - 15.5, fz + 15.5]) for (const y of [0.5, 0.95]) b.add(boxGeo(V(fx - 24, y, zz - 0.03), V(fx + 24, y + 0.07, zz + 0.03)), lam("woodM", () => ({ map: beamHD() })));
     house(b, fx - 34, fz - 4, Math.PI / 2, 9, 7, 6, 3);
     prop(b, kit, "windmill", fx + 40, 0, fz - 30, 14, -0.6);
+    for (let i = 0; i < 30; i++) { const a2 = (i / 30) * Math.PI * 2, r2 = 260 + 80 * hash(i, 51); b.add(new THREE.SphereGeometry(90 + 50 * hash(i, 52), 10, 6, 0, Math.PI * 2, 0, Math.PI / 2).scale(1, 0.35 + 0.3 * hash(i, 53), 1).translate(fx + r2 * Math.cos(a2), -6, fz + r2 * Math.sin(a2)), C(i % 2 ? "#7aa05a" : "#8aac62")); }
+    for (let i = 0; i < 60; i++) { const a2 = hash(i, 54) * Math.PI * 2, r2 = 90 + hash(i, 55) * 120; prop(b, kit, i % 3 ? "tree_oak" : "tree_default", fx + r2 * Math.cos(a2), 0, fz + r2 * Math.sin(a2), 8 + hash(i, 56) * 5, a2); }
     for (let i = 0; i < 18; i++) prop(b, kit, i % 3 ? "tree_oak" : "tree_default", fx - 70 + i * 9 + hash(i, 1) * 4, 0, fz - 40 - hash(i, 2) * 30, 7 + hash(i, 3) * 4, i);
     for (const [x, z] of [[fx + 28, fz + 4], [fx + 31, fz + 8], [fx - 28, fz + 12]]) b.add(new THREE.ConeGeometry(1.6, 2.8, 12).translate(x, 1.4, z), lam("hay", () => ({ color: "#d9b25a" })));
     prop(b, kit, "cart", fx + 26, 0, fz + 13, 1.6, 0.7);
@@ -286,6 +312,7 @@ const mergeTwo = (a: THREE.BufferGeometry, b2: THREE.BufferGeometry) => {
 // ---------------- the court room (inside the church) ----------------
 export class Court {
   group = new THREE.Group();
+  dust!: THREE.Points;
   candles: THREE.MeshBasicMaterial;
   constructor() {
     const b = new Batch(), [x0, y0, z0] = COURT;
@@ -321,6 +348,12 @@ export class Court {
     for (const m of AO) this.group.add(m);
     AO.length = 0;
     this.candles = new THREE.MeshBasicMaterial({ color: new THREE.Color(3.6, 2.4, 1.0), fog: false });
+    const shaft = new THREE.MeshBasicMaterial({ color: new THREE.Color(1.0, 0.9, 0.7), transparent: true, opacity: 0.12, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, fog: false });
+    for (const sx of [-6, 0, 6]) { const g2 = new THREE.CylinderGeometry(1.1, 2.6, 11, 4, 1, true).rotateY(Math.PI / 4); const m2 = new THREE.Mesh(g2, shaft); m2.position.set(x0 + sx + 0.6, y0 + 3.5, z0 - 10.5); m2.rotation.x = 0.55; m2.layers.set(NOINK); this.group.add(m2); }
+    const dp: number[] = []; for (let i = 0; i < 350; i++) dp.push(x0 + (hash(i, 41) - 0.5) * 14, y0 + 0.5 + hash(i, 42) * 6, z0 - 12 + hash(i, 43) * 14);
+    const dg = new THREE.BufferGeometry(); dg.setAttribute("position", new THREE.Float32BufferAttribute(dp, 3));
+    const dust = new THREE.Points(dg, new THREE.PointsMaterial({ color: new THREE.Color(1.4, 1.25, 0.9), size: 2.0, sizeAttenuation: false, transparent: true, opacity: 0.55, depthWrite: false }));
+    dust.layers.set(NOINK); this.group.add(dust); this.dust = dust;
     for (const [x, y, z] of [[-2.8, 1.8, -8.8], [2.8, 1.8, -8.8], [-9.6, 3.2, -4], [9.6, 3.2, -4], [-9.6, 3.2, 4], [9.6, 3.2, 4], [1.5, 1.2, -6.2], ...Array.from({ length: 8 }, (_, i) => [1.4 * Math.cos(i * 0.785), 6.45, -4 + 1.4 * Math.sin(i * 0.785)] as [number, number, number])]) {
       const c = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.3, 8), new THREE.MeshLambertMaterial({ color: "#f4efe0" })); c.position.set(x0 + x, y0 + y - 0.2, z0 + z); this.group.add(c);
       const f = new THREE.Mesh(new THREE.SphereGeometry(0.05, 8, 6).scale(1, 1.8, 1), this.candles); f.position.set(x0 + x, y0 + y, z0 + z); f.layers.set(NOINK); this.group.add(f);
