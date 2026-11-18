@@ -1,5 +1,5 @@
 # Parallel cloud render of the 3D shorts (3d-short, cartoon-3d-short) with coldframe (github.com/Razee4315/coldframe, MIT).
-# Splits a Remotion composition of tools/remotion-3d across up to 20 GitHub machines, joins the chunks without
+# Splits a Remotion composition of tools/remotion-3d (or tools/inkbeat via the project-dir input) across up to 20 GitHub machines, joins the chunks without
 # re-encoding and checks the frame count. The silent MP4 is attached to the run; mux the mixed audio afterwards.
 # Start: Actions tab > coldframe > Run workflow, or (renders what is pushed to main, not local edits):
 #   npx github:Razee4315/coldframe#da55531509d27399c70846df3e4e5793f922abf3 render VasaShort --repo gmacc616/yt-automation-vault --chunks 20
@@ -23,6 +23,9 @@ on:
       output-name:
         description: Output file name (optional)
         default: ""
+      project-dir:
+        description: Remotion project folder (tools/remotion-3d for the 3D shorts, tools/inkbeat for inkbeat-shorts)
+        default: tools/remotion-3d
 
 permissions:
   contents: read
@@ -35,7 +38,7 @@ jobs:
       chunks: ${{ fromJSON(inputs.chunks) }}
       props: ${{ inputs.props }}
       output-name: ${{ inputs.output-name }}
-      project-dir: tools/remotion-3d
+      project-dir: ${{ inputs.project-dir }}
       entry-point: src/index.ts
       gl: swangle
       concurrency: "1"
