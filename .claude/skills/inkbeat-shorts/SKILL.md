@@ -1,6 +1,6 @@
 ---
 name: inkbeat-shorts
-description: Toon-shaded 3D cartoon videos in Remotion + React Three Fiber, for vertical Shorts and calm 16:9 films. Covers beat-driven camera work, post-process ink lines, color grading, flicker hunting, deterministic multi-tab rendering, motion blur, captions, sound and QA, with a ready starter project. Use it to start or fix a 3D cartoon video in Remotion, or when a render flickers, shimmers, shows broken outlines or changes between runs.
+description: Toon-shaded 3D cartoon videos in Remotion + React Three Fiber, for vertical Shorts and calm 16:9 films. With no topic given it first offers 10 fact-checked ideas across every category (history, fun facts, mystery, psychology, science and more); Shorts run 60-90 s. Covers beat-driven camera work, post-process ink lines, color grading, flicker hunting, deterministic multi-tab rendering, motion blur, captions, sound and QA, with a ready starter project. Use it to start or fix a 3D cartoon video in Remotion, or when a render flickers, shimmers, shows broken outlines or changes between runs.
 ---
 
 # inkbeat-shorts: toon-shaded 3D Shorts and long-form videos in Remotion
@@ -179,8 +179,22 @@ Shared tools of the 3D skills that apply to any short. Not carried over on purpo
 studies, script structure, pace defaults, bean-head billboard look, `mystery_bed.py` music and look targets. Inkbeat
 keeps its own look, camera grammar, characters, audio levels (-14 LUFS) and gates.
 - Commands run from `tools/inkbeat/`; `SK=<vault>/.claude/skills`.
-- **Ask first, every video:** topic and length, voice (default voice or a recorded VO), music (a licensed track you
-  give, or an original light bed). Then stop after the plan, after the look-dev and after the final, as in section 2.
+- **Topic ideas (user rule, 2026-11-18):** if the user gives no topic, research and reply with exactly 10 ideas,
+  numbered, and ask for a number (or "more"). Spread them across every kind of topic, never one category: history,
+  fun facts, mystery, psychology, science, the human body, animals and nature, space, inventions and tech, money and
+  business, food, language and culture, weird laws, geography, lucky accidents. Each idea gets: a plain title and its
+  category; "What it is": 2-3 sentences of verified facts; a verdict (Documented, Disputed or Legend, plus which
+  details are solid); 2+ source links (museums, universities, papers, encyclopaedias over listicles). Fact-check every
+  idea with web searches before offering it. No real living people as the butt of a joke, nothing graphic, nothing
+  political. Pick ideas that can be shown with 3D sets and characters. A topic the user gives skips this list.
+- **Length (user rule, 2026-11-18):** 60-90 s, set by how much the script needs (about 150-230 words); never under
+  60 s, over 90 s only if the user asks. Inkbeat's own pacing targets (sections 1-2) apply at any length.
+- **Script:** inkbeat's own shape (references/shorts.md: a concrete strange hook in the first line, escalation in
+  short sentences, one plain explanation, a twist, a last line that lands; numbers as words), for every category. Not
+  the 3D skills' reference-channel formula. Fact-check every detail before writing; show the script before voicing.
+- **Ask first, every video:** the topic (or offer the 10 ideas), voice (default voice or a recorded VO), music (a
+  licensed track you give, or an original light bed). Then stop after the plan, after the look-dev and after the final,
+  as in section 2.
 - **Project = `tools/inkbeat/`** in the public vault (a copy of `templates/`, `npm ci` there; its Remotion 4.0.540
   deps are separate from `tools/remotion-3d`). One folder per video in `src/videos/<name>/`, registered in
   `src/Root.tsx`; the VO lives in `vo/<name>/` (`.gitignore` it if it is not yours to publish).
