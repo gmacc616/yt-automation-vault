@@ -416,7 +416,7 @@ const courtWide = (t: number, cam: CamInfo, out: Stage, phase: "trial" | "empty"
     const i = r * 6 + k, x = CX + (k < 3 ? -6.8 + k * 1.9 : 2.2 + (k - 3) * 1.9), z = CZ + 4.75 + r * 2.2;
     actor(cam, t, 840 + i, FOLKM[i % 6], `fm${i % 6}`, x, CY + 0.42, z, { mode: "sit", steps: [[0, "neutral"], [phase === "empty" ? W.dont : W.realcourt, (["shock", "laugh", "dazed", "grin", "smile", "nervous"] as Expr[])[i % 6]]], facing: (k < 3 ? 1 : -1), calm: 0.3 }, out, 0.95);
   }
-  if (phase === "empty") actor(cam, t, 860, CRIER, "crier", CX + 2.2, CY, CZ - 6.2, { steps: [[0, "stern"], [W.dont, "nervous"]], prop: (tt) => (tt < W.dont ? "point" : "shrug") }, out);
+  if (phase === "empty") actor(cam, t, 860, CRIER, "crier", CX - 1.6, CY, CZ - 6.4, { steps: [[0, "stern"], [W.dont, "nervous"]], prop: (tt) => (tt < W.dont ? "scroll" : "shrug") }, out);
 };
 const doubters = (t: number, cam: CamInfo, out: Stage) => {
   actor(cam, t, 870, FOLKM[1], "fm1", CX - 0.9, CY, CZ + 2.0, { steps: [[W.qrats, "shock"], [W.qcourt, "dazed"]], talk: [W.qrats, W.qcourt], prop: "point", facing: 1 }, out);

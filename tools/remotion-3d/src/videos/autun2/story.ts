@@ -117,7 +117,8 @@ const hold = (sh: Shot, f: number, f0: number, creep = 0.0015, arc = 3): Shot =>
   const r: V3 = [d[0] * c - d[2] * s, d[1], d[0] * s + d[2] * c];
   // a slow truck of the whole rig (lens and look point together): real parallax between near and far layers
   const h = Math.hypot(d[0], d[2]) || 1, tr = Math.sign(arc || 1) * 0.12 * u / FPS, side: V3 = [d[2] / h * tr, 0.02 * Math.sin(u / 40), -d[0] / h * tr];
-  return { ...sh, pos: add(add(sh.look, scl(r, k)), side), look: add(sh.look, side) };
+  // the look point stays locked on the subject (never lose it); only the lens trucks a little
+  return { ...sh, pos: add(add(sh.look, scl(r, k)), scl(side, 0.6)) };
 };
 const still = (sh: Shot): Shot => sh;
 const a = (id: number) => SHOTS[id - 1].a;
@@ -167,8 +168,8 @@ const CAMS: Record<number, Key[]> = {
   ],
   // the summons, the empty dock, "Big surprise." (dead still on the judge)
   7: [
-    { f: a(7), s: (f) => hold(frame(mid([CX + 2.2, CY, CZ - 6.2], DOCK), 0.5, -14, { camY: 1.3 }), f, a(7), 0.0015, 3) },
-    CUT(W.dont, () => ({ pos: add(DOCK, [0.2, 0.75, 2.6]), look: add(DOCK, [0, 0.45, 0]), fov: 46 }), 0.0015, 3),
+    { f: a(7), s: (f) => hold(frame([CX - 1.6, CY, CZ - 6.4], 0.55, 12, { camY: 1.3 }), f, a(7), 0.0015, 3) },
+    CUT(W.dont, () => ({ pos: add(DOCK, [-1.0, 1.5, 5.6]), look: add(DOCK, [-0.6, 0.6, 0]), fov: 46 }), 0.0015, 3),
     CUT(W.big, () => frame(JUDGE, 0.7, 6, { camY: 1.0, lookY: 1.05 }), 0, 0),
   ],
   // the plea: the lawyer talking, judge in the back
