@@ -4,7 +4,8 @@
 # Start: Actions tab > coldframe > Run workflow, or (renders what is pushed to main, not local edits):
 #   npx github:Razee4315/coldframe#da55531509d27399c70846df3e4e5793f922abf3 render VasaShort --repo gmacc616/yt-automation-vault --chunks 20
 # Pinned to coldframe v1 by commit SHA so upstream changes cannot alter what runs here. Uses no secrets.
-# Settings match tools/remotion-3d/scripts/render.sh (scale 1.3333 = 1440x2560, crf 16, software WebGL, 1 tab per machine).
+# Settings match tools/remotion-3d/scripts/render.sh (scale 4/3 = 1440x2560, crf 16, software WebGL, 1 tab per machine).
+# The scale is exact 4/3: Remotion 4.0.540 (tools/inkbeat) rejects a non-integer size, and 1.3333 gives 2559.94 px.
 
 name: coldframe
 
@@ -43,5 +44,5 @@ jobs:
       gl: swangle
       concurrency: "1"
       frame-timeout: 300000
-      extra-args: --scale=1.3333 --crf=16
+      extra-args: --scale=1.3333333333333333 --crf=16
       chunk-timeout: 150
