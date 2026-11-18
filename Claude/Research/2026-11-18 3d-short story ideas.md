@@ -1,0 +1,12 @@
+# 3d-short story ideas (2026-11-18, set 4)
+Fact-checked by a research agent; none repeat sets 1-3 or the reference titles. Franklin's pond oil was rejected (same physics as the reference's storm-oil short).
+1. **Hannibal's fire-and-vinegar rock, 218 BC.** Livy 21.37: fire + vinegar to crack a rockfall; Polybius omits it; fire-setting is real, vinegar only matters on limestone. Disputed. archaeolog.stanford.edu/?p=127 ; isterre.fr/IMG/pdf/2007geoarcheology.pdf
+2. **Yakhchal desert ice, Iran.** Qanat water in shallow shaded pools freezes under clear winter skies; stored in mud-brick domes. Method documented, "400 BC" unproven (surviving ones Safavid). en.wikipedia.org/wiki/Yakhchāl ; archnet.org/sites/6442
+3. **Rats of Autun, ~1510-1525.** Chasseneuz defends rats, cats make the road unsafe. Legend (no court record; "beau conte" 1742). bearistotle.substack.com/p/the-trial-of-the-rats-of-autun ; firstthings.com/crime-rats/
+4. **Clever Hans, Berlin 1904-07.** Pfungst: horse reads involuntary cues; ~6% right when questioner doesn't know. Documented. en.wikipedia.org/wiki/Clever_Hans ; gutenberg.org/files/33936
+5. **Raising of Chicago, 1858-60s.** Tremont House 1861 raised ~6 ft by ~500 men, ~1,000 jackscrews, guests inside. Documented. en.wikipedia.org/wiki/Raising_of_Chicago ; classicchicagomagazine.com/?p=61737
+6. **Saccharin, Johns Hopkins 1878.** Fahlberg's sweet bread roll; tasted beakers; patented alone. Documented. sciencehistory.org/distillations/article/pursuit-sweet ; en.wikipedia.org/wiki/Ira_Remsen
+7. **Galloping Gertie, Tacoma 7 Nov 1940.** ~40-42 mph wind, torsional flutter, fell ~11:00; no humans died, dog Tubby did. Documented. en.wikipedia.org/wiki/Tacoma_Narrows_Bridge_(1940) ; physicstoday.aip.org/article/68/11/64/414979
+8. **Walkie-Scorchie, London 2013.** Concave facade, 6x sun, melted a Jaguar XJ (£946), egg fried on pavement; fins 2014. Documented. en.wikipedia.org/wiki/20_Fenchurch_Street ; constructionenquirer.com/2013/09/03/walkie-talkie-skyscraper-melts-car-parts
+9. **Post-it, 3M 1968-1980.** Silver's weak glue; Fry's hymnal bookmark 1974; Press 'n Peel flop 1977; Boise samples; 1980. Documented. mnopedia.org/thing/post-it-notes ; invent.org/inductees/arthur-l-fry
+10. **Eiffel Tower leans from the sun.** Top traces ~15 cm curve daily; "grows 15 cm" is a myth (few mm). Disputed detail. toureiffel.paris/en/news/history-and-culture/why-does-eiffel-tower-change-size ; yahoo.com/news/fact-check-eiffel-tower-grows-120000751.html
