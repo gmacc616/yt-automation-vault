@@ -3,6 +3,7 @@
 Claude reads this note before every task and adds a line for each new session.
 
 ## Sessions
+- [[2026-11-19 Cutline timeline review]]: Cutline set up as the review step before every long-form render
 - [[2026-11-04 Obsidian REST API setup]] — connected Claude to the vault, installed and verified the Local REST API plugin
 - [[2026-11-04 Graphify skill]] — found the graphify skill and CLI (already installed, v0.9.101)
 - [[2026-11-04 Obsidian and graphify]] — graphed the vault notes and exported them to Graphs/vault-notes; added refresh rules; later made the vault Claude's second brain (CLAUDE.md rule)
