@@ -27,12 +27,15 @@ export const TearCalendar: React.FC<{ p: V3; r?: V3; s?: number; t: number; page
       <M g={boxG(w + 0.24, h + 0.3, 0.1)} c="#6a3a2a" tex="wood" p={[0, -0.04, -0.06]} />
       <M g={cylG(0.05, 0.05, w + 0.1, 12)} c="#c9a24a" tex="metal" p={[0, h / 2 + 0.03, 0.03]} r={[0, 0, Math.PI / 2]} />
       {/* the page that stays (last) */}
-      <group position={[0, 0, 0.02]}>
+      <group position={[0, 0, 0.02]} visible={n === 0 || t >= flipA + (n - 1) * per}>
         <Page month={pages[n].month} day={pages[n].day} w={w} h={h} head={head} />
       </group>
       {pages.slice(0, n).map((pg, i) => {
         const u = clamp((t - (flipA + i * per)) / Math.max(0.35, per * 1.6));
         if (u >= 1) return null;
+        // only the top unflipped page is drawn (pages under it would z-fight with its painted number)
+        const top = pages.slice(0, n).findIndex((_, j) => t < flipA + j * per);
+        if (u <= 0 && i !== top) return null;
         const e = ease(u);
         const side = h1(i + 3) - 0.5;
         // flip up about the top edge, then fly off sideways, tumbling
@@ -239,10 +242,10 @@ export const Study: React.FC<{ t: number }> = ({ t }) => (
 export const Snow: React.FC<{ t: number; c: V3; n?: number }> = ({ t, c, n = 140 }) => (
   <group position={c}>
     {Array.from({ length: n }, (_, i) => {
-      const x = (h1(i) - 0.5) * 16;
-      const z = (h1(i + 500) - 0.5) * 12;
+      const x = (h1(i) - 0.5) * 9;
+      const z = (h1(i + 500) - 0.5) * 7 + 1;
       const y = 7 - ((t * (0.6 + h1(i + 900) * 0.5) + h1(i + 77) * 7) % 7);
-      return <mesh key={i} geometry={sphG(0.04, 6)} material={coreMat("#ffffff", 0.95)} position={[x + Math.sin(t + i) * 0.2, y, z]} />;
+      return <mesh key={i} geometry={sphG(0.075, 8)} material={coreMat("#ffffff", 0.95)} position={[x + Math.sin(t + i) * 0.2, y, z]} />;
     })}
   </group>
 );
@@ -265,6 +268,6 @@ export const Town: React.FC<{ sign: string; lamp?: number; snow?: boolean; banne
     <Barrel p={[-2.6, 0.16, -4.4]} />
     <Planter p={[-5.0, 0.16, -4.6]} />
     <Crate p={[2.4, 0, 2.2]} s={0.55} yaw={0.5} />
-    {snow ? <Snow t={t} c={[0, 0, -1]} /> : null}
+    {snow ? <Snow t={t} c={[0, 0, -1]} n={260} /> : null}
   </group>
 );

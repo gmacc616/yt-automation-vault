@@ -50,7 +50,7 @@ const ELDER = CAST.elder;
 const CAL_P: V3 = [0.4, 2.35, -5.12]; // the wall calendar on the brick house
 const POPE_P: V3 = [0.6, 0, -2.05];
 const MAN_P: V3 = [-0.7, 0.16, -2.2];
-const KID_P: V3 = [1.6, 0.16, -2.5];
+const KID_P: V3 = [1.0, 0.16, -2.2];
 const ELDER_P: V3 = [-2.4, 0.16, -3.2];
 const popeHead = headOf(POPE_P, POPE.height, POPE.build);
 const manHead = headOf(MAN_P, MAN.height, MAN.build);
@@ -72,12 +72,12 @@ const SETUP: Record<string, { cam: Cam; focus: V3; blur: number }> = {
   S07: { cam: aim([0.0, 1.55, 0.55], [BLK_P[0], 1.2, BLK_P[2]], 44, 0.45), focus: [BLK_P[0], 1.2, BLK_P[2]], blur: 2.2 },
   S08: { cam: aim([0.6, 2.2, 1.6], MARCH_P, 46, 0.42), focus: MARCH_P, blur: 1.0 },
   S09: { cam: aim([1.5, 1.4, 1.2], popeHead, 44, 0.36), focus: popeHead, blur: 1.8 },
-  S10: { cam: aim([2.0, 1.3, 0.6], [3.4, 1.0, -2.9], 46, 0.45), focus: [3.4, 1.0, -2.9], blur: 1.4 },
-  S11: { cam: aim([0.2, 1.4, 2.6], [0.4, 1.9, -3.4], 54, 0.4), focus: [0.4, 1.5, -3.0], blur: 0.8 },
+  S10: { cam: aim([3.4, 1.5, 1.6], [3.7, 1.0, -2.9], 46, 0.48), focus: [3.7, 1.0, -2.9], blur: 1.0 },
+  S11: { cam: aim([0.4, 1.45, 3.4], [0.4, 1.8, -3.4], 54, 0.42), focus: [0.4, 1.5, -3.0], blur: 0.8 },
   S12: { cam: aim([-1.0, 1.35, -0.6], elderHead, 46, 0.36), focus: elderHead, blur: 1.6 },
   S13: { cam: aim([2.2, 1.6, 0.9], CAL_P, 50, 0.38), focus: CAL_P, blur: 0.8 },
-  S14: { cam: aim([1.4, 1.5, 0.8], [manHead[0] + 0.6, manHead[1] + 0.4, manHead[2]], 50, 0.42), focus: manHead, blur: 1.4 },
-  S15: { cam: aim([-0.6, 1.5, 1.4], CAL_P, 48, 0.38), focus: CAL_P, blur: 0.9 },
+  S14: { cam: aim([0.6, 1.6, 2.6], [0.0, 1.9, -3.4], 50, 0.42), focus: manHead, blur: 1.0 },
+  S15: { cam: aim([-0.8, 1.5, 2.6], [-0.3, 1.9, -3.6], 50, 0.4), focus: CAL_P, blur: 0.9 },
 };
 
 // small, safe move sizes for every beat (pushes never reach the subject)
