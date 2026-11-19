@@ -117,6 +117,19 @@ def sfx(kind):
         t = np.arange(n) / SR
         f = 220 + 160 * np.exp(-t * 6) * np.sin(2 * np.pi * 9 * t)
         return np.sin(2 * np.pi * np.cumsum(f) / SR) * env(n, 0.005, 0.25)
+    if kind == "toll":  # a soft, distant bell
+        return tone(392.0, 2.4, "bell", 1.0) * np.exp(-np.arange(int(2.4 * SR)) / SR / 1.2) + tone(196.0, 2.4, "pad", 0.3)
+    if kind == "tick":  # clock ticks, running back
+        n = int(0.7 * SR)
+        y = np.zeros(n)
+        for k in range(4):
+            c = sfx("block") * 0.6
+            i = int(k * 0.17 * SR)
+            y[i:i + len(c)] += c[: n - i]
+        return y
+    if kind == "flap":  # cloth snapping up
+        n = int(0.25 * SR)
+        return lp(noise(n), 0.5) * env(n, 0.005, 0.06) * (1 + np.sin(np.arange(n) / SR * 2 * np.pi * 30))
     raise ValueError(kind)
 
 
@@ -154,17 +167,20 @@ def main(vdir, planp, outd):
     b[-fade:] *= np.linspace(1, 0, fade)
     # ---- SFX on words (time, kind)
     cues = [
-        (ev["flipA"], "flurry"), (ev["deleted"], "snip"),
-        (shots["S02"]["t"] - 0.1, "whoosh"), (shots["S03"]["t"] - 0.1, "whoosh"),
-        (ev["spring"], "chime"), (ev["cut"], "snip"), (ev["skip"] + 0.35, "stamp"), (ev["skip"] + 0.75, "stamp"),
-        (ev["wasnt"], "stamp"), (ev["was"], "chime"), (ev["cheer"] - 0.2, "cheer"),
-        (shots["S11"]["t"] - 0.1, "whoosh"), (shots["S13"]["t"] - 0.1, "whoosh"), (ev["ukA"] - 0.1, "flurry"),
-        (shots["S14"]["t"] - 0.1, "wind"), (ev["feb"], "flip"), (ev["feb"] + 0.3, "boing"),
-        (shots["S15"]["t"] - 0.1, "whoosh"), (ev["nov"] - 0.15, "flip"), (ev["nov"] + 0.2, "boing"),
+        (shots["A02"]["t"] - 0.1, "whoosh"), (ev["died"] + 0.1, "toll"), (shots["A04"]["t"] - 0.1, "whoosh"),
+        (ev["flipA"], "flurry"), (ev["deleted"], "snip"), (shots["A06"]["t"] - 0.1, "whoosh"),
+        (ev["minutes"], "tick"), (ev["spring"], "chime"), (ev["cut"], "snip"),
+        (ev["skip"] + 0.35, "stamp"), (ev["wasnt"], "stamp"), (ev["was"], "chime"),
+        (shots["A16"]["t"] - 0.1, "whoosh"), (ev["cheer"] - 0.2, "cheer"), (shots["A18"]["t"] - 0.1, "whoosh"),
+        (ev["ukA"] - 0.1, "flurry"), (shots["A19"]["t"] - 0.1, "wind"), (ev["feb"] + 0.3, "boing"),
+        (shots["A20"]["t"] - 0.1, "whoosh"), (ev["r1918"], "flip"),
+        (ev["nov"] - 0.15, "flip"), (ev["nov"] + 0.2, "boing"),
     ]
-    s07 = shots["S07"]
-    for k in range(1, 10, 2):  # the stacking day blocks (every other one)
-        cues.append((s07["t"] + (k + 1) / 10 * max(0.5, s07["end"] - s07["t"] - 0.4) - 0.05, "block"))
+    for k in ("spain", "portugal", "poland", "italy"):  # each flag snaps up on its name
+        cues.append((ev[k], "flap"))
+    a11 = shots["A11"]
+    for k in (3, 9):  # two of the stacking day blocks
+        cues.append((ev["y128"] + (k + 1) / 10 * max(0.5, a11["end"] - ev["y128"] - 0.3) - 0.05, "block"))
     fx = np.zeros(N)
     gain = None
     for at, kind in cues:

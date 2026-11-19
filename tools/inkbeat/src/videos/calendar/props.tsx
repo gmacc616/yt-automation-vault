@@ -8,16 +8,17 @@ const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const ease = (u: number) => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2);
 
 /** one tear-off page: header strip (month) + a big number */
-const Page: React.FC<{ month: string; day: string; w: number; h: number; head?: string }> = ({ month, day, w, h, head = "#c8323a" }) => (
+const Page: React.FC<{ month: string; day: string; foot?: string; w: number; h: number; head?: string }> = ({ month, day, foot, w, h, head = "#c8323a" }) => (
   <group>
     <M g={boxG(w, h, 0.02)} c="#f6efe0" tex="paper" />
     <Label text={month} p={[0, h / 2 - h * 0.13, 0.012]} w={w * 0.96} h={h * 0.22} fg="#f8f0e2" bg={head} font={0.66} />
-    <Label text={day} p={[0, -h * 0.1, 0.012]} w={w * 0.9} h={h * 0.62} fg="#1e1a22" bg="none" font={0.92} />
+    <Label text={day} p={[0, foot ? -h * 0.04 : -h * 0.1, 0.012]} w={w * 0.9} h={foot ? h * 0.5 : h * 0.62} fg="#1e1a22" bg="none" font={0.92} />
+    {foot ? <Label text={foot} p={[0, -h * 0.4, 0.012]} w={w * 0.9} h={h * 0.16} fg="#5a3a2a" bg="none" font={0.8} /> : null}
   </group>
 );
 
 /** a big wall calendar on a board; pages flip up and fly off between `flipA` and `flipB` (s), from `pages[0]` to the last page */
-export const TearCalendar: React.FC<{ p: V3; r?: V3; s?: number; t: number; pages: { month: string; day: string }[]; flipA?: number; flipB?: number; head?: string }> = ({ p, r, s = 1, t, pages, flipA = 1e9, flipB = 1e9, head }) => {
+export const TearCalendar: React.FC<{ p: V3; r?: V3; s?: number; t: number; pages: { month: string; day: string; foot?: string }[]; flipA?: number; flipB?: number; head?: string }> = ({ p, r, s = 1, t, pages, flipA = 1e9, flipB = 1e9, head }) => {
   const w = 1.5;
   const h = 1.7;
   const n = pages.length - 1; // pages that fly off
@@ -28,7 +29,7 @@ export const TearCalendar: React.FC<{ p: V3; r?: V3; s?: number; t: number; page
       <M g={cylG(0.05, 0.05, w + 0.1, 12)} c="#c9a24a" tex="metal" p={[0, h / 2 + 0.03, 0.03]} r={[0, 0, Math.PI / 2]} />
       {/* the page that stays (last) */}
       <group position={[0, 0, 0.02]} visible={n === 0 || t >= flipA + (n - 1) * per}>
-        <Page month={pages[n].month} day={pages[n].day} w={w} h={h} head={head} />
+        <Page month={pages[n].month} day={pages[n].day} foot={pages[n].foot} w={w} h={h} head={head} />
       </group>
       {pages.slice(0, n).map((pg, i) => {
         const u = clamp((t - (flipA + i * per)) / Math.max(0.35, per * 1.6));
@@ -42,7 +43,7 @@ export const TearCalendar: React.FC<{ p: V3; r?: V3; s?: number; t: number; page
         return (
           <group key={i} position={[side * 3.2 * e, h / 2 + 2.2 * e * e, 0.04 + (n - i) * 0.004 + 0.9 * e]} rotation={[-Math.PI * 0.9 * clamp(u * 2), side * 4 * e, side * 2 * e]}>
             <group position={[0, -h / 2, 0]}>
-              <Page month={pg.month} day={pg.day} w={w} h={h} head={head} />
+              <Page month={pg.month} day={pg.day} foot={pg.foot} w={w} h={h} head={head} />
             </group>
           </group>
         );
@@ -279,5 +280,121 @@ export const Town: React.FC<{ sign: string; lamp?: number; snow?: boolean; banne
     <Planter p={[-5.0, 0.16, -4.6]} />
     <Crate p={[2.4, 0, 2.2]} s={0.55} yaw={0.5} />
     {snow ? <Snow t={t} c={[0, 0, -1]} n={260} /> : null}
+  </group>
+);
+
+/** a nun's veil and white band, in a character's local frame (put it in the same group as the Character3D) */
+export const Veil: React.FC<{ head: V3; r: number }> = ({ head, r }) => (
+  <group position={head}>
+    <M g={sphG(r * 1.12, 24)} c="#2e221e" tex="fabric" p={[0, r * 0.08, -r * 0.16]} s={[1.02, 1.08, 1.0]} />
+    <M g={boxG(r * 2.1, r * 2.2, r * 0.5)} c="#2e221e" tex="fabric" p={[0, -r * 0.9, -r * 0.62]} />
+    <M g={torG(r * 0.98, r * 0.12)} c="#f4f0e6" p={[0, r * 0.42, r * 0.08]} r={[Math.PI / 2 - 0.25, 0, 0]} />
+  </group>
+);
+
+/** the convent cell: stone walls, a narrow bed, a window with the night outside, a small cross, a candle on a stool */
+export const Cell: React.FC<{ t: number; candleOut: number }> = ({ t, candleOut }) => (
+  <group>
+    <M g={boxG(10, 0.2, 10)} c="#7a6a5a" tex="stone" p={[0, -0.1, 0]} cast={false} />
+    <M g={boxG(10, 5, 0.3)} c="#b8a890" tex="plaster" p={[0, 2.5, -2.6]} />
+    <M g={boxG(0.3, 5, 10)} c="#a89878" tex="plaster" p={[-3.2, 2.5, 1.5]} />
+    <M g={boxG(0.3, 5, 10)} c="#a89878" tex="plaster" p={[3.2, 2.5, 1.5]} />
+    <M g={boxG(10, 0.3, 10)} c="#6a5440" tex="planks" p={[0, 4.6, 1.5]} cast={false} />
+    {/* window: deep blue night, moon glow */}
+    <group position={[-1.9, 2.7, -2.44]}>
+      <mesh geometry={boxG(0.9, 1.3, 0.02)} material={coreMat("#2a3a7a", 0.75)} />
+      <mesh geometry={sphG(0.12, 16)} material={coreMat("#f4f0d8", 1.0)} position={[0.2, 0.3, 0.02]} />
+      <M g={boxG(1.1, 0.1, 0.25)} c="#8a7a64" p={[0, -0.7, 0.08]} />
+      <M g={boxG(0.06, 1.3, 0.05)} c="#4a3a2a" p={[0, 0, 0.02]} />
+    </group>
+    {/* a small wooden cross */}
+    <M g={boxG(0.08, 0.6, 0.05)} c="#5a3a22" tex="wood" p={[0.6, 2.6, -2.42]} />
+    <M g={boxG(0.36, 0.08, 0.05)} c="#5a3a22" tex="wood" p={[0.6, 2.75, -2.42]} />
+    {/* bed: frame, mattress, pillow; the head end at -z */}
+    <M g={boxG(1.2, 0.36, 2.3)} c="#6a4228" tex="wood" p={[0, 0.3, -1.1]} />
+    <M g={boxG(1.24, 1.0, 0.1)} c="#6a4228" tex="wood" p={[0, 0.7, -2.27]} />
+    <M g={boxG(1.1, 0.16, 2.2)} c="#e8e0d0" tex="fabric" p={[0, 0.56, -1.1]} />
+    <M g={boxG(0.8, 0.14, 0.4)} c="#f4efe4" tex="fabric" p={[0, 0.71, -1.95]} />
+    {/* stool with the candle */}
+    <M g={cylG(0.22, 0.24, 0.62, 16)} c="#7a4a2a" tex="wood" p={[1.0, 0.31, -1.75]} />
+    <M g={cylG(0.05, 0.05, 0.3, 12)} c="#f4ead6" p={[1.0, 0.77, -1.75]} />
+    {candleOut < 1 ? (
+      <>
+        <mesh geometry={sphG(0.045, 10)} material={coreMat("#ffc860", 1.0)} position={[1.0, 0.97 + 0.01 * Math.sin(t * 9), -1.75]} scale={[1 - candleOut, (1.7 + 0.1 * Math.sin(t * 13)) * (1 - candleOut), 1 - candleOut]} />
+        <pointLight position={[1.0, 1.1, -1.5]} color="#ffb05a" intensity={5 * (1 - candleOut)} distance={6} decay={2} />
+      </>
+    ) : null}
+    {candleOut > 0
+      ? Array.from({ length: 4 }, (_, i) => {
+          const u = clamp(candleOut * 1.4 - i * 0.12);
+          return u > 0 && u < 1 ? <M key={i} g={sphG(0.05, 10)} c="#8a8088" p={[1.0 + Math.sin(i * 2 + t) * 0.03, 0.97 + u * 0.7, -1.75]} s={0.4 + u * 1.2} op={0.7 * (1 - u)} cast={false} /> : null;
+        })
+      : null}
+  </group>
+);
+
+/** a flag on a pole with a painted name board; `up` 0..1 raises it */
+export const Flag: React.FC<{ p: V3; stripes: string[]; vertical?: boolean; name: string; up: number; t: number }> = ({ p, stripes, vertical, name, up, t }) => {
+  const k = ease(clamp(up));
+  return (
+    <group position={p}>
+      <M g={cylG(0.04, 0.05, 3.2, 10)} c="#3a3238" tex="metal" p={[0, 1.6, 0]} />
+      <M g={sphG(0.07, 10)} c="#c9a24a" p={[0, 3.24, 0]} />
+      <group position={[0.62, 1.5 + 1.4 * k, 0]} rotation={[0, Math.sin(t * 2.2 + p[0]) * 0.12, 0]}>
+        {stripes.map((c, i) => {
+          const n = stripes.length;
+          return vertical ? (
+            <M key={i} g={boxG(1.2 / n, 0.8, 0.02)} c={c} tex="fabric" p={[-0.6 + (i + 0.5) * (1.2 / n), 0, 0]} />
+          ) : (
+            <M key={i} g={boxG(1.2, 0.8 / n, 0.02)} c={c} tex="fabric" p={[0, 0.4 - (i + 0.5) * (0.8 / n), 0]} />
+          );
+        })}
+      </group>
+      <Label text={name} p={[0, 0.55, 0.06]} w={1.3} h={0.34} fg="#f8f0e2" bg="#2a2232" font={0.62} />
+    </group>
+  );
+};
+
+/** a hand-held red banner (pole along +y from the hand) */
+export const RedFlag: React.FC<{ p: V3; t: number; seed?: number }> = ({ p, t, seed = 0 }) => (
+  <group position={p} rotation={[0, 0, 0.12]}>
+    <M g={cylG(0.02, 0.02, 1.6, 8)} c="#5a3a22" tex="wood" p={[0, 0.6, 0]} />
+    <group position={[0.32, 1.22, 0]} rotation={[0, Math.sin(t * 3 + seed) * 0.2, 0]}>
+      <M g={boxG(0.62, 0.42, 0.02)} c="#c8202a" tex="fabric" />
+    </group>
+  </group>
+);
+
+/** a mantel clock whose minute hand runs back 11 minutes as `back` goes 0..1, with a "-11 MIN" card */
+export const Clock: React.FC<{ p: V3; back: number; s?: number }> = ({ p, back, s = 1 }) => {
+  const m = -11 * ease(clamp(back));
+  return (
+    <group position={p} scale={s}>
+      <M g={boxG(0.5, 0.62, 0.22)} c="#6a3a22" tex="wood" p={[0, 0.31, 0]} />
+      <M g={cylG(0.2, 0.2, 0.03, 32)} c="#f6efe0" p={[0, 0.36, 0.115]} r={[Math.PI / 2, 0, 0]} />
+      <M g={boxG(0.02, 0.17, 0.01)} c="#1e1a22" p={[Math.sin((m / 60) * Math.PI * 2) * 0.08, 0.36 + Math.cos((m / 60) * Math.PI * 2) * 0.08, 0.135]} r={[0, 0, -(m / 60) * Math.PI * 2]} />
+      <M g={boxG(0.025, 0.1, 0.01)} c="#1e1a22" p={[0.035, 0.38, 0.135]} r={[0, 0, -0.7]} />
+      {back > 0.05 ? <Label text="-11 MIN" p={[0, -0.12, 0.2]} w={0.6} h={0.2} fg="#c8202a" bg="#f6efe0" font={0.7} /> : null}
+    </group>
+  );
+};
+
+/** a stone tablet on a stand with painted text */
+export const Tablet: React.FC<{ p: V3; text: string; text2?: string; yaw?: number }> = ({ p, text, text2, yaw = 0 }) => (
+  <group position={p} rotation={[0, yaw, 0]}>
+    <M g={boxG(0.1, 1.0, 0.1)} c="#5a3a22" tex="wood" p={[0, 0.5, -0.1]} />
+    <M g={boxG(1.0, 0.7, 0.1)} c="#d8d0c4" tex="stone" p={[0, 1.25, 0]} r={[-0.15, 0, 0]} />
+    <group position={[0, 1.25, 0.06]} rotation={[-0.15, 0, 0]}>
+      <Label text={text} p={[0, text2 ? 0.1 : 0, 0.01]} w={0.9} h={0.32} fg="#2a2228" bg="none" font={0.9} />
+      {text2 ? <Label text={text2} p={[0, -0.2, 0.01]} w={0.9} h={0.2} fg="#7a1a1a" bg="none" font={0.85} /> : null}
+    </group>
+  </group>
+);
+
+/** a small painted card standing on a desk */
+export const Card: React.FC<{ p: V3; text: string; yaw?: number }> = ({ p, text, yaw = 0 }) => (
+  <group position={p} rotation={[0, yaw, 0]}>
+    <M g={boxG(0.5, 0.22, 0.02)} c="#f6efe0" tex="paper" p={[0, 0.11, 0]} r={[-0.25, 0, 0]} />
+    <Label text={text} p={[0, 0.11, 0.015]} r={[-0.25, 0, 0]} w={0.46} h={0.18} fg="#c8202a" bg="none" font={0.8} />
   </group>
 );

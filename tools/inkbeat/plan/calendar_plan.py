@@ -25,31 +25,40 @@ LEAD = 2  # captions appear 2 frames before the word (applied by makeChunks in c
 # A shot is a setup (a set, a mood, a lens). Inside it the beat rig moves the camera about once a second (SKILL.md
 # section 1); change setups only where the picture must change (a new subject, a reaction, the payoff).
 SHOTS = [
-    # id, anchor (turn, word, nth), mood, set, note
-    ("S01", (1, "On", 1), "night", "town", "convent street at night, the wall calendar on 4"),
-    ("S02", (1, "next", 1), "golden", "town", "the next morning: pages fly, 15; a townsman is shocked"),
-    ("S03", (2, "Pope", 1), "lamp", "study", "the Pope at his desk with shears"),
-    ("S04", (3, "Julius", 1), "lamp", "study", "Caesar bust, 365.25"),
-    ("S05", (3, "real", 1), "lamp", "study", "orrery: the year 11 minutes too long"),
-    ("S06", (4, "11", 1), "lamp", "study", "the Pope shrugs"),
-    ("S07", (4, "every", 1), "lamp", "study", "extra-day blocks stack up"),
-    ("S08", (4, "spring", 1), "lamp", "study", "March wall: the flower slides 21 to 11"),
-    ("S09", (5, "So", 1), "lamp", "study", "the Pope snips out ten days"),
-    ("S10", (5, "skipped", 1), "lamp", "study", "year plaques: 1900 NO, 2000 YES"),
-    ("S11", (6, "Spain", 1), "day", "town", "the square on the 15th, people cheer"),
-    ("S12", (6, "Everyone", 1), "day", "town", "the elder dozes"),
-    ("S13", (6, "Britain", 1), "cold", "town", "London 1752: eleven pages fly"),
-    ("S14", (7, "Sweden", 1), "cold", "snow", "Sweden: February 30, confusion"),
-    ("S15", (8, "Russia", 1), "night", "town", "Russia: October flips to November"),
+    # id, anchor (turn, word, nth), mood, set, what is on screen (one row per clause: the picture follows the words)
+    ("A01", (1, "On", 1), "night", "town", "the date: THURSDAY 4 OCTOBER 1582 on the convent wall"),
+    ("A02", (1, "a", 1), "lamp", "cell", "a famous nun, Teresa, in bed; a sister prays"),
+    ("A03", (1, "died", 1), "lamp", "cell", "she dies: eyes close, the candle goes out (non-graphic)"),
+    ("A04", (1, "The", 2), "golden", "town", "next morning: pages fly to FRIDAY 15"),
+    ("A05", (2, "Nobody", 1), "golden", "town", "nobody lost 10 days: townsfolk count on their fingers"),
+    ("A06", (2, "Pope", 1), "lamp", "study", "the Pope deletes them: snips 10 days out"),
+    ("A07", (3, "You", 1), "lamp", "study", "the old calendar came from Julius Caesar: his bust"),
+    ("A08", (3, "his", 1), "lamp", "study", "his year: a tablet 365.25 DAYS"),
+    ("A09", (3, "The", 2), "lamp", "study", "the real year is 11 minutes shorter: orrery + clock -11 MIN"),
+    ("A10", (4, "11", 1), "lamp", "study", "sounds like nothing: the Pope shrugs"),
+    ("A11", (4, "but", 1), "lamp", "study", "every 128 years one whole day: blocks stack, 128 YEARS card"),
+    ("A12", (4, "After", 1), "lamp", "study", "spring slips from March 21 to March 11: the flower slides"),
+    ("A13", (4, "Easter", 1), "lamp", "study", "Easter drifting with it: the egg rolls"),
+    ("A14", (5, "So", 1), "lamp", "study", "Pope Gregory fixed it, cut 10 days: snip"),
+    ("A15", (5, "then", 1), "lamp", "study", "skipped leap years: 1700/1800/1900 NO, 2000 YES"),
+    ("A16", (6, "Spain", 1), "day", "town", "Spain, Portugal, Poland, Italy: a flag rises on each name; cheers"),
+    ("A17", (6, "Everyone", 1), "day", "town", "everyone else took their time: the elder dozes"),
+    ("A18", (6, "Britain", 1), "cold", "town", "Britain 1752: eleven pages fly"),
+    ("A19", (7, "Sweden", 1), "cold", "snow", "Sweden: February 30, confusion"),
+    ("A20", (8, "And", 1), "night", "town", "Russia waited until 1918: JAN 31 flips to FEB 14 1918"),
+    ("A21", (8, "which", 1), "night", "town", "the October Revolution, in November: red flags, OCT 25 flips to NOV 7"),
 ]
 ACCENT = set()
 TAGS = []
 # word-anchored event times the composition uses (turn, word, nth) -> name
 EVENTS = {
-    "flipA": (1, "morning", 1), "flipB": (1, "15th", 1), "deleted": (2, "deleted", 1),
-    "cut": (5, "Cut", 1), "skip": (5, "skipped", 1), "wasnt": (5, "wasn't", 1), "was": (5, "was", 1),
-    "ukA": (6, "delete", 1), "ukB": (6, "days", 1), "feb": (7, "February", 1), "nov": (8, "November", 1),
-    "shrug": (4, "nothing", 1), "spring": (4, "spring", 1), "easter": (4, "Easter", 1), "cheer": (6, "overnight", 1),
+    "flipA": (1, "morning", 1), "flipB": (1, "15th", 1), "died": (1, "died", 1), "nobody": (2, "Nobody", 1),
+    "deleted": (2, "deleted", 1), "caesar": (3, "Julius", 1), "y365": (3, "365", 1), "minutes": (3, "minutes", 1),
+    "shrug": (4, "nothing", 1), "y128": (4, "128", 1), "spring": (4, "spring", 1), "easter": (4, "Easter", 1),
+    "cut": (5, "cut", 1), "skip": (5, "skipped", 1), "wasnt": (5, "wasn't", 1), "was": (5, "was", 1),
+    "spain": (6, "Spain", 1), "portugal": (6, "Portugal", 1), "poland": (6, "Poland", 1), "italy": (6, "Italy", 1),
+    "cheer": (6, "overnight", 1), "ukA": (6, "delete", 1), "ukB": (6, "days", 1), "feb": (7, "February", 1),
+    "r1918": (8, "1918", 1), "nov": (8, "November", 1),
 }
 MOVES = ["PUSH", "ORBIT_L", "PUSH", "DOLLY_R", "PULL", "ORBIT_R", "PUSH", "CRANE_UP", "PUSH", "DOLLY_L", "PULL", "TILT_UP"]
 
