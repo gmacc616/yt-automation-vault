@@ -1,0 +1,128 @@
+{
+ "fps": 30,
+ "duration_s": 78.18,
+ "shots": [
+  {
+   "id": "S01",
+   "t": 0.0,
+   "mood": "night",
+   "set": "town",
+   "note": "convent street at night, the wall calendar on 4",
+   "end": 7.22
+  },
+  {
+   "id": "S02",
+   "t": 7.22,
+   "mood": "golden",
+   "set": "town",
+   "note": "the next morning: pages fly, 15; a townsman is shocked",
+   "end": 11.8
+  },
+  {
+   "id": "S03",
+   "t": 11.8,
+   "mood": "lamp",
+   "set": "study",
+   "note": "the Pope at his desk with shears",
+   "end": 16.38
+  },
+  {
+   "id": "S04",
+   "t": 16.38,
+   "mood": "lamp",
+   "set": "study",
+   "note": "Caesar bust, 365.25",
+   "end": 22.08
+  },
+  {
+   "id": "S05",
+   "t": 22.08,
+   "mood": "lamp",
+   "set": "study",
+   "note": "orrery: the year 11 minutes too long",
+   "end": 25.14
+  },
+  {
+   "id": "S06",
+   "t": 25.14,
+   "mood": "lamp",
+   "set": "study",
+   "note": "the Pope shrugs",
+   "end": 27.42
+  },
+  {
+   "id": "S07",
+   "t": 27.42,
+   "mood": "lamp",
+   "set": "study",
+   "note": "extra-day blocks stack up",
+   "end": 35.02
+  },
+  {
+   "id": "S08",
+   "t": 35.02,
+   "mood": "lamp",
+   "set": "study",
+   "note": "March wall: the flower slides 21 to 11",
+   "end": 41.5
+  },
+  {
+   "id": "S09",
+   "t": 41.5,
+   "mood": "lamp",
+   "set": "study",
+   "note": "the Pope snips out ten days",
+   "end": 46.44
+  },
+  {
+   "id": "S10",
+   "t": 46.44,
+   "mood": "lamp",
+   "set": "study",
+   "note": "year plaques: 1900 NO, 2000 YES",
+   "end": 54.44
+  },
+  {
+   "id": "S11",
+   "t": 54.44,
+   "mood": "day",
+   "set": "town",
+   "note": "the square on the 15th, people cheer",
+   "end": 57.86
+  },
+  {
+   "id": "S12",
+   "t": 57.86,
+   "mood": "day",
+   "set": "town",
+   "note": "the elder dozes",
+   "end": 59.76
+  },
+  {
+   "id": "S13",
+   "t": 59.76,
+   "mood": "cold",
+   "set": "town",
+   "note": "London 1752: eleven pages fly",
+   "end": 65.48
+  },
+  {
+   "id": "S14",
+   "t": 65.48,
+   "mood": "cold",
+   "set": "snow",
+   "note": "Sweden: February 30, confusion",
+   "end": 71.96
+  },
+  {
+   "id": "S15",
+   "t": 71.96,
+   "mood": "night",
+   "set": "town",
+   "note": "Russia: October flips to November",
+   "end": 78.18
+  }
+ ],
+ "accent_words": [],
+ "tags": []
+}

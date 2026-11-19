@@ -1,3 +1,5 @@
 node_modules
 out/
 build/
+vo/*/voice*.wav
+vo/*/*.log
