@@ -18,7 +18,7 @@ import type { Beat, BeatPrm, Cam } from "../../inkbeat/core/rig";
 import { View } from "../../inkbeat/core/View";
 import type { V3 } from "../../inkbeat/types";
 import { BEATS, DURATION, EVENTS, SHOTS, WORDS } from "./plan.gen";
-import { Bust, DayBlocks, DayStrip, MarchWall, Orrery, Shears, Study, TearCalendar, Town, YearPlaque } from "./props";
+import { Bust, DayBlocks, PlaqueBoard, DayStrip, MarchWall, Orrery, Shears, Study, TearCalendar, Town, YearPlaque } from "./props";
 
 export const CAL_FRAMES = DURATION;
 const E = EVENTS;
@@ -32,8 +32,8 @@ const POPE: CharacterSpec = {
   build: ELDER_BUILD,
   look: {
     skin: SKIN.fair,
-    outfit: "sweater",
-    colors: { top: "#f2eee6", inner: CLOTH.cream, bottom: "#ece6da", shoes: CLOTH.oxblood, accent: CLOTH.brass },
+    outfit: "jacket",
+    colors: { top: "#f4f4f8", inner: "#b8202a", bottom: "#e8e8ee", shoes: CLOTH.oxblood, accent: CLOTH.brass },
     hair: "sides",
     hairColor: HAIR.silver,
     hat: "beanie",
@@ -49,7 +49,7 @@ const ELDER = CAST.elder;
 // ------------------------------------------------------------------ places
 const CAL_P: V3 = [0.4, 2.35, -5.12]; // the wall calendar on the brick house
 const POPE_P: V3 = [0.6, 0, -2.05];
-const MAN_P: V3 = [-0.7, 0.16, -2.2];
+const MAN_P: V3 = [-0.3, 0.16, -2.1];
 const KID_P: V3 = [1.0, 0.16, -2.2];
 const ELDER_P: V3 = [-2.4, 0.16, -3.2];
 const popeHead = headOf(POPE_P, POPE.height, POPE.build);
@@ -57,22 +57,22 @@ const manHead = headOf(MAN_P, MAN.height, MAN.build);
 const elderHead = headOf(ELDER_P, ELDER.height, ELDER.build);
 const BUST_P: V3 = [-2.5, 0, -2.4];
 const ORR_P: V3 = [1.55, 0.87, -0.85];
-const BLK_P: V3 = [0.4, 0.87, -0.95];
+const BLK_P: V3 = [1.0, 0.87, -0.72];
 const MARCH_P: V3 = [0.2, 2.75, -3.8];
 
 type SetName = "town" | "study" | "snow";
 /** the base lens and the depth-of-field focus of each setup */
 const SETUP: Record<string, { cam: Cam; focus: V3; blur: number }> = {
   S01: { cam: aim([3.6, 1.9, 4.6], CAL_P, 50, 0.36), focus: CAL_P, blur: 0.8 },
-  S02: { cam: aim([1.2, 1.35, 0.6], [manHead[0] + 0.5, manHead[1] + 0.35, manHead[2]], 50, 0.42), focus: manHead, blur: 1.6 },
+  S02: { cam: aim([1.4, 1.45, 2.4], [0.1, 1.95, -3.6], 50, 0.42), focus: manHead, blur: 1.0 },
   S03: { cam: aim([-0.2, 1.4, 0.55], popeHead, 46, 0.42), focus: popeHead, blur: 1.6 },
   S04: { cam: aim([-1.0, 1.75, 0.2], [BUST_P[0], 1.55, BUST_P[2]], 44, 0.4), focus: [BUST_P[0], 1.6, BUST_P[2]], blur: 2.0 },
   S05: { cam: aim([2.1, 1.45, 0.35], [ORR_P[0], ORR_P[1] + 0.31, ORR_P[2]], 42, 0.45), focus: [ORR_P[0], ORR_P[1] + 0.31, ORR_P[2]], blur: 2.4 },
   S06: { cam: aim([-0.8, 1.45, 1.6], popeHead, 44, 0.42), focus: popeHead, blur: 1.8 },
-  S07: { cam: aim([0.0, 1.55, 0.55], [BLK_P[0], 1.2, BLK_P[2]], 44, 0.45), focus: [BLK_P[0], 1.2, BLK_P[2]], blur: 2.2 },
+  S07: { cam: aim([0.5, 1.5, 0.75], [BLK_P[0], 1.2, BLK_P[2]], 44, 0.45), focus: [BLK_P[0], 1.2, BLK_P[2]], blur: 2.2 },
   S08: { cam: aim([0.6, 2.2, 1.6], MARCH_P, 46, 0.42), focus: MARCH_P, blur: 1.0 },
   S09: { cam: aim([0.3, 1.35, 1.1], popeHead, 46, 0.42), focus: popeHead, blur: 1.8 },
-  S10: { cam: aim([3.6, 1.6, 4.6], [3.6, 1.0, -2.9], 46, 0.5), focus: [3.6, 1.0, -2.9], blur: 0.8 },
+  S10: { cam: aim([3.2, 1.45, 1.7], [3.45, 1.35, -2.9], 52, 0.5), focus: [3.45, 1.35, -2.9], blur: 1.0 },
   S11: { cam: aim([0.4, 1.45, 3.4], [0.4, 1.8, -3.4], 54, 0.42), focus: [0.4, 1.5, -3.0], blur: 0.8 },
   S12: { cam: aim([-1.0, 1.35, -0.6], elderHead, 46, 0.36), focus: elderHead, blur: 1.6 },
   S13: { cam: aim([2.2, 1.6, 0.9], CAL_P, 50, 0.38), focus: CAL_P, blur: 0.8 },
@@ -142,8 +142,9 @@ const World: React.FC<{ i: number; t: number; cam: Cam }> = ({ i, t, cam }) => {
         <DayBlocks p={BLK_P} k={id === "S07" ? blocks : t > s07.t ? 1 : 0} />
         <MarchWall p={MARCH_P} drift={id === "S08" ? drift : t > s08.t ? 1 : 0} t={t} />
         {[["1700", "NO", E.skip + 0.35], ["1800", "NO", E.skip + 0.75], ["1900", "NO", E.wasnt], ["2000", "YES", E.was]].map(([y, st, at], k) => (
-          <YearPlaque key={y as string} p={[2.2 + k * 0.95, 0.95, -2.9]} year={y as string} stamp={st as "NO" | "YES"} on={t >= (at as number)} />
+          <YearPlaque key={y as string} p={[2.93 + (k % 2) * 1.04, 1.72 - Math.floor(k / 2) * 0.74, -2.9]} year={y as string} stamp={st as "NO" | "YES"} on={t >= (at as number)} />
         ))}
+        <PlaqueBoard />
         {strip}
         {actors}
         <CastLight at={id === "S04" ? [BUST_P[0], 1.7, BUST_P[2]] : popeHead} cam={cam.pos} mood={m} />

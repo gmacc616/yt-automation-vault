@@ -202,6 +202,16 @@ export const YearPlaque: React.FC<{ p: V3; year: string; stamp: "NO" | "YES"; on
   </group>
 );
 
+/** a wooden board on legs that holds the four year plaques */
+export const PlaqueBoard: React.FC = () => (
+  <group position={[3.45, 0, -3.0]}>
+    <M g={boxG(2.4, 1.75, 0.08)} c="#7a4a2a" tex="wood" p={[0, 1.35, 0]} />
+    {[-1.05, 1.05].map((x) => (
+      <M key={x} g={boxG(0.1, 0.5, 0.1)} c="#5a3a22" tex="wood" p={[x, 0.25, 0]} />
+    ))}
+  </group>
+);
+
 /** the Pope's study: plastered walls, a window, bookshelves, a rug */
 export const Study: React.FC<{ t: number }> = ({ t }) => (
   <group>
@@ -243,9 +253,9 @@ export const Snow: React.FC<{ t: number; c: V3; n?: number }> = ({ t, c, n = 140
   <group position={c}>
     {Array.from({ length: n }, (_, i) => {
       const x = (h1(i) - 0.5) * 9;
-      const z = (h1(i + 500) - 0.5) * 6 - 0.5;
+      const z = (h1(i + 500) - 0.5) * 5 - 2;
       const y = 7 - ((t * (0.6 + h1(i + 900) * 0.5) + h1(i + 77) * 7) % 7);
-      return <mesh key={i} geometry={sphG(0.045, 8)} material={coreMat("#ffffff", 0.95)} position={[x + Math.sin(t + i) * 0.2, y, z]} />;
+      return <mesh key={i} geometry={sphG(0.03, 8)} material={coreMat("#ffffff", 0.95)} position={[x + Math.sin(t + i) * 0.2, y, z]} />;
     })}
   </group>
 );
