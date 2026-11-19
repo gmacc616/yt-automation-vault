@@ -80,17 +80,17 @@ const TABLET_P: V3 = [-1.3, 0, -2.75];
 const CLOCK_P: V3 = [1.0, 0.87, -1.4];
 const EGG_P: V3 = [0.45, 2.95, -3.7];
 const FLAGS = [
-  { x: -3.4, name: "SPAIN", stripes: ["#c8202a", "#f4c020", "#f4c020", "#c8202a"], v: false, at: E.spain },
-  { x: -2.0, name: "PORTUGAL", stripes: ["#1a7a3a", "#c8202a", "#c8202a"], v: true, at: E.portugal },
-  { x: 2.2, name: "POLAND", stripes: ["#f4f4f4", "#d02030"], v: false, at: E.poland },
-  { x: 3.6, name: "ITALY", stripes: ["#1a8a4a", "#f4f4f4", "#d02030"], v: true, at: E.italy },
+  { x: -2.3, name: "SPAIN", stripes: ["#c8202a", "#f4c020", "#f4c020", "#c8202a"], v: false, at: E.spain },
+  { x: -0.95, name: "PORTUGAL", stripes: ["#1a7a3a", "#c8202a", "#c8202a"], v: true, at: E.portugal },
+  { x: 1.75, name: "POLAND", stripes: ["#f4f4f4", "#d02030"], v: false, at: E.poland },
+  { x: 3.1, name: "ITALY", stripes: ["#1a8a4a", "#f4f4f4", "#d02030"], v: true, at: E.italy },
 ];
 
 /** the base lens and the depth-of-field focus of each setup (one per clause) */
 const SETUP: Record<string, { cam: Cam; focus: V3; blur: number }> = {
   A01: { cam: aim([1.0, 2.2, -2.0], CAL_P, 44, 0.42), focus: CAL_P, blur: 1.2 },
-  A02: { cam: aim([1.7, 1.7, 0.9], [-0.1, 0.95, -1.4], 46, 0.45), focus: [-0.2, 1.0, -1.4], blur: 1.2 },
-  A03: { cam: aim([0.55, 1.35, -0.75], teresaHead, 40, 0.42), focus: teresaHead, blur: 2.2 },
+  A02: { cam: aim([1.7, 2.4, 0.8], [-0.35, 0.95, -1.35], 50, 0.45), focus: [-0.2, 1.0, -1.4], blur: 1.0 },
+  A03: { cam: aim([0.75, 1.75, -1.15], [teresaHead[0], teresaHead[1] + 0.12, teresaHead[2]], 40, 0.45), focus: teresaHead, blur: 2.0 },
   A04: { cam: aim([1.4, 1.45, 2.4], [0.1, 1.95, -3.6], 50, 0.42), focus: manHead, blur: 1.0 },
   A05: { cam: aim([0.7, 1.3, 1.3], [0.35, 1.25, -2.2], 48, 0.42), focus: [0.35, 1.3, -2.2], blur: 1.4 },
   A06: { cam: aim([-0.2, 1.4, 0.55], popeHead, 46, 0.42), focus: popeHead, blur: 1.6 },
@@ -103,7 +103,7 @@ const SETUP: Record<string, { cam: Cam; focus: V3; blur: number }> = {
   A13: { cam: aim([0.75, 2.65, -1.7], EGG_P, 40, 0.45), focus: EGG_P, blur: 2.0 },
   A14: { cam: aim([0.3, 1.35, 1.1], popeHead, 46, 0.42), focus: popeHead, blur: 1.8 },
   A15: { cam: aim([3.2, 1.45, 1.7], [3.45, 1.35, -2.9], 52, 0.5), focus: [3.45, 1.35, -2.9], blur: 1.0 },
-  A16: { cam: aim([0.3, 1.6, 4.4], [0.2, 1.9, -3.6], 58, 0.42), focus: [0.2, 1.5, -3.0], blur: 0.6 },
+  A16: { cam: aim([0.4, 1.7, 3.3], [0.4, 1.95, -3.4], 56, 0.42), focus: [0.4, 1.6, -3.0], blur: 0.6 },
   A17: { cam: aim([-3.3, 1.35, -0.9], elderHead, 46, 0.4), focus: elderHead, blur: 1.6 },
   A18: { cam: aim([2.2, 1.6, 0.9], CAL_P, 50, 0.38), focus: CAL_P, blur: 0.8 },
   A19: { cam: aim([0.6, 1.6, 2.6], [0.0, 1.9, -3.4], 50, 0.42), focus: manHead, blur: 1.0 },
@@ -164,8 +164,8 @@ const World: React.FC<{ i: number; t: number; cam: Cam }> = ({ i, t, cam }) => {
           <Character3D {...NUN} position={[0, 0, 0]} yaw={0} t={t} face={{ eyes: gone > 0.5 ? "closed" : "half", mouth: "smile", brows: "neutral", blink: false }} pose={{ armL: [8, 20], armR: [8, 20], headTilt: gone * 12 }} />
           <Veil head={nunHeadLocal} r={VEIL_R} />
         </group>
-        <M g={boxG(1.06, 0.3, 1.25)} c="#6a5a8a" tex="fabric" p={[0, 0.82, -0.85]} />
-        <M g={boxG(1.08, 0.08, 0.2)} c="#f4efe4" tex="fabric" p={[0, 0.96, -1.42]} />
+        <M g={boxG(1.06, 0.14, 1.0)} c="#6a5a8a" tex="fabric" p={[0, 0.84, -0.62]} />
+        <M g={boxG(1.08, 0.06, 0.16)} c="#f4efe4" tex="fabric" p={[0, 0.9, -1.1]} />
         <group position={SIS_P} rotation={[0, 1.15, 0]}>
           <Character3D {...SISTER} position={[0, 0, 0]} yaw={0} t={t} face={{ eyes: gone > 0.5 ? "closed" : "half", mouth: gone > 0.5 ? "frown" : "smile", brows: "worried" }} pose={{ armL: [38, 118], armR: [38, 118], armLFwd: 72, armRFwd: 72, headNod: 14 }} />
           <Veil head={sisHeadLocal} r={VEIL_R * 0.99} />
@@ -193,7 +193,7 @@ const World: React.FC<{ i: number; t: number; cam: Cam }> = ({ i, t, cam }) => {
         <Orrery p={ORR_P} t={t} year={t * 0.22} s={0.5} />
         <Clock p={CLOCK_P} back={ramp(t, E.minutes, 0.7)} s={0.8} />
         <DayBlocks p={BLK_P} k={t < a11.t ? 0 : blocks} />
-        {t >= E.y128 - 0.1 ? <Card p={[0.45, 0.87, -0.78]} text="128 YEARS" yaw={0.2} /> : null}
+        {t >= E.y128 - 0.1 ? <Card p={[0.95, 0.87, -0.42]} text="128 YEARS" yaw={0.4} /> : null}
         <MarchWall p={MARCH_P} drift={drift} t={t} />
         {[["1700", "NO", E.skip + 0.35], ["1800", "NO", E.skip + 0.75], ["1900", "NO", E.wasnt], ["2000", "YES", E.was]].map(([y, st, at], k) => (
           <YearPlaque key={y as string} p={[2.93 + (k % 2) * 1.04, 1.72 - Math.floor(k / 2) * 0.74, -2.9]} year={y as string} stamp={st as "NO" | "YES"} on={t >= (at as number)} />
@@ -226,7 +226,7 @@ const World: React.FC<{ i: number; t: number; cam: Cam }> = ({ i, t, cam }) => {
   } else if (id === "A16" || id === "A17") {
     sign = "PLAZA";
     calendar = <TearCalendar p={CAL_P} t={t} pages={[{ month: "OCTOBER", day: "15", foot: "1582" }]} />;
-    flags = FLAGS.map((f) => <Flag key={f.name} p={[f.x, 0.16, -4.2]} stripes={f.stripes} vertical={f.v} name={f.name} up={ramp(t, f.at - 0.1, 0.45)} t={t} />);
+    flags = FLAGS.map((f) => <Flag key={f.name} p={[f.x, 0.16, -3.3]} stripes={f.stripes} vertical={f.v} name={f.name} up={ramp(t, f.at - 0.1, 0.45)} t={t} />);
     const cheer = t >= E.cheer - 0.2;
     actors.push(<Character3D key="kid" {...KID} position={KID_P} yaw={-0.3} t={t} face={{ eyes: "open", mouth: cheer ? "grin" : "smile", brows: "raised" }} pose={{ armL: cheer ? [150, 20] : [15, 20], armR: cheer ? [150, 20] : [15, 20], bob: cheer ? Math.abs(Math.sin(t * 6)) * 10 : 0 }} faceCamera={cam.pos} />);
     actors.push(<Character3D key="man" {...MAN} position={MAN_P} yaw={0.3} t={t} face={{ eyes: "open", mouth: cheer ? "grin" : "smile", brows: "raised" }} pose={{ armL: [20, 30], armR: cheer ? [140, 30] : [20, 30] }} faceCamera={cam.pos} />);
@@ -259,7 +259,7 @@ const World: React.FC<{ i: number; t: number; cam: Cam }> = ({ i, t, cam }) => {
     lamp = 1;
     focusHead = [0.3, 1.4, -2.4];
     calendar = <TearCalendar p={CAL_P} t={t} pages={[{ month: "OCTOBER", day: "25", foot: "1917" }, { month: "NOVEMBER", day: "7", foot: "1917" }]} flipA={E.nov - 0.15} flipB={E.nov + 0.25} head="#8a1a2a" />;
-    const marchers: [CharacterSpec, V3, number][] = [[MAN, [-0.9, 0.16, -2.3], 0.15], [KID, [0.4, 0.16, -1.9], -0.05], [ELDER, [1.6, 0.16, -2.4], -0.25]];
+    const marchers: [CharacterSpec, V3, number][] = [[MAN, [-1.8, 0.16, -2.3], 0.2], [KID, [-0.9, 0.16, -1.8], 0.1], [ELDER, [1.7, 0.16, -2.3], -0.25]];
     marchers.forEach(([c, pos, yaw], k) => {
       const turn = t >= E.nov;
       const pose: Pose = { armL: [12, 25], armR: [55, 80], armRFwd: 35, walk: turn ? 0 : t * 6 + k, bob: turn ? 0 : Math.abs(Math.sin(t * 6 + k)) * 6 };
@@ -270,7 +270,7 @@ const World: React.FC<{ i: number; t: number; cam: Cam }> = ({ i, t, cam }) => {
   }
   return (
     <>
-      <Town sign={sign} banner={banner} lamp={lamp} snow={set === "snow"} t={t} />
+      <Town sign={sign} banner={banner} lamp={lamp} snow={set === "snow"} t={t} noPost={id === "A16" || id === "A17"} />
       {calendar}
       {flags}
       {actors}

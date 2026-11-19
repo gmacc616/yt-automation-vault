@@ -262,7 +262,7 @@ export const Snow: React.FC<{ t: number; c: V3; n?: number }> = ({ t, c, n = 140
 );
 
 /** the town square: the demo street, re-dressed per scene (sign text, snow, a banner) */
-export const Town: React.FC<{ sign: string; lamp?: number; snow?: boolean; banner?: string; t: number }> = ({ sign, lamp = 0, snow, banner, t }) => (
+export const Town: React.FC<{ sign: string; lamp?: number; snow?: boolean; banner?: string; t: number; noPost?: boolean }> = ({ sign, lamp = 0, snow, banner, t, noPost }) => (
   <group>
     <M g={boxG(60, 0.2, 60)} c={snow ? "#e8eef4" : "#8a8290"} tex={snow ? "sand" : "stone"} ts={1.5} p={[0, -0.1, 0]} cast={false} />
     <M g={boxG(30, 0.16, 3.2)} c={snow ? "#f0f4f8" : "#c8bcae"} tex="stone" p={[0, 0.08, -3.6]} cast={false} />
@@ -272,7 +272,7 @@ export const Town: React.FC<{ sign: string; lamp?: number; snow?: boolean; banne
     <House p={[-9.2, 0.16, -6.6]} w={5} h={5.8} d={4} wall="#e8dca8" tex="planks" roof={snow ? "#e8eef4" : "#5a4a6a"} windows={2} />
     <Label text={sign} p={[1.8, 3.7, -5.05]} w={2.6} h={0.5} fg="#f4ead6" bg="#3a2a4a" font={0.6} />
     {banner ? <Label text={banner} p={[-3.6, 4.2, -4.98]} w={3.2} h={0.7} fg="#f8f0e2" bg="#c8323a" font={0.6} /> : null}
-    <LampPost p={[-1.2, 0.16, -2.4]} on={lamp} />
+    {noPost ? null : <LampPost p={[-1.2, 0.16, -2.4]} on={lamp} />}
     <Crate p={[3.6, 0.16, -4.6]} yaw={0.3} />
     <Crate p={[4.2, 0.16, -4.4]} s={0.45} yaw={-0.2} />
     <Crate p={[3.85, 0.76, -4.55]} s={0.4} yaw={0.6} />
@@ -286,9 +286,9 @@ export const Town: React.FC<{ sign: string; lamp?: number; snow?: boolean; banne
 /** a nun's veil and white band, in a character's local frame (put it in the same group as the Character3D) */
 export const Veil: React.FC<{ head: V3; r: number }> = ({ head, r }) => (
   <group position={head}>
-    <M g={sphG(r * 1.12, 24)} c="#2e221e" tex="fabric" p={[0, r * 0.08, -r * 0.16]} s={[1.02, 1.08, 1.0]} />
+    <M g={sphG(r * 1.12, 24)} c="#2e221e" tex="fabric" p={[0, r * 0.1, -r * 0.3]} s={[1.04, 1.1, 0.72]} />
     <M g={boxG(r * 2.1, r * 2.2, r * 0.5)} c="#2e221e" tex="fabric" p={[0, -r * 0.9, -r * 0.62]} />
-    <M g={torG(r * 0.98, r * 0.12)} c="#f4f0e6" p={[0, r * 0.42, r * 0.08]} r={[Math.PI / 2 - 0.25, 0, 0]} />
+    <M g={torG(r * 0.92, r * 0.1)} c="#f4f0e6" p={[0, r * 0.5, -r * 0.05]} r={[Math.PI / 2 - 0.35, 0, 0]} />
   </group>
 );
 
@@ -358,8 +358,8 @@ export const Flag: React.FC<{ p: V3; stripes: string[]; vertical?: boolean; name
 /** a hand-held red banner (pole along +y from the hand) */
 export const RedFlag: React.FC<{ p: V3; t: number; seed?: number }> = ({ p, t, seed = 0 }) => (
   <group position={p} rotation={[0, 0, 0.12]}>
-    <M g={cylG(0.02, 0.02, 1.6, 8)} c="#5a3a22" tex="wood" p={[0, 0.6, 0]} />
-    <group position={[0.32, 1.22, 0]} rotation={[0, Math.sin(t * 3 + seed) * 0.2, 0]}>
+    <M g={cylG(0.02, 0.02, 1.2, 8)} c="#5a3a22" tex="wood" p={[0, 0.4, 0]} />
+    <group position={[0.32, 0.82, 0]} rotation={[0, Math.sin(t * 3 + seed) * 0.2, 0]}>
       <M g={boxG(0.62, 0.42, 0.02)} c="#c8202a" tex="fabric" />
     </group>
   </group>
