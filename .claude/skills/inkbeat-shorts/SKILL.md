@@ -192,6 +192,14 @@ keeps its own look, camera grammar, characters, audio levels (-14 LUFS) and gate
 - **Script:** inkbeat's own shape (references/shorts.md: a concrete strange hook in the first line, escalation in
   short sentences, one plain explanation, a twist, a last line that lands; numbers as words), for every category. Not
   the 3D skills' reference-channel formula. Fact-check every detail before writing; show the script before voicing.
+- **The picture follows the words (user rule, 2026-11-19):** the scene changes with what the narrator says. Every
+  sentence, and every clause that names a new person, place, date, number or action, gets its own setup that shows
+  exactly that thing, starting on (or 0-3 frames before) its first word. Plan shots from the script, clause by
+  clause, before choosing sets: if the line says "a nun died", show the nun and her death (peaceful and non-graphic:
+  eyes closing, a candle going out); if it names four countries, show each one as it is named. When the script
+  opens with a date, the first shot shows that date on screen. Never hold one set over lines about something else,
+  and never cover a named event with a generic establishing shot. Check it in the plan: one row per clause with the
+  words and what is on screen.
 - **Ask first, every video:** the topic (or offer the 10 ideas), voice (default voice or a recorded VO), music (a
   licensed track you give, or an original light bed). Then stop after the plan, after the look-dev and after the final,
   as in section 2.
