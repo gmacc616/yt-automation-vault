@@ -31,11 +31,11 @@ SHOTS = [
     ("S03", (2, "Pope", 1), "lamp", "study", "the Pope at his desk with shears"),
     ("S04", (3, "Julius", 1), "lamp", "study", "Caesar bust, 365.25"),
     ("S05", (3, "real", 1), "lamp", "study", "orrery: the year 11 minutes too long"),
-    ("S06", (4, "Eleven", 1), "lamp", "study", "the Pope shrugs"),
+    ("S06", (4, "11", 1), "lamp", "study", "the Pope shrugs"),
     ("S07", (4, "every", 1), "lamp", "study", "extra-day blocks stack up"),
     ("S08", (4, "spring", 1), "lamp", "study", "March wall: the flower slides 21 to 11"),
     ("S09", (5, "So", 1), "lamp", "study", "the Pope snips out ten days"),
-    ("S10", (5, "skip", 1), "lamp", "study", "year plaques: 1900 NO, 2000 YES"),
+    ("S10", (5, "skipped", 1), "lamp", "study", "year plaques: 1900 NO, 2000 YES"),
     ("S11", (6, "Spain", 1), "day", "town", "the square on the 15th, people cheer"),
     ("S12", (6, "Everyone", 1), "day", "town", "the elder dozes"),
     ("S13", (6, "Britain", 1), "cold", "town", "London 1752: eleven pages fly"),
@@ -46,8 +46,8 @@ ACCENT = set()
 TAGS = []
 # word-anchored event times the composition uses (turn, word, nth) -> name
 EVENTS = {
-    "flipA": (1, "morning", 1), "flipB": (1, "fifteenth", 1), "deleted": (2, "deleted", 1),
-    "cut": (5, "Cut", 1), "skip": (5, "skip", 1), "wasnt": (5, "wasn't", 1), "was": (5, "was", 1),
+    "flipA": (1, "morning", 1), "flipB": (1, "15th", 1), "deleted": (2, "deleted", 1),
+    "cut": (5, "Cut", 1), "skip": (5, "skipped", 1), "wasnt": (5, "wasn't", 1), "was": (5, "was", 1),
     "ukA": (6, "delete", 1), "ukB": (6, "days", 1), "feb": (7, "February", 1), "nov": (8, "November", 1),
     "shrug": (4, "nothing", 1), "spring": (4, "spring", 1), "easter": (4, "Easter", 1), "cheer": (6, "overnight", 1),
 }
@@ -65,11 +65,21 @@ def beats_for(words, shots):
         for i, w in enumerate(ws):
             start = i == 0 or re.search(r"[.?!,]$", ws[i - 1]["w"]) is not None
             gap = w["t"] - last
-            if (start and gap >= 0.7) or gap >= 1.15:
+            if (start and gap >= 0.7) or gap >= 0.85:
                 mv = MOVES[k % len(MOVES)]
                 k += 1
                 out.append({"shot": s["id"], "t": round(max(s["t"] + 0.4, w["t"] - 0.2), 3), "move": mv, "word": w["w"]})
                 last = w["t"]
+        # fill any hold over 1.25 s (pauses, long words) with evenly spaced small moves
+        ts = [s["t"]] + [b["t"] for b in out if b["shot"] == s["id"]] + [s["end"] - 0.3]
+        for a, b in zip(ts, ts[1:]):
+            m = int((b - a) / 0.85)
+            if b - a > 1.1:
+                for j in range(1, m):
+                    mv = MOVES[k % len(MOVES)]
+                    k += 1
+                    out.append({"shot": s["id"], "t": round(a + j * (b - a) / m, 3), "move": mv, "word": ""})
+    out.sort(key=lambda b: b["t"])
     return out
 
 

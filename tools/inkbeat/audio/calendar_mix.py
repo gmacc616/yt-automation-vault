@@ -154,7 +154,7 @@ def main(vdir, planp, outd):
     b[-fade:] *= np.linspace(1, 0, fade)
     # ---- SFX on words (time, kind)
     cues = [
-        (ev["flipA"], "flurry"), (ev["flipB"], "flip"), (ev["deleted"], "snip"),
+        (ev["flipA"], "flurry"), (ev["deleted"], "snip"),
         (shots["S02"]["t"] - 0.1, "whoosh"), (shots["S03"]["t"] - 0.1, "whoosh"),
         (ev["spring"], "chime"), (ev["cut"], "snip"), (ev["skip"] + 0.35, "stamp"), (ev["skip"] + 0.75, "stamp"),
         (ev["wasnt"], "stamp"), (ev["was"], "chime"), (ev["cheer"] - 0.2, "cheer"),
@@ -163,7 +163,7 @@ def main(vdir, planp, outd):
         (shots["S15"]["t"] - 0.1, "whoosh"), (ev["nov"] - 0.15, "flip"), (ev["nov"] + 0.2, "boing"),
     ]
     s07 = shots["S07"]
-    for k in range(10):  # the stacking day blocks
+    for k in range(1, 10, 2):  # the stacking day blocks (every other one)
         cues.append((s07["t"] + (k + 1) / 10 * max(0.5, s07["end"] - s07["t"] - 0.4) - 0.05, "block"))
     fx = np.zeros(N)
     gain = None

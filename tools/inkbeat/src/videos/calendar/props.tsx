@@ -243,9 +243,9 @@ export const Snow: React.FC<{ t: number; c: V3; n?: number }> = ({ t, c, n = 140
   <group position={c}>
     {Array.from({ length: n }, (_, i) => {
       const x = (h1(i) - 0.5) * 9;
-      const z = (h1(i + 500) - 0.5) * 7 + 1;
+      const z = (h1(i + 500) - 0.5) * 6 - 0.5;
       const y = 7 - ((t * (0.6 + h1(i + 900) * 0.5) + h1(i + 77) * 7) % 7);
-      return <mesh key={i} geometry={sphG(0.075, 8)} material={coreMat("#ffffff", 0.95)} position={[x + Math.sin(t + i) * 0.2, y, z]} />;
+      return <mesh key={i} geometry={sphG(0.045, 8)} material={coreMat("#ffffff", 0.95)} position={[x + Math.sin(t + i) * 0.2, y, z]} />;
     })}
   </group>
 );

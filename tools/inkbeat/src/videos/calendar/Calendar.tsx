@@ -65,19 +65,19 @@ type SetName = "town" | "study" | "snow";
 const SETUP: Record<string, { cam: Cam; focus: V3; blur: number }> = {
   S01: { cam: aim([3.6, 1.9, 4.6], CAL_P, 50, 0.36), focus: CAL_P, blur: 0.8 },
   S02: { cam: aim([1.2, 1.35, 0.6], [manHead[0] + 0.5, manHead[1] + 0.35, manHead[2]], 50, 0.42), focus: manHead, blur: 1.6 },
-  S03: { cam: aim([0.9, 1.5, 0.75], popeHead, 46, 0.36), focus: popeHead, blur: 1.6 },
+  S03: { cam: aim([-0.2, 1.4, 0.55], popeHead, 46, 0.42), focus: popeHead, blur: 1.6 },
   S04: { cam: aim([-1.0, 1.75, 0.2], [BUST_P[0], 1.55, BUST_P[2]], 44, 0.4), focus: [BUST_P[0], 1.6, BUST_P[2]], blur: 2.0 },
   S05: { cam: aim([2.1, 1.45, 0.35], [ORR_P[0], ORR_P[1] + 0.31, ORR_P[2]], 42, 0.45), focus: [ORR_P[0], ORR_P[1] + 0.31, ORR_P[2]], blur: 2.4 },
-  S06: { cam: aim([-0.8, 1.45, 1.6], popeHead, 44, 0.36), focus: popeHead, blur: 1.8 },
+  S06: { cam: aim([-0.8, 1.45, 1.6], popeHead, 44, 0.42), focus: popeHead, blur: 1.8 },
   S07: { cam: aim([0.0, 1.55, 0.55], [BLK_P[0], 1.2, BLK_P[2]], 44, 0.45), focus: [BLK_P[0], 1.2, BLK_P[2]], blur: 2.2 },
   S08: { cam: aim([0.6, 2.2, 1.6], MARCH_P, 46, 0.42), focus: MARCH_P, blur: 1.0 },
-  S09: { cam: aim([1.5, 1.4, 1.2], popeHead, 44, 0.36), focus: popeHead, blur: 1.8 },
-  S10: { cam: aim([3.4, 1.5, 1.6], [3.7, 1.0, -2.9], 46, 0.48), focus: [3.7, 1.0, -2.9], blur: 1.0 },
+  S09: { cam: aim([0.3, 1.35, 1.1], popeHead, 46, 0.42), focus: popeHead, blur: 1.8 },
+  S10: { cam: aim([3.6, 1.6, 4.6], [3.6, 1.0, -2.9], 46, 0.5), focus: [3.6, 1.0, -2.9], blur: 0.8 },
   S11: { cam: aim([0.4, 1.45, 3.4], [0.4, 1.8, -3.4], 54, 0.42), focus: [0.4, 1.5, -3.0], blur: 0.8 },
   S12: { cam: aim([-1.0, 1.35, -0.6], elderHead, 46, 0.36), focus: elderHead, blur: 1.6 },
   S13: { cam: aim([2.2, 1.6, 0.9], CAL_P, 50, 0.38), focus: CAL_P, blur: 0.8 },
   S14: { cam: aim([0.6, 1.6, 2.6], [0.0, 1.9, -3.4], 50, 0.42), focus: manHead, blur: 1.0 },
-  S15: { cam: aim([-0.8, 1.5, 2.6], [-0.3, 1.9, -3.6], 50, 0.4), focus: CAL_P, blur: 0.9 },
+  S15: { cam: aim([0.2, 1.5, 2.8], [0.6, 1.9, -3.6], 50, 0.4), focus: CAL_P, blur: 0.9 },
 };
 
 // small, safe move sizes for every beat (pushes never reach the subject)
@@ -142,7 +142,7 @@ const World: React.FC<{ i: number; t: number; cam: Cam }> = ({ i, t, cam }) => {
         <DayBlocks p={BLK_P} k={id === "S07" ? blocks : t > s07.t ? 1 : 0} />
         <MarchWall p={MARCH_P} drift={id === "S08" ? drift : t > s08.t ? 1 : 0} t={t} />
         {[["1700", "NO", E.skip + 0.35], ["1800", "NO", E.skip + 0.75], ["1900", "NO", E.wasnt], ["2000", "YES", E.was]].map(([y, st, at], k) => (
-          <YearPlaque key={y as string} p={[2.2 + k * 1.0, 0.95, -2.9]} year={y as string} stamp={st as "NO" | "YES"} on={t >= (at as number)} />
+          <YearPlaque key={y as string} p={[2.2 + k * 0.95, 0.95, -2.9]} year={y as string} stamp={st as "NO" | "YES"} on={t >= (at as number)} />
         ))}
         {strip}
         {actors}
@@ -187,7 +187,7 @@ const World: React.FC<{ i: number; t: number; cam: Cam }> = ({ i, t, cam }) => {
     lamp = 1;
     calendar = <TearCalendar p={CAL_P} t={t} pages={[{ month: "OCTOBER", day: "25" }, { month: "NOVEMBER", day: "7" }]} flipA={E.nov - 0.15} flipB={E.nov + 0.25} head="#8a1a2a" />;
     const turn = t >= E.nov;
-    actors.push(<Character3D key="elder" {...ELDER} position={[-1.3, 0.16, -2.6]} yaw={0.4} t={t} face={{ eyes: turn ? "wide" : "open", mouth: turn ? "o" : "smile", brows: "raised", look: 0.6 }} pose={{ armL: turn ? [70, 80] : [10, 30], armR: turn ? [70, 80] : [10, 30], armLFwd: 20, armRFwd: 20, headYaw: turn ? 0 : 35 }} faceCamera={cam.pos} />);
+    actors.push(<Character3D key="elder" {...ELDER} position={[0.9, 0.16, -2.5]} yaw={-0.2} t={t} face={{ eyes: turn ? "wide" : "open", mouth: turn ? "o" : "smile", brows: "raised", look: 0.6 }} pose={{ armL: turn ? [70, 80] : [10, 30], armR: turn ? [70, 80] : [10, 30], armLFwd: 20, armRFwd: 20, headYaw: turn ? 0 : 35 }} faceCamera={cam.pos} />);
   }
   const focusHead = actors.length ? manHead : CAL_P;
   return (
