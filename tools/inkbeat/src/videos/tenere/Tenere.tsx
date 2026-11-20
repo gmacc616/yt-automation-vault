@@ -81,7 +81,12 @@ const CAMS: Record<string, CamPath> = {
   S04: PRESETS.orbit({ target: [0, 3.5, 0], dist: 24, h: 1.5, from: 20, deg: 75, t0: S("S04").t, dur: S("S04").end - S("S04").t + 0.6, mm: 22, face: 0.48 }),
   S05: PRESETS.slowPush({ target: [0, 3.5, 0], ang: -0.6, h: 0.6, from: 22, to: 16, t0: S("S05").t, dur: S("S05").end - S("S05").t, mm: 24, face: 0.46 }),
   S06: PRESETS.sideTrack({ subject: (t) => camelAt(t, 1).pos, offset: 9, side: 1, h: 1.6, aimH: 1.6, mm: 28, lead: 0.6 }),
-  S07: PRESETS.reveal({ target: [0, 4.5, 0], ang: 2.2, dist: 6.5, rise: [6.5, 1.4], lookDrop: -3.2, t0: S("S07").t, dur: S("S07").end - S("S07").t, mm: 28 }),
+  // the question: from beside the crown, a slow crane down the trunk to the sand (outside the crown the whole way)
+  S07: (t) => {
+    const u = EASE.inOut(clamp((t - S("S07").t) / (S("S07").end - S("S07").t)), 3);
+    const d = 11.5 - 2.5 * u;
+    return { pos: [Math.sin(2.2) * d, 7.6 - 5.6 * u, Math.cos(2.2) * d], look: [0, 7.0 - 5.6 * u, 0], fov: 46, roll: 0 };
+  },
   S08: PRESETS.slowPush({ target: [2.6, 0.9, 1.4], ang: 0.4, h: 1.2, from: 7, to: 5.6, t0: S("S08").t, dur: S("S08").end - S("S08").t, mm: 32, face: 0.42 }),
   S09: (t) => {
     const u = EASE.inOut(clamp((t - S("S09").t) / (E.roots - S("S09").t + 0.6)), 3);
