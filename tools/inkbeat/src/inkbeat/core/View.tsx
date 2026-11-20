@@ -59,15 +59,22 @@ export type ViewProps = {
   exposure?: number;
   /** draw the sky dome (exteriors) */
   sky?: boolean;
+  /** half-size (m) of the key light's shadow box; default follows the lens distance (4-16 m). Wide outdoor worlds:
+   * 24-60 (trees and buildings far from the subject still cast shadows; uses a 4096 shadow map) */
+  shadowExtent?: number;
+  /** the camera far plane (m): 600 default; distant hills and skies may need more */
+  far?: number;
+  /** override the key light direction (a moving sun: time passing, a sunrise); default = the mood's key */
+  keyDir?: V3;
   width?: number;
   height?: number;
   children?: React.ReactNode;
   style?: React.CSSProperties;
 };
 
-export const View: React.FC<ViewProps> = ({ mood: m, cam, t, focus, blur = 1.4, exposure = 0, sky = true, width = 1080, height = 1920, children, style }) => {
+export const View: React.FC<ViewProps> = ({ mood: m, cam, t, focus, blur = 1.4, exposure = 0, sky = true, shadowExtent, far = 600, keyDir, width = 1080, height = 1920, children, style }) => {
   const mood = typeof m === "string" ? moodOf(m) : m;
-  const L = shotLight(mood, cam);
+  const L = shotLight(mood, cam, keyDir, shadowExtent);
   const fd = Math.max(0.2, new THREE.Vector3(...cam.pos).distanceTo(new THREE.Vector3(...(focus ?? cam.look))));
   const P = mood.post;
   const k = width / 1080; // post px values are authored at 1080 wide
@@ -80,7 +87,7 @@ export const View: React.FC<ViewProps> = ({ mood: m, cam, t, focus, blur = 1.4, 
   };
   return (
     <ThreeCanvas width={width} height={height} shadows flat style={{ position: "absolute", inset: 0, ...style }}>
-      <CamSet cam={cam} far={600} />
+      <CamSet cam={cam} far={far} />
       <LookLights look={L.look} center={L.center} extent={L.extent} fog />
       <ToonSync look={L.look} />
       <CamFill cam={cam} color={mood.camFill.color} intensity={mood.camFill.intensity} />

@@ -40,10 +40,13 @@ export type Cam = { pos: V3; look: V3; fov: number; roll?: number };
 export type ShotLight = { look: MoodPreset; center: V3; extent: number };
 
 /** the shadow box for a lens: extent from the lens→look distance (2 m steps, 4–16 m), center snapped to texels */
-export const shotLight = (mood: MoodPreset, cam: Cam, keyDir?: V3): ShotLight => {
-  const look = keyDir ? { ...mood, lights: { ...mood.lights, key: { ...mood.lights.key, dir: keyDir } } } : mood;
+export const shotLight = (mood: MoodPreset, cam: Cam, keyDir?: V3, extentOverride?: number): ShotLight => {
+  // a wide outdoor shot can ask for a bigger box (extentOverride, m, quantized to 4 m) and gets a 4096 map
+  const big = extentOverride !== undefined && extentOverride > 16;
+  const key0 = { ...mood.lights.key, ...(keyDir ? { dir: keyDir } : {}), ...(big ? { mapSize: 4096 } : {}) };
+  const look = keyDir || big ? { ...mood, lights: { ...mood.lights, key: key0 } } : mood;
   const d = dist(cam.pos, cam.look);
-  const extent = clamp(Math.ceil((d * 1.2 + 3) / 2) * 2, 4, 16);
+  const extent = extentOverride !== undefined ? clamp(Math.ceil(extentOverride / 4) * 4, 4, 80) : clamp(Math.ceil((d * 1.2 + 3) / 2) * 2, 4, 16);
   const c0: V3 = [Math.round(cam.look[0] * 2) / 2, Math.round(cam.look[1] * 2) / 2, Math.round(cam.look[2] * 2) / 2];
   return { look, center: snapShadowCenter(c0, look.lights.key.dir, extent, look.lights.key.mapSize), extent };
 };

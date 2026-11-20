@@ -1,0 +1,439 @@
+{
+ "fps": 30,
+ "duration_s": 64.14,
+ "shots": [
+  {
+   "id": "S01",
+   "t": 0.0,
+   "mood": "sunny",
+   "set": "desert",
+   "note": "the lone acacia, nothing to the horizon; 400 KM marker stone",
+   "end": 3.06
+  },
+  {
+   "id": "S02",
+   "t": 3.06,
+   "mood": "sunny",
+   "set": "desert",
+   "note": "tease: the trunk jolts twice (two hits), no vehicle shown",
+   "end": 5.86
+  },
+  {
+   "id": "S03",
+   "t": 5.86,
+   "mood": "sunny",
+   "set": "desert",
+   "note": "overhead: the tree a dot in the sand sea; NIGER tag",
+   "end": 8.2
+  },
+  {
+   "id": "S04",
+   "t": 8.2,
+   "mood": "sunny",
+   "set": "desert",
+   "note": "orbit: empty sand in every direction",
+   "end": 13.22
+  },
+  {
+   "id": "S05",
+   "t": 13.22,
+   "mood": "sunny",
+   "set": "desert",
+   "note": "300 YEARS: the sun arcs, the shadow sweeps",
+   "end": 15.72
+  },
+  {
+   "id": "S06",
+   "t": 15.72,
+   "mood": "golden",
+   "set": "desert",
+   "note": "salt caravan of camels walks past; AGADEZ / BILMA signs",
+   "end": 21.84
+  },
+  {
+   "id": "S07",
+   "t": 21.84,
+   "mood": "golden",
+   "set": "desert",
+   "note": "the question: tilt down the trunk to the sand",
+   "end": 24.84
+  },
+  {
+   "id": "S08",
+   "t": 24.84,
+   "mood": "cloudy",
+   "set": "desert",
+   "note": "1938: the crew digs a well beside the tree",
+   "end": 28.34
+  },
+  {
+   "id": "S09",
+   "t": 28.34,
+   "mood": "cloudy",
+   "set": "shaft",
+   "note": "cross-section: 35 M down, the roots reach the water",
+   "end": 35.21
+  },
+  {
+   "id": "S10",
+   "t": 35.21,
+   "mood": "sunny",
+   "set": "desert",
+   "note": "a 1930s car crosses the sand",
+   "end": 37.08
+  },
+  {
+   "id": "S11",
+   "t": 37.08,
+   "mood": "sunny",
+   "set": "desert",
+   "note": "1934: the explorer lifts his hat at the tree",
+   "end": 43.06
+  },
+  {
+   "id": "S12",
+   "t": 43.06,
+   "mood": "cloudy",
+   "set": "desert",
+   "note": "1959: the explorer shocked, broken limbs on the sand",
+   "end": 47.06
+  },
+  {
+   "id": "S13",
+   "t": 47.06,
+   "mood": "night",
+   "set": "desert",
+   "note": "1973 night: truck headlights approach",
+   "end": 50.36
+  },
+  {
+   "id": "S14",
+   "t": 50.36,
+   "mood": "night",
+   "set": "desert",
+   "note": "impact: the tree breaks and falls; debris, dust, shake",
+   "end": 52.78
+  },
+  {
+   "id": "S15",
+   "t": 52.78,
+   "mood": "sunset",
+   "set": "desert",
+   "note": "the fallen tree in empty sand; pull back",
+   "end": 56.49
+  },
+  {
+   "id": "S16",
+   "t": 56.49,
+   "mood": "indoor",
+   "set": "museum",
+   "note": "the remains on a plinth in the museum in Niamey",
+   "end": 59.9
+  },
+  {
+   "id": "S17",
+   "t": 59.9,
+   "mood": "golden",
+   "set": "desert",
+   "note": "the metal tree alone in the sand",
+   "end": 64.14
+  }
+ ],
+ "accent_words": [],
+ "tags": [],
+ "events": {
+  "thud1": 3.66,
+  "twice": 4.88,
+  "landmark": 14.96,
+  "lose": 19.62,
+  "dug": 26.88,
+  "water": 30.14,
+  "roots": 31.16,
+  "storey": 33.86,
+  "cars": 35.555,
+  "y1934": 38.86,
+  "first": 40.44,
+  "back": 43.54,
+  "crashed59": 45.7,
+  "y1973": 47.36,
+  "truck": 48.58,
+  "knocked": 51.4,
+  "kill": 54.44,
+  "two": 54.96,
+  "remains": 57.202,
+  "metal": 61.0,
+  "end": 63.54
+ },
+ "beats": [
+  {
+   "shot": "S01",
+   "t": 0.535,
+   "move": "PUSH",
+   "word": "tree"
+  },
+  {
+   "shot": "S01",
+   "t": 1.46,
+   "move": "ORBIT_L",
+   "word": "kilometres"
+  },
+  {
+   "shot": "S02",
+   "t": 3.8,
+   "move": "ORBIT_R",
+   "word": "into"
+  },
+  {
+   "shot": "S02",
+   "t": 4.68,
+   "move": "PUSH",
+   "word": "twice."
+  },
+  {
+   "shot": "S03",
+   "t": 6.62,
+   "move": "PULL",
+   "word": "in"
+  },
+  {
+   "shot": "S04",
+   "t": 8.74,
+   "move": "DOLLY_R",
+   "word": "stood"
+  },
+  {
+   "shot": "S04",
+   "t": 9.62,
+   "move": "PULL",
+   "word": "sand."
+  },
+  {
+   "shot": "S04",
+   "t": 10.38,
+   "move": "ORBIT_R",
+   "word": "Nothing"
+  },
+  {
+   "shot": "S04",
+   "t": 11.46,
+   "move": "PUSH",
+   "word": "it"
+  },
+  {
+   "shot": "S05",
+   "t": 13.74,
+   "move": "PUSH",
+   "word": "years,"
+  },
+  {
+   "shot": "S05",
+   "t": 14.6,
+   "move": "DOLLY_L",
+   "word": "the"
+  },
+  {
+   "shot": "S06",
+   "t": 16.24,
+   "move": "ORBIT_L",
+   "word": "of"
+  },
+  {
+   "shot": "S06",
+   "t": 16.96,
+   "move": "PUSH",
+   "word": "crossing"
+  },
+  {
+   "shot": "S06",
+   "t": 18.08,
+   "move": "DOLLY_R",
+   "word": "and"
+  },
+  {
+   "shot": "S06",
+   "t": 19.08,
+   "move": "PULL",
+   "word": "it,"
+  },
+  {
+   "shot": "S06",
+   "t": 20.02,
+   "move": "ORBIT_R",
+   "word": "and"
+  },
+  {
+   "shot": "S07",
+   "t": 22.58,
+   "move": "PUSH",
+   "word": "live"
+  },
+  {
+   "shot": "S07",
+   "t": 23.46,
+   "move": "CRANE_UP",
+   "word": "else"
+  },
+  {
+   "shot": "S08",
+   "t": 26.38,
+   "move": "TILT_UP",
+   "word": "a"
+  },
+  {
+   "shot": "S08",
+   "t": 27.26,
+   "move": "PUSH",
+   "word": "right"
+  },
+  {
+   "shot": "S09",
+   "t": 29.02,
+   "move": "PULL",
+   "word": "down,"
+  },
+  {
+   "shot": "S09",
+   "t": 29.94,
+   "move": "ORBIT_R",
+   "word": "water."
+  },
+  {
+   "shot": "S09",
+   "t": 30.96,
+   "move": "PUSH",
+   "word": "roots"
+  },
+  {
+   "shot": "S09",
+   "t": 31.82,
+   "move": "CRANE_UP",
+   "word": "there,"
+  },
+  {
+   "shot": "S09",
+   "t": 32.7,
+   "move": "PUSH",
+   "word": "deep"
+  },
+  {
+   "shot": "S09",
+   "t": 33.66,
+   "move": "DOLLY_L",
+   "word": "building"
+  },
+  {
+   "shot": "S11",
+   "t": 37.76,
+   "move": "PUSH",
+   "word": "saw"
+  },
+  {
+   "shot": "S11",
+   "t": 38.66,
+   "move": "DOLLY_R",
+   "word": "1934,"
+  },
+  {
+   "shot": "S11",
+   "t": 40.02,
+   "move": "PULL",
+   "word": "on"
+  },
+  {
+   "shot": "S11",
+   "t": 41.1,
+   "move": "ORBIT_R",
+   "word": "between"
+  },
+  {
+   "shot": "S11",
+   "t": 42.12,
+   "move": "PUSH",
+   "word": "Agadez."
+  },
+  {
+   "shot": "S12",
+   "t": 43.58,
+   "move": "CRANE_UP",
+   "word": "in"
+  },
+  {
+   "shot": "S12",
+   "t": 44.86,
+   "move": "PUSH",
+   "word": "a"
+  },
+  {
+   "shot": "S12",
+   "t": 45.8,
+   "move": "DOLLY_L",
+   "word": "into"
+  },
+  {
+   "shot": "S13",
+   "t": 48.3,
+   "move": "PUSH",
+   "word": "a"
+  },
+  {
+   "shot": "S13",
+   "t": 49.02,
+   "move": "ORBIT_L",
+   "word": "reportedly"
+  },
+  {
+   "shot": "S14",
+   "t": 50.86,
+   "move": "ORBIT_R",
+   "word": "it"
+  },
+  {
+   "shot": "S15",
+   "t": 53.52,
+   "move": "PULL",
+   "word": "desert"
+  },
+  {
+   "shot": "S15",
+   "t": 54.44,
+   "move": "TILT_UP",
+   "word": "it."
+  },
+  {
+   "shot": "S15",
+   "t": 55.315,
+   "move": "PUSH",
+   "word": ""
+  },
+  {
+   "shot": "S16",
+   "t": 57.2,
+   "move": "DOLLY_R",
+   "word": "rest"
+  },
+  {
+   "shot": "S16",
+   "t": 58.34,
+   "move": "PULL",
+   "word": "Museum"
+  },
+  {
+   "shot": "S17",
+   "t": 60.74,
+   "move": "PUSH",
+   "word": "a"
+  },
+  {
+   "shot": "S17",
+   "t": 61.7,
+   "move": "DOLLY_L",
+   "word": "watch"
+  },
+  {
+   "shot": "S17",
+   "t": 62.64,
+   "move": "PULL",
+   "word": "empty"
+  }
+ ]
+}

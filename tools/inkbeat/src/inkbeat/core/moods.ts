@@ -115,5 +115,65 @@ export const MOODS: Record<string, MoodPreset> = {
     grade: { exposure: 0.85, contrast: 1.14, saturation: 1.12, shadowTint: "#5a3a7a", highlightTint: "#ffe0a0", gain: "#fff4e0" }, bloomTint: "#ffd080", ink: "#1e1008",
     camFill: ["#ffe8c8", 0.25], cast: { rim: ["#ffd070", 2.2], fill: ["#e0d8ff", 0.5] },
   }),
+  // ---- cinematic-upgrade moods (inkbeat): natural outdoor light for deep sets with sky, grass and roads. The classic
+  // moods above keep a warm, stylized cast; these read as real weather while staying toon (banded, inked, clean).
+  /** sunny day: neutral-white sun high and to the side, clear blue sky, green bounce from fields, crisp blue shade.
+   * The default for outdoor worlds (it never washes a scene orange). */
+  sunny: mk({
+    note: "sunny day, neutral sun, blue sky", hemi: ["#c4dcff", "#6f8a58", 1.0], key: ["#fff7ea", 4.4, [0.5, 0.75, 0.35]], rim: ["#ffffff", 1.4, [-0.6, 0.5, -0.7]],
+    fill: ["#9fc0ff", 0.4, [-0.7, 0.3, 0.5]], prac: ["#ffd8a0", 3, "#fff0d0"], fog: ["#cfe2f8", 0.0018],
+    sky: sky("#2f72e8", "#7fb6f6", "#e6f2ff", { sunOn: 0.6, clouds: 0.55, cloudColor: "#e8f0fc", cloudLit: "#ffffff", horizon: 0.2, sun: { dir: [0.5, 0.6, -0.6], color: "#fffbe8", size: 5 } }),
+    toon: { shadowTint: [0.84, 0.9, 1.16], hiTint: [1.04, 1.03, 0.97], rimColor: "#ffffff" },
+    grade: { exposure: 0.9, contrast: 1.1, saturation: 1.1, shadowTint: "#33458f", highlightTint: "#fffaf0", gain: "#fbfdff" }, bloomTint: "#fff6e0", ink: "#18202a",
+    camFill: ["#eef4ff", 0.22], cast: { rim: ["#ffffff", 1.5], fill: ["#dce8ff", 0.55] },
+  }),
+  /** cloudy day: soft, almost shadowless key, bright sky dome, low contrast but still saturated greens */
+  cloudy: mk({
+    note: "overcast day, soft light", hemi: ["#dfe6f0", "#7a8a6a", 1.5], key: ["#f4f6fa", 1.9, [0.3, 0.9, 0.3]], rim: ["#e8eef8", 0.9, [-0.6, 0.5, -0.7]],
+    fill: ["#c8d4e8", 0.6, [-0.7, 0.3, 0.5]], prac: ["#ffd8a0", 4, "#fff0d0"], fog: ["#c8d0dc", 0.006],
+    sky: sky("#8a9ab4", "#b8c4d4", "#dce2ea", { clouds: 1.0, cloudColor: "#a8b4c4", cloudLit: "#e8ecf2", horizon: 0.25 }),
+    toon: { shadowTint: [0.9, 0.93, 1.08], hiTint: [1.0, 1.0, 1.0], rimColor: "#eef2f8" },
+    grade: { exposure: 0.95, contrast: 1.04, saturation: 1.06, shadowTint: "#4a5470", highlightTint: "#f4f6fa", gain: "#f8faff" }, bloomTint: "#f0f4f8", ink: "#1c2028",
+    camFill: ["#f0f4fa", 0.3], cast: { rim: ["#f0f4fa", 1.0], fill: ["#e8ecf4", 0.7] },
+  }),
+  /** sunset: the sun on the horizon, red-orange key raking the set, magenta-violet sky and shade, long shadows */
+  sunset: mk({
+    note: "sunset, raking red-orange sun", hemi: ["#d890c0", "#4a2a4a", 0.7], key: ["#ff8040", 4.8, [-0.8, 0.16, -0.4]], rim: ["#ffb070", 3.0, [0.7, 0.25, -0.7]],
+    fill: ["#8a70e0", 0.55, [0.8, 0.3, 0.5]], prac: ["#ffa040", 8, "#ffd090"], fog: ["#c07090", 0.006],
+    sky: sky("#2a2a80", "#e06a8a", "#ffa050", { sunOn: 1.0, rays: 0.4, clouds: 0.45, cloudColor: "#a04a7a", cloudLit: "#ffb070", horizon: 0.22, sun: { dir: [-0.8, 0.05, -0.6], color: "#ffb060", size: 9 } }),
+    toon: { shadowTint: [0.95, 0.72, 1.12], hiTint: [1.16, 0.95, 0.78], rimColor: "#ffa060" },
+    grade: { exposure: 0.88, contrast: 1.16, saturation: 1.18, shadowTint: "#4a2070", highlightTint: "#ffc890", gain: "#fff2e4" }, bloomTint: "#ff9a50", ink: "#1a0c18",
+    camFill: ["#ffd0b8", 0.22], cast: { rim: ["#ffa050", 2.4], fill: ["#d0c0ff", 0.5] },
+  }),
+  /** rain at night: dark blue-gray storm, weak cool key, strong warm practicals and headlights (they make the wet
+   * road read), dense fog for depth; pair with fx Rain + a wet Road + WetGlints */
+  rain: mk({
+    note: "rainy night, storm blue, warm practicals", hemi: ["#5a6a8a", "#1a1e28", 0.85], key: ["#b8c8e8", 1.6, [-0.4, 0.8, -0.5]], rim: ["#c8d8ff", 2.0, [0.6, 0.45, -0.7]],
+    fill: ["#ffb060", 0.35, [0.6, 0.2, 0.7]], prac: ["#ffc070", 10, "#ffe0a8"], fog: ["#3a4458", 0.012],
+    sky: sky("#1a1e2e", "#2e3648", "#4a5468", { clouds: 1.0, cloudColor: "#262c3c", cloudLit: "#4a5470", horizon: 0.3 }),
+    toon: { shadowTint: [0.86, 0.9, 1.14], hiTint: [1.0, 1.02, 1.08], rimColor: "#c8d8ff" },
+    grade: { exposure: 0.82, contrast: 1.14, saturation: 0.98, shadowTint: "#2a3450", highlightTint: "#ffe2b8", gain: "#e8eef8" }, bloomTint: "#ffd8a0", ink: "#0a0e16",
+    camFill: ["#c8d4f0", 0.3], cast: { rim: ["#c8d8ff", 1.8], fill: ["#ffc890", 0.6] },
+  }),
+  /** dramatic: one hard key from the side and behind, little ambient, a strong rim; tension, reveals, villains */
+  dramatic: mk({
+    note: "dramatic hard side key", hemi: ["#5a5a8a", "#1a1420", 0.45], key: ["#ffe2b0", 5.5, [-0.9, 0.45, -0.2]], rim: ["#a8c0ff", 3.2, [0.7, 0.4, -0.7]],
+    fill: ["#5060c0", 0.25, [0.8, 0.2, 0.5]], prac: ["#ffb050", 8, "#ffe0a0"], fog: ["#1a1830", 0.006],
+    sky: sky("#141838", "#2a2a5a", "#4a4a7a", { clouds: 0.5, cloudColor: "#222448", cloudLit: "#5a5a90" }),
+    toon: { shadowTint: [0.82, 0.8, 1.2], hiTint: [1.12, 1.04, 0.9], rimColor: "#b8c8ff" },
+    grade: { exposure: 0.8, contrast: 1.26, saturation: 1.08, shadowTint: "#20184a", highlightTint: "#ffe0b0", gain: "#fff8ee" }, bloomTint: "#ffd8a0", ink: "#0a0810",
+    camFill: ["#c8c8ff", 0.15], cast: { rim: ["#b8c8ff", 2.6], fill: ["#8890d0", 0.35] },
+  }),
+  /** indoor daylight: a window key (soft, cool-neutral), warm bounce from the floor, readable faces */
+  indoor: mk({
+    note: "indoor daylight through windows", hemi: ["#e8eef8", "#8a6a50", 1.1], key: ["#f6f8ff", 3.4, [0.7, 0.55, 0.3]], rim: ["#ffe8c8", 1.4, [-0.6, 0.45, -0.7]],
+    fill: ["#ffd8b0", 0.5, [-0.7, 0.2, 0.5]], prac: ["#ffd090", 5, "#fff0c8"], fog: ["#e8e4dc", 0.004],
+    sky: sky("#8ab8f0", "#c8e0fa", "#eef6ff"), toon: { shadowTint: [0.9, 0.88, 1.08], hiTint: [1.04, 1.02, 0.98], rimColor: "#fff0d8" },
+    grade: { exposure: 0.95, contrast: 1.1, saturation: 1.08, shadowTint: "#4a4070", highlightTint: "#fff8ec", gain: "#fdfcfa" }, bloomTint: "#fff4e0", ink: "#1a1418",
+    camFill: ["#fff4e8", 0.28], cast: { rim: ["#ffe8c8", 1.4], fill: ["#f0f0ff", 0.6] },
+  }),
 };
 export const moodOf = (id: string): MoodPreset => MOODS[id] ?? MOODS.day;
+/** every lighting preset by name (classic: day dusk night cold lamp golden; outdoor worlds: sunny cloudy sunset rain
+ * dramatic indoor). Pick by story and act, never one light for a whole film. */
+export const LIGHTING = Object.keys(MOODS);
