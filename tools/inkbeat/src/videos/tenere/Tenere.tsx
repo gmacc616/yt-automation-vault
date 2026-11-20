@@ -11,7 +11,7 @@ import { CLOTH } from "../../inkbeat/char/family";
 import { Captions, makeChunks } from "../../inkbeat/core/captions";
 import type { Word } from "../../inkbeat/core/captions";
 import { CastLight } from "../../inkbeat/core/castLight";
-import { subFrame, useFonts } from "../../inkbeat/core/frame";
+import { SUB, subFrame, useFonts } from "../../inkbeat/core/frame";
 import { Label } from "../../inkbeat/core/kit";
 import { moodOf } from "../../inkbeat/core/moods";
 import { poseAt, withShake } from "../../inkbeat/core/rig";
@@ -34,6 +34,7 @@ const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const ramp = (t: number, a: number, d = 0.3) => clamp((t - a) / d);
 const XF = 0.33; // dissolve (s)
 const BL = 0.6; // camera blend between setups in the same place and light (s)
+const BLEND = false;
 type Shot = (typeof SHOTS)[number];
 const S = (id: string) => SHOTS.find((s) => s.id === id)!;
 
@@ -116,7 +117,9 @@ const camAt = (i: number, t: number): Cam & { shake: number; roll: number } => {
     return undefined;
   });
   let p = poseAt(base, beats, s.t, t, prm);
-  if (i > 0 && sameRoom(SHOTS[i - 1], s) && t < s.t + BL) {
+  // camera blends between setups were too fast for the distances they covered (ghosting under motion blur, and one
+  // flew through the crown): every setup change is now a short dissolve; the blend stays off (BLEND = false)
+  if (BLEND && i > 0 && sameRoom(SHOTS[i - 1], s) && t < s.t + BL) {
     // travel from the previous setup's camera into this one (no cut)
     const prev = CAMS[SHOTS[i - 1].id](t);
     const u = EASE.inOut((t - s.t) / BL, 3);
@@ -246,15 +249,11 @@ const Setup: React.FC<{ i: number; t: number }> = ({ i, t }) => {
 const CHUNKS = makeChunks(WORDS as unknown as Word[], DURATION / 30);
 const LAST = WORDS[WORDS.length - 1][2];
 
-export const Tenere: React.FC<{ sub?: boolean }> = ({ sub = false }) => {
-  const ready = useFonts();
-  const g = useCurrentFrame();
-  if (!ready) return <AbsoluteFill style={{ background: "#1a1220" }} />;
-  const { n, fp } = sub ? subFrame(g) : { n: g, fp: g };
+const Frame: React.FC<{ n: number; fp: number }> = ({ n, fp }) => {
   const t = fp / 30;
   let i = SHOTS.findIndex((s) => t >= s.t && t < s.end);
   if (i < 0) i = SHOTS.length - 1;
-  const prevFade = i > 0 && !sameRoom(SHOTS[i - 1], SHOTS[i]) && t < SHOTS[i].t + XF ? 1 - (t - SHOTS[i].t) / XF : 0;
+  const prevFade = i > 0 && t < SHOTS[i].t + XF ? 1 - (t - SHOTS[i].t) / XF : 0;
   return (
     <AbsoluteFill style={{ background: "#1a1220" }}>
       <Setup i={i} t={t} />
@@ -266,6 +265,34 @@ export const Tenere: React.FC<{ sub?: boolean }> = ({ sub = false }) => {
       <Captions chunks={CHUNKS} t={n / 30} until={LAST + 0.35} />
     </AbsoluteFill>
   );
+};
+
+export const Tenere: React.FC<{ sub?: boolean }> = ({ sub = false }) => {
+  const ready = useFonts();
+  const g = useCurrentFrame();
+  if (!ready) return <AbsoluteFill style={{ background: "#1a1220" }} />;
+  const { n, fp } = sub ? subFrame(g) : { n: g, fp: g };
+  return <Frame n={n} fp={fp} />;
+};
+
+/** a re-render of selected frame ranges only ([first, last] output frames, inclusive), back to back, at SUB × fps:
+ * render on coldframe with props {"ranges": [...]}, tmix it, then splice each range into the full render */
+export const segFrames = (ranges: [number, number][]) => ranges.reduce((a, [x, y]) => a + (y - x + 1), 0);
+export const TenereSeg: React.FC<{ ranges: [number, number][] }> = ({ ranges }) => {
+  const ready = useFonts();
+  const g = useCurrentFrame();
+  if (!ready) return <AbsoluteFill style={{ background: "#1a1220" }} />;
+  let k = Math.floor(g / SUB);
+  let out = ranges[0][0];
+  for (const [x, y] of ranges) {
+    if (k <= y - x) {
+      out = x + k;
+      break;
+    }
+    k -= y - x + 1;
+  }
+  const { n, fp } = subFrame(out * SUB + (g % SUB));
+  return <Frame n={n} fp={fp} />;
 };
 
 /** look-dev: one setup at a time, at its middle (or `at` s into it), for stills */
